@@ -1,0 +1,114 @@
+{
+
+************* KSP EXTENDED COMMANDS LIBRARY *************
+
+Add, initialize and manage GUI controls
+
+v0.1 - Last update 2016-01-09
+
+}		
+
+{UI Controls IDs}
+declare const SWITCHES := 1
+declare const BUTTONS := 2
+declare const KNOBS := 3
+declare const TEXT_LABELS := 4
+declare const PIC_LABELS := 5
+declare const MENUS := 6
+declare const FILE_SELECTOR := 7
+declare const VALUE_EDITS := 8
+declare const SLIDERS := 9
+declare const TABLES := 10
+declare const LEVEL_METERS := 11
+declare const WAVEFORMS := 12
+declare const TEXT_EDITS := 13
+
+{UI fonts}
+family CONSOLE
+	declare const WHITE := 0
+	declare const LIGHTGREY := 10
+	declare const GREY1 := 3
+	declare const GREY2 := 11
+	declare const DARKGREY1 := 8
+	declare const DARKGREY2 := 2
+	declare const BLACK := 9
+	declare const YELLOW := 4
+	declare const RED := 6
+end family 
+
+family REGULAR
+	declare const WHITE := 18
+	declare const LIGHTGREY := 13
+	declare const GREY1 := 14
+	declare const GREY2 := 23
+	declare const DARKGREY1 := 15
+	declare const DARKGREY2 := 12
+	declare const BLACK := 22
+end family 
+
+family BOLD
+	declare const WHITE := 17
+	declare const LIGHTGREY := 1
+	declare const GREY1 := 20
+	declare const GREY2 := 21
+	declare const DARKGREY1 := 16
+	declare const BLACK := 19
+	declare const YELLOW := 5
+	declare const RED := 7
+end family 
+
+declare const LEFT := 0
+declare const CENTER := 1
+declare const RIGHT := 2
+
+{Visibility constants}
+declare const VISIBLE := 0 {HIDE_PART_NOTHING value}
+declare const INVISIBLE := 16 {HIDE_WHOLE_CONTROL value}
+
+{UI Level Meter constants}
+declare const LEFT_CH := 0
+declare const RIGHT_CH := 1
+declare const VERTICAL := 1
+declare const HORIZONTAL := 0
+
+{Persistence constants}
+declare const PERSISTENT := 1
+declare const NOT_PERSISTENT := 0
+
+
+{---------------------- PRIVATE ----------------------}
+
+
+{UI arrays}
+declare const _EOA := -1
+declare _UI_COUNT := 0
+
+declare _UI_IDS[MAX_ARRAY_SIZE] := (_EOA)
+declare _UI_FAMILIES[MAX_ARRAY_SIZE] := (_EOA)
+
+declare _UI_TYPE[MAX_ARRAY_SIZE] := (_EOA)
+declare _UI_POS_X[MAX_ARRAY_SIZE] := (_EOA)
+declare _UI_POS_Y[MAX_ARRAY_SIZE] := (_EOA)
+declare _UI_WIDTH[MAX_ARRAY_SIZE] := (_EOA)
+declare _UI_HEIGHT[MAX_ARRAY_SIZE] := (_EOA)
+declare _UI_DEFAULT_VALUE[MAX_ARRAY_SIZE] := (_EOA)
+declare _UI_CURR_VISIBILITY[MAX_ARRAY_SIZE] := (_EOA)
+declare _UI_DEF_VISIBILITY[MAX_ARRAY_SIZE] := (_EOA)
+declare !_UI_PICTURE[MAX_ARRAY_SIZE]
+declare !_UI_TEXT[MAX_ARRAY_SIZE]
+declare _UI_FONT_TYPE[MAX_ARRAY_SIZE] := (_EOA)
+declare _UI_FONT_ALIGNMENT[MAX_ARRAY_SIZE] := (_EOA)
+
+_UI_IDS[0] := 0
+_UI_FAMILIES[0] := 0
+
+_UI_TYPE[0] := 0
+_UI_POS_X[0] := 0
+_UI_POS_Y[0] := 0
+_UI_CURR_VISIBILITY[0] := 0
+_UI_HEIGHT[0] := 0
+_UI_DEFAULT_VALUE[0] := 0
+!_UI_PICTURE[0] := "N/A"
+!_UI_TEXT[0] := "N/A"
+_UI_FONT_TYPE[0] := 0
+_UI_FONT_ALIGNMENT[0] := 0
