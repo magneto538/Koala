@@ -1,0 +1,174 @@
+{
+
+********* KOALA - AN ADVANCED SCRIPTING LIBRARY FOR KSP DEVELOPERS *********
+
+This file is part of Koala - An advanced scripting library for KSP developers.
+
+Koala is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Koala is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Koala. If not, see <http://www.gnu.org/licenses/>.
+
+Koala and all its content - included individual scripting files, the Manual and its content, 
+all the functions and features - are protected by copyright and registered to Davide Magni.
+
+© Davide Magni, 2016. All rights reserved.
+
+---
+
+CONTACTS
+
+info@davidemagni.com
+www.davidemagni.com
+Skype: magneto538
+Twitter: magneto538
+
+}   
+
+{Generic Family - Show/Hide debugging options}
+
+DEBUG.page_button(page_ui)
+DEBUG.page_button(page_event)
+DEBUG.page_button(page_custom)
+
+{UI Family - Adjust position}
+
+on ui_control (DEBUG.adjust_pos_x)
+	if (DEBUG.SELECTED_UI_ID # 0)
+		set_control_par(DEBUG.SELECTED_UI_ID, CONTROL_PAR_POS_X, DEBUG.adjust_pos_x)
+	else 
+		message("### DEBUGGER: Click on a UI Control to display/set its data.")
+		DEBUG.adjust_pos_x := 0
+	end if
+end on
+
+on ui_control (DEBUG.adjust_pos_y)
+	if (DEBUG.SELECTED_UI_ID # 0)
+		set_control_par(DEBUG.SELECTED_UI_ID, CONTROL_PAR_POS_Y, DEBUG.adjust_pos_y)	
+	else 
+		message("### DEBUGGER: Click on a UI Control to display/set its data.")
+		DEBUG.adjust_pos_y := 0
+	end if
+end on
+
+on ui_control (DEBUG.adjust_width)
+	if (DEBUG.SELECTED_UI_ID # 0)
+		set_control_par(DEBUG.SELECTED_UI_ID, CONTROL_PAR_WIDTH, DEBUG.adjust_width)	
+	else 
+		message("### DEBUGGER: Click on a UI Control to display/set its data.")
+		DEBUG.adjust_width := 0
+	end if
+end on
+
+on ui_control (DEBUG.adjust_height)
+	if (DEBUG.SELECTED_UI_ID # 0)
+		set_control_par(DEBUG.SELECTED_UI_ID, CONTROL_PAR_HEIGHT, DEBUG.adjust_height)	
+	else 
+		message("### DEBUGGER: Click on a UI Control to display/set its data.")
+		DEBUG.adjust_height := 0
+	end if
+end on
+
+
+
+on ui_control (DEBUG.midi_mon_reset)
+	DEBUG.midi_monitor_reset_view
+	DEBUG.midi_mon_reset := 0
+end on
+
+on ui_control (DEBUG.midi_mon_freeze)
+	{Conditional button. When on, no more messages will be displayed on monitor.}
+end on
+
+on ui_control (DEBUG.midi_mon_note_on)
+	{Conditional button. When on, Note On messages wil be monitored.}
+end on
+
+on ui_control (DEBUG.midi_mon_note_off)
+	{Conditional button. When on, Note Off messages wil be monitored.}
+end on
+
+on ui_control (DEBUG.midi_mon_cc)
+	{Conditional button. When on, MIDI CC messages wil be monitored.}
+end on
+
+on ui_control (DEBUG.midi_mon_pb)
+	{Conditional button. When on, Pitch bend messages wil be monitored.}
+end on
+
+on ui_control (DEBUG.midi_mon_play)
+	DEBUG.panic
+	if (DEBUG.midi_mon_play = ON)
+		DEBUG.play_count := DEBUG.midi_mon_play_start
+		while (DEBUG.play_count <= DEBUG.midi_mon_play_end and DEBUG.midi_mon_play = ON)
+			play_note(DEBUG.play_count, DEBUG.midi_mon_play_vel, 0, DURATION_QUARTER)
+			set_ctrl_text(get_ui_id(DEBUG.midi_mon_play), "Note " & DEBUG.play_count & ", Vel. " & DEBUG.midi_mon_play_vel)
+			wait(DURATION_QUARTER)
+			inc(DEBUG.play_count)
+		end while
+		set_ctrl_text(get_ui_id(DEBUG.midi_mon_play), "Play...")		
+		DEBUG.midi_mon_play := OFF
+	else 
+		set_ctrl_text(get_ui_id(DEBUG.midi_mon_play), "Play...")				
+	end if
+end on
+
+on ui_control (DEBUG.midi_mon_play_start)
+	if (DEBUG.midi_mon_play_end < DEBUG.midi_mon_play_start)
+		DEBUG.midi_mon_play_end := DEBUG.midi_mon_play_start
+	end if
+end on
+
+on ui_control (DEBUG.midi_mon_play_end)
+	if (DEBUG.midi_mon_play_start > DEBUG.midi_mon_play_end)
+		DEBUG.midi_mon_play_start := DEBUG.midi_mon_play_end
+	end if
+end on
+
+on ui_control (DEBUG.midi_mon_kill)
+	DEBUG.panic	
+	message("### DEBUGGER: All Notes Off, All Voices Killed")	
+	DEBUG.midi_mon_kill := 0
+end on
+
+on ui_control (DEBUG.midi_cc_test_value)
+	set_controller(DEBUG.midi_cc_test, DEBUG.midi_cc_test_value)
+end on
+
+on ui_control (DEBUG.midi_cc_test)
+	set_value(get_ui_id(DEBUG.midi_cc_test_value), CC[DEBUG.midi_cc_test])					
+end on
+
+on ui_control (DEBUG.midi_mon_freeze_engine)
+	if (DEBUG.midi_mon_freeze_engine = ON)
+		DEBUG.panic
+	end if
+	{Conditional button. When on, ALL EVENTS WILL BE IGNORED!}	
+end on
+
+on ui_control (DEBUG.ui_family_name)
+	DEBUG.fam_menu_filter
+end on
+
+on ui_control (DEBUG.ui_type)
+	DEBUG.fam_menu_filter	
+end on
+
+on ui_control (DEBUG.var_name)
+	if (DEBUG.var_name = 0)
+		DEBUG.var_name := DEBUG.pre_var_name
+	else 
+		set_menu_item_visibility(get_ui_id(DEBUG.var_name), 0, 0)
+		DEBUG.SELECTED_UI_ID := _UI_IDS[DEBUG.var_name]
+		DEBUG.var_menu_text_update
+		DEBUG.pre_var_name := DEBUG.var_name	
+	end if
+end on

@@ -1,0 +1,42 @@
+{
+
+********* KOALA - AN ADVANCED SCRIPTING LIBRARY FOR KSP DEVELOPERS *********
+
+This file is part of Koala - An advanced scripting library for KSP developers.
+
+Koala is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Koala is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Koala. If not, see <http://www.gnu.org/licenses/>.
+
+Koala and all its content - included individual scripting files, the Manual and its content, 
+all the functions and features - are protected by copyright and registered to Davide Magni.
+
+© Davide Magni, 2016. All rights reserved.
+
+---
+
+CONTACTS
+
+info@davidemagni.com
+www.davidemagni.com
+Skype: magneto538
+Twitter: magneto538
+
+}   
+
+{Load array with notes names}
+declare !NOTE_NAME[128]
+import "Koala/event/NOTE_NAME.ksp"
+
+{Load array with MIDI CC names}
+declare !CC_NAME[128]
+import "Koala/event/CC_NAME.ksp"

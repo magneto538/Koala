@@ -1,0 +1,311 @@
+{
+
+************* KSP EXTENDED COMMANDS LIBRARY *************
+
+Add, initialize and manage GUI controls
+
+v0.1 - Last update 2016-01-09
+
+}		
+
+macro create_button(#name#, #fam#, x, y, w, h, default, pers_status, text, picture)
+	declare ui_button #name#
+	_add_ctrl(#name#, #fam#)	
+	_store_pos_data(x, y)
+	_store_size_data(w, h)
+	_store_def_value(default)
+	_store_ctrl_text(text)
+	_store_ctrl_pic(picture)
+	_store_visibility(get_ui_id(#name#), VISIBLE)	
+	_ctrl_type(BUTTONS)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_X, x)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_Y, y)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_WIDTH, w)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_HEIGHT, h)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_DEFAULT_VALUE, default)	
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_VALUE, default)	
+	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_PICTURE, picture)
+	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_TEXT, text)
+	if (pers_status = PERSISTENT)
+		make_persistent(#name#)
+	end if	
+	USE_CODE_IF(ENABLE_DEBUG)
+		add_menu_item(DEBUG.var_name, "#name#", _UI_COUNT)
+		DEBUG.set_persistence(pers_status)
+	END_USE_CODE
+end macro
+
+macro create_switch(#name#, #fam#, x, y, w, h, default, pers_status, text, picture)
+	declare ui_switch #name#
+	_add_ctrl(#name#, #fam#)		
+	_store_pos_data(x, y)
+	_store_size_data(w, h)
+	_store_def_value(default)
+	_store_ctrl_text(text)	
+	_store_ctrl_pic(picture)
+	_store_visibility(get_ui_id(#name#), VISIBLE)	
+	_ctrl_type(SWITCHES)	
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_X, x)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_Y, y)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_WIDTH, w)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_HEIGHT, h)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_DEFAULT_VALUE, default)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_VALUE, default)	
+	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_TEXT, text)
+	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_PICTURE, picture)
+	if (pers_status = PERSISTENT)
+		make_persistent(#name#)
+	end if	
+	USE_CODE_IF(ENABLE_DEBUG)
+		add_menu_item(DEBUG.var_name, "#name#", _UI_COUNT)
+		DEBUG.set_persistence(pers_status)
+	END_USE_CODE
+end macro
+
+macro create_text_label(#name#, #fam#, x, y, w, h, text, font, alignment, background)
+	declare ui_label #name# (1, 1)
+	_add_ctrl(#name#, #fam#)		
+	_store_pos_data(x, y)
+	_store_size_data(w, h)
+	_store_ctrl_font_type(font)	
+	_store_ctrl_font_alignment(alignment)		
+	_store_ctrl_pic(background)
+	_store_visibility(get_ui_id(#name#), VISIBLE)	
+	_ctrl_type(TEXT_LABELS)	
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_X, x)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_Y, y)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_WIDTH, w)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_HEIGHT, h)
+	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_TEXT, text)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_FONT_TYPE, font)	
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_TEXT_ALIGNMENT, alignment)	
+	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_PICTURE, background)
+	USE_CODE_IF(ENABLE_DEBUG)
+		add_menu_item(DEBUG.var_name, "#name#", _UI_COUNT)
+	END_USE_CODE
+end macro
+
+macro create_pic_label(#name#, #fam#, x, y, w, h, picture)
+	declare ui_label #name# (1, 1)
+	_add_ctrl(#name#, #fam#)
+	_store_pos_data(x, y)
+	_store_size_data(w, h)
+	_store_ctrl_pic(picture)
+	_store_visibility(get_ui_id(#name#), VISIBLE)	
+	_ctrl_type(PIC_LABELS)	
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_X, x)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_Y, y)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_WIDTH, w)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_HEIGHT, h)
+	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_TEXT, "")
+	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_PICTURE, picture)	
+	USE_CODE_IF(ENABLE_DEBUG)
+		add_menu_item(DEBUG.var_name, "#name#", _UI_COUNT)
+	END_USE_CODE
+end macro
+
+macro create_slider(#name#, #fam#, x, y, w, h, min, max, default, pers_status, mouse_behaviour, picture)
+	declare ui_slider #name# (min, max)
+	_add_ctrl(#name#, #fam#)		
+	_store_pos_data(x, y)
+	_store_size_data(w, h)
+	_store_def_value(default)
+	_store_ctrl_pic(picture)	
+	_store_visibility(get_ui_id(#name#), VISIBLE)	
+	_ctrl_type(SLIDERS)	
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_X, x)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_Y, y)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_WIDTH, w)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_HEIGHT, h)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_DEFAULT_VALUE, default)	
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_VALUE, default)	
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_MOUSE_BEHAVIOUR, mouse_behaviour)	
+	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_PICTURE, picture)
+	if (pers_status = PERSISTENT)
+		make_persistent(#name#)
+	end if	
+	USE_CODE_IF(ENABLE_DEBUG)
+		add_menu_item(DEBUG.var_name, "#name#", _UI_COUNT)
+		DEBUG.set_persistence(pers_status)
+	END_USE_CODE
+end macro
+
+macro create_knob(#name#, #fam#, x, y, min, max, default, disp_ratio, pers_status, unit, text)
+	declare ui_knob #name# (min, max, disp_ratio)
+	_add_ctrl(#name#, #fam#)		
+	_store_pos_data(x, y)
+	_store_size_data(0, 0)
+	_store_def_value(default)
+	_store_ctrl_text(text)	
+	_store_visibility(get_ui_id(#name#), VISIBLE)		
+	_ctrl_type(KNOBS)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_X, x)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_Y, y)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_DEFAULT_VALUE, default)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_VALUE, default)	
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_UNIT, unit)
+	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_TEXT, text)	
+	if (pers_status = PERSISTENT)
+		make_persistent(#name#)
+	end if	
+	USE_CODE_IF(ENABLE_DEBUG)
+		add_menu_item(DEBUG.var_name, "#name#", _UI_COUNT)
+		DEBUG.set_persistence(pers_status)
+	END_USE_CODE
+end macro
+
+macro create_menu(#name#, #fam#, x, y, w, h, default, entries, font, alignment, pers_status, picture)
+	declare ui_menu #name#
+	declare !#name#_entries[entries]
+	declare _#name#_COUNT := 0	
+	_add_ctrl(#name#, #fam#)	
+	_store_pos_data(x, y)
+	_store_size_data(w, h)
+	_store_def_value(default)
+	_store_ctrl_font_type(font)	
+	_store_ctrl_font_alignment(font)	
+	_store_ctrl_pic(picture)
+	_store_visibility(get_ui_id(#name#), VISIBLE)	
+	_ctrl_type(MENUS)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_X, x)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_Y, y)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_WIDTH, w)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_HEIGHT, h)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_DEFAULT_VALUE, default)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_FONT_TYPE, font)		
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_TEXT_ALIGNMENT, alignment)	
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_VALUE, default)	
+	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_PICTURE, picture)
+	if (pers_status = PERSISTENT)
+		make_persistent(#name#)
+	end if	
+	USE_CODE_IF(ENABLE_DEBUG)
+		add_menu_item(DEBUG.var_name, "#name#", _UI_COUNT)
+		DEBUG.set_persistence(pers_status)
+	END_USE_CODE
+end macro
+
+macro create_value_edit(#name#, #fam#, x, y, w, min, max, default, disp_ratio, pers_status, font, picture)
+	declare ui_value_edit #name# (min, max, disp_ratio)
+	_add_ctrl(#name#, #fam#)		
+	_store_pos_data(x, y)
+	_store_size_data(w, 0)
+	_store_def_value(default)
+	_store_ctrl_font_type(font)		
+	_store_ctrl_pic(picture)	
+	_store_visibility(get_ui_id(#name#), VISIBLE)	
+	_ctrl_type(VALUE_EDITS)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_X, x)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_Y, y)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_WIDTH, w)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_DEFAULT_VALUE, default)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_VALUE, default)	
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_FONT_TYPE, font)	
+	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_PICTURE, picture)
+	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_TEXT, "")
+	if (pers_status = PERSISTENT)
+		make_persistent(#name#)
+	end if	
+	USE_CODE_IF(ENABLE_DEBUG)
+		add_menu_item(DEBUG.var_name, "#name#", _UI_COUNT)
+		DEBUG.set_persistence(pers_status)
+	END_USE_CODE
+end macro
+
+macro create_file_selector(#name#, #fam#, x, y, w, h, col_width, file_type, root_folder, font)
+	declare ui_file_selector #name#
+	_add_ctrl(#name#, #fam#)		
+	_store_pos_data(x, y)
+	_store_size_data(w, h)
+	_store_visibility(get_ui_id(#name#), VISIBLE)	
+	_ctrl_type(FILE_SELECTOR)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_X, x)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_Y, y)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_WIDTH, w)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_HEIGHT, h)	
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_COLUMN_WIDTH, col_width)	
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_FILE_TYPE, file_type)
+	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_BASEPATH, root_folder)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_FONT_TYPE, font)
+	USE_CODE_IF(ENABLE_DEBUG)
+		add_menu_item(DEBUG.var_name, "#name#", _UI_COUNT)
+	END_USE_CODE
+end macro
+
+macro create_table(#name#, #fam#, x, y, w, h, columns, range, pers_status)
+	declare ui_table #name# [columns](1, 1, range)
+	_add_ctrl(#name#, #fam#)		
+	_store_pos_data(x, y)
+	_store_size_data(w, h)
+	_store_visibility(get_ui_id(#name#), VISIBLE)	
+	_ctrl_type(TABLES)	
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_X, x)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_Y, y)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_WIDTH, w)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_HEIGHT, h)
+	if (pers_status = PERSISTENT)
+		make_persistent(#name#)
+	end if	
+	USE_CODE_IF(ENABLE_DEBUG)
+		add_menu_item(DEBUG.var_name, "#name#", _UI_COUNT)
+		DEBUG.set_persistence(pers_status)
+	END_USE_CODE
+end macro
+
+macro create_level_meter(#name#, #fam#, x, y, w, h, orientation, group, slot, channel, bus)
+	declare ui_level_meter #name#
+	_add_ctrl(#name#, #fam#)		
+	_store_pos_data(x, y)
+	_store_size_data(w, h)
+	_store_visibility(get_ui_id(#name#), VISIBLE)	
+	_ctrl_type(LEVEL_METERS)	
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_X, x)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_Y, y)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_WIDTH, w)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_HEIGHT, h)	
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_VERTICAL, orientation)	
+	attach_level_meter(get_ui_id(#name#), group, slot, channel, bus)
+	USE_CODE_IF(ENABLE_DEBUG)
+		add_menu_item(DEBUG.var_name, "#name#", _UI_COUNT)
+	END_USE_CODE
+end macro
+
+macro create_waveform(#name#, #fam#, x, y, w, h, zone_name, zone_flags)
+	declare ui_waveform #name#(1,1)
+	_add_ctrl(#name#, #fam#)		
+	_store_pos_data(x, y)
+	_store_size_data(w, h)
+	_store_visibility(get_ui_id(#name#), VISIBLE)	
+	_ctrl_type(WAVEFORMS)	
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_X, x)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_Y, y)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_WIDTH, w)
+	set_control_par(get_ui_id(#name#), CONTROL_PAR_HEIGHT, h)	
+	attach_zone(#name#, find_zone(zone_name), zone_flags)		
+	USE_CODE_IF(ENABLE_DEBUG)
+		add_menu_item(DEBUG.var_name, "#name#", _UI_COUNT)
+	END_USE_CODE
+end macro
+
+macro create_text_edit(#name#, #fam#, x, y, w, h, text, font, alignment, background)
+	declare ui_text_edit @#name#
+	_add_ctrl(@#name#, #fam#)		
+	_store_pos_data(x, y)
+	_store_size_data(w, h)
+	_store_ctrl_font_type(font)	
+	_store_ctrl_font_alignment(alignment)		
+	_store_ctrl_pic(background)
+	_store_visibility(get_ui_id(@#name#), VISIBLE)	
+	_ctrl_type(TEXT_EDITS)	
+	set_control_par(get_ui_id(@#name#), CONTROL_PAR_POS_X, x)
+	set_control_par(get_ui_id(@#name#), CONTROL_PAR_POS_Y, y)
+	set_control_par(get_ui_id(@#name#), CONTROL_PAR_WIDTH, w)
+	set_control_par(get_ui_id(@#name#), CONTROL_PAR_HEIGHT, h)
+	set_control_par_str(get_ui_id(@#name#), CONTROL_PAR_TEXT, text)
+	set_control_par(get_ui_id(@#name#), CONTROL_PAR_FONT_TYPE, font)	
+	set_control_par(get_ui_id(@#name#), CONTROL_PAR_TEXT_ALIGNMENT, alignment)	
+	set_control_par_str(get_ui_id(@#name#), CONTROL_PAR_PICTURE, background)
+	USE_CODE_IF(ENABLE_DEBUG)
+		add_menu_item(DEBUG.var_name, "#name#", _UI_COUNT)
+	END_USE_CODE
+end macro
