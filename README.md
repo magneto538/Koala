@@ -29,7 +29,7 @@ Koala and all its content - included individual scripting files, the Manual and 
 
 # Contacts
 
-info@davidemagni.com
+koala@davidemagni.com
 
 www.davidemagni.com
 
