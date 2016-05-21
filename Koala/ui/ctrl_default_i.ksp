@@ -1,0 +1,13 @@
+{
+
+************* KSP EXTENDED COMMANDS LIBRARY *************
+
+UI values and constants
+
+v0.1 - Last update 2016-01-09
+
+}		
+
+
+declare const 0_dB_12 := 631000
+declare const 0_dB_24 := 397000

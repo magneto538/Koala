@@ -1,0 +1,217 @@
+{
+
+********* KOALA - AN ADVANCED SCRIPTING LIBRARY FOR KSP DEVELOPERS *********
+
+This file is part of Koala - An advanced scripting library for KSP developers.
+
+Koala is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Koala is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Koala. If not, see <http://www.gnu.org/licenses/>.
+
+Koala and all its content - included individual scripting files, the Manual and its content, 
+all the functions and features - are protected by copyright and registered to Davide Magni.
+
+© Davide Magni, 2016. All rights reserved.
+
+---
+
+CONTACTS
+
+info@davidemagni.com
+www.davidemagni.com
+Skype: magneto538
+Twitter: magneto538
+
+}   
+
+{Look for the greater/smaller value inside an array}
+function max_value(array) -> return
+	return := array[0]
+	for _j := 1 to num_elements(array)-1
+		if (return <= array[_j])
+			return := array[_j]
+		end if
+	end for
+end function
+
+function min_value(array) -> return
+	return := array[0]
+	for _j := 1 to num_elements(array)-1
+		if (return >= array[_j])
+			return := array[_j]
+		end if
+	end for
+end function
+
+
+{Find how many of a specified value are present inside an array}
+function count_entries(array, value) -> return
+	declare entries_count
+
+	entries_count := 0
+	for _j := 0 to num_elements(array)-1
+		if (array[_j] = value)
+			inc(entries_count)
+		end if
+	end for
+
+	return := entries_count
+
+end function
+
+{Copy an array into another. 4 modes: NORMAL, INVERTED, ASC_SORT, DESC_SORT}
+function copy(source_arr, target_arr, mode)
+	select mode 
+		case NORMAL
+			_copy_array_size_compare(source_arr, target_arr)
+			for _j := 0 to _SMALLEST_ARR
+				target_arr[_j] := source_arr[_j]
+			end for
+		case INVERT 
+			_copy_array_size_compare(source_arr, target_arr)
+			_k := 0
+			for _j := _SMALLEST_ARR downto 0
+				target_arr[_k] := source_arr[_j]
+				inc(_k)
+			end for
+		case SORT_ASC
+			_copy_array_size_compare(source_arr, target_arr)
+			for _j := 0 to _SMALLEST_ARR
+				target_arr[_j] := source_arr[_j]
+			end for
+			sort(target_arr, 0)
+		case SORT_DESC
+			_copy_array_size_compare(source_arr, target_arr)
+			for _j := 0 to _SMALLEST_ARR
+				target_arr[_j] := source_arr[_j]
+			end for
+			sort(target_arr, 1)
+	end select
+end function
+
+{Reverse the order of an array}
+function reverse(arr)
+	declare temp
+
+	for _j := 0 to ((num_elements(arr) - 1) / 2)
+		temp := arr[_j]
+		arr[_j] := arr[ (num_elements(arr) - 1) - _j ]
+		arr[ (num_elements(arr) - 1) - _j ] := temp
+	end for	
+
+end function
+
+
+{Concatenate two arrays inside a third array}
+
+function concat(source_arr_1, source_arr_2, target_arr, mode)
+	select mode
+		case SEQUENTIAL {arr1 first, then arr2}
+			for _j := 0 to num_elements(source_arr_1)-1
+				target_arr[_j] := source_arr_1[_j]
+			end for
+
+			for _j := 0 to num_elements(source_arr_2)-1
+				target_arr[_j + num_elements(source_arr_1)] := source_arr_2[_j]
+			end for
+
+		case MIXED {arr1[0], arr2[0], arr1[1], arr2[1], ...}
+
+			_j := 0
+			_k := 0
+			while (_j < num_elements(target_arr))
+
+				if (_k < num_elements(source_arr_1))
+					target_arr[_j] := source_arr_1[_k]
+					inc(_j)					
+				end if
+
+				if (_k < num_elements(source_arr_2))
+					target_arr[_j] := source_arr_2[_k]
+					inc(_j)										
+				end if
+
+				inc(_k)
+
+			end while
+
+	end select
+end function
+
+{Copy a matrix into an array (or another matrix) by line. 4 modes: NORMAL, INVERTED, ASC_SORT, DESC_SORT}
+
+function copy_matrix(source_mtx, target_arr, source_cols, row_to_copy, mode)
+	select mode 
+		case NORMAL
+			_copy_matrix_size_compare(source_mtx, target_arr, source_cols, row_to_copy)
+			 _k := source_cols*(row_to_copy)
+			for _j := 0 to _SMALLEST_ARR
+				target_arr[_j] := source_mtx[_k]
+				inc(_k)
+			end for
+		case INVERT 
+			_copy_matrix_size_compare(source_mtx, target_arr, source_cols, row_to_copy)
+			 _k := source_cols*(row_to_copy)
+			for _j := _SMALLEST_ARR downto 0
+				target_arr[_j] := source_mtx[_k]
+				inc(_k)
+			end for
+		case SORT_ASC
+			_copy_matrix_size_compare(source_mtx, target_arr, source_cols, row_to_copy)
+			 _k := source_cols*(row_to_copy)
+			for _j := 0 to _SMALLEST_ARR
+				target_arr[_j] := source_mtx[_k]
+				inc(_k)
+			end for
+			sort(target_arr, 0)
+		case SORT_DESC
+			_copy_matrix_size_compare(source_mtx, target_arr, source_cols, row_to_copy)
+			 _k := source_cols*(row_to_copy)
+			for _j := 0 to _SMALLEST_ARR
+				target_arr[_j] := source_mtx[_k]
+				inc(_k)
+			end for
+			sort(target_arr, 1)
+	end select
+end function
+
+
+{Get ctrl number}
+function search_ctrl_number(ui_id) -> return
+	return := search(_UI_IDS, ui_id)
+end function
+
+{PRIVATE}
+
+function _copy_array_size_compare(source_arr, target_arr)
+	if (num_elements(source_arr) <= num_elements(target_arr))
+		_SMALLEST_ARR := num_elements(source_arr) - 1
+	else 
+		_SMALLEST_ARR := num_elements(target_arr) - 1
+	end if
+end function
+
+function _copy_matrix_size_compare(source_mtx, target_arr, source_cols, row_to_copy)
+	if (row_to_copy = ALL_ROWS)
+		if (num_elements(source_mtx) <= num_elements(target_arr))
+			_SMALLEST_ARR := num_elements(source_mtx) - 1
+		else 
+			_SMALLEST_ARR := num_elements(target_arr) - 1
+		end if
+	else 
+		if (source_cols <= num_elements(target_arr))
+			_SMALLEST_ARR := source_cols - 1
+		else 
+			_SMALLEST_ARR := num_elements(target_arr) - 1
+		end if
+	end if
+end function

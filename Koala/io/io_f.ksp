@@ -1,0 +1,75 @@
+{
+
+********* KOALA - AN ADVANCED SCRIPTING LIBRARY FOR KSP DEVELOPERS *********
+
+This file is part of Koala - An advanced scripting library for KSP developers.
+
+Koala is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Koala is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Koala. If not, see <http://www.gnu.org/licenses/>.
+
+Koala and all its content - included individual scripting files, the Manual and its content, 
+all the functions and features - are protected by copyright and registered to Davide Magni.
+
+© Davide Magni, 2016. All rights reserved.
+
+---
+
+CONTACTS
+
+info@davidemagni.com
+www.davidemagni.com
+Skype: magneto538
+Twitter: magneto538
+
+}   
+
+function message_1(a)
+	message(a)
+end function
+
+function message_2(a, b)
+	message(a & " " & b)
+end function
+
+function message_3(a, b, c)
+	message(a & " " & b & " " & c)
+end function
+
+function message_4(a, b, c, d)
+	message(a & " " & b & " " & c & " " & d)
+end function
+
+function message_5(a, b, c, d, e)
+	message(a & " " & b & " " & c & " " & d & " " & e)
+end function
+
+function message_6(a, b, c, d, e, f)
+	message(a & " " & b & " " & c & " " & d & " " & e & " " & f)
+end function
+
+function message_7(a, b, c, d, e, f, g)
+	message(a & " " & b & " " & c & " " & d & " " & e & " " & f & " " & g)
+end function
+
+function message_8(a, b, c, d, e, f, g, h)
+	message(a & " " & b & " " & c & " " & d & " " & e & " " & f & " " & g & " " & h)
+end function
+
+function message_9(a, b, c, d, e, f, g, h, i)
+	message(a & " " & b & " " & c & " " & d & " " & e & " " & f & " " & g & " " & h)
+end function
+
+function message_10(a, b, c, d, e, f, g, h, i, l)
+	message(a & " " & b & " " & c & " " & d & " " & e & " " & f & " " & g & " " & h & " " & i)
+end function
+
