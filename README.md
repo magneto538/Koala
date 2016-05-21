@@ -30,6 +30,10 @@ Koala and all its content - included individual scripting files, the Manual and 
 # Contacts
 
 info@davidemagni.com
+
 www.davidemagni.com
+
 Skype: magneto538
+
 Twitter: magneto538
+
