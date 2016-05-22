@@ -3,7 +3,7 @@ Koala is an advanced scripting library for Kontakt KSP developers.
 
 # Pre-requisites
 - Sublime Text 3 BETA: https://www.sublimetext.com/3
-- Koala: donwload this repository as ZIP file
+- Koala: download this repository as ZIP file
 - Kontakt 5 FULL
 
 # Quickstart
