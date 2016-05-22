@@ -11,7 +11,12 @@ Koala is an advanced scripting library for Kontakt KSP developers.
 2. Extract the ZIP file.
 3. Copy 'SublimeKSP' folder inside ~/Library/Application Support/Sublime Text 3/Packages (Mac) or %APPDATA%\Sublime Text 3\Packages (Windows). These fodlers can also be accessed from Preferences > Browse Packages... from Sublime Text 3 menus.
 4. Copy 'Koala' folder in the root directory of your KSP project.
-5. Now you are ready to use Koala. Please refer to the User Manual for additional steps required
+
+5. Open your KSP project in Sublime Text 3. At the very beginning of the file, add the following code: 
+    import "Koala/Koala.ksp"
+6. Create the 'on init' callback in your KSP project. At the very beginning of the callback, add the following code: 
+    Koala.init
+7. Now you are ready to use Koala.
 
 # GNU General Public License (GPL)
 
