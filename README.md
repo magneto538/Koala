@@ -36,8 +36,8 @@ Now you are ready to use Koala.
 **WARNING**: it is strongly discouraged to use Koala on an already started project. If you want to get the maximum out of Koala, you should use it on a brand new project
 
 # Downloads and contacts
-· [Koala User's Manual](http://davidemagni.com/wp-content/uploads/2016/05/Koala-v1.0-User-Manual.pdf)
-· [Contact Koala Support](mailto:koala@davidemagni.com)
+- [Koala User's Manual](http://davidemagni.com/wp-content/uploads/2016/05/Koala-v1.0-User-Manual.pdf)
+- [Contact Koala Support](mailto:koala@davidemagni.com)
 
 # GNU General Public License (GPL)
 **Koala** is an open source project released under GNU General Public License (GPL).
