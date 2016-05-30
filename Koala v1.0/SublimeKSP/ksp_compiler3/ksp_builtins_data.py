@@ -852,18 +852,20 @@ zone_slice_idx_loop_start(<zone-ID>,<loop-index>):integer
 zone_slice_length(<zone-ID>,<slice-index>):integer
 zone_slice_loop_count(<zone-ID>,<loop-index>):integer
 zone_slice_start(<zone-ID>,<slice-index>):integer
-create_button(<name>,<fam>,<x>,<y>,<w>,<h>,<default>,<text>,<picture>)
-create_switch(<name>,<fam>,<x>,<y>,<w>,<h>,<default>,<text>,<picture>)
+create_family(<fam>,<id>)
+create_button(<name>,<fam>,<x>,<y>,<w>,<h>,<default>,<pers_status>,<text>,<picture>)
+create_switch(<name>,<fam>,<x>,<y>,<w>,<h>,<default>,<pers_status>,<text>,<picture>)
 create_text_label(<name>,<fam>,<x>,<y>,<w>,<h>,<text>,<font>,<alignment>,<background>)
 create_pic_label(<name>,<fam>,<x>,<y>,<w>,<h>,<picture>)
-create_slider(<name>,<fam>,<x>,<y>,<w>,<h>,<min>,<max>,<default>,<mouse-behaviour>,<picture>)
-create_knob(<name>,<fam>,<x>,<y>,<min>,<max>,<default>,<disp-ratio>,<unit>,<text>)
-create_menu(<name>,<fam>,<x>,<y>,<w>,<h>,<default>,<entries>,<picture>)
-create_value_edit(<name>,<fam>,<x>,<y>,<w>,<min>,<max>,<default>,<disp-ratio>,<font>,<picture>)
-create_file_selector(<name>,<fam>,<x>,<y>,<w>,<h>,<col-width>,<file-type>,<root-folder>,<font>)
-create_table(<name>,<fam>,<x>,<y>,<w>,<h>,<columns>,<range>)
-create_waveform(<name>,<fam>,<x>,<y>,<w>,<h>,<zone-name>, <zone-flags>)
+create_slider(<name>,<fam>,<x>,<y>,<w>,<h>,<min>,<max>,<default>,<pers_status>,<mouse_behaviour>,<picture>)
+create_knob(<name>,<fam>,<x>,<y>,<min>,<max>,<default>,<disp_ratio>,<pers_status>,<unit>,<text>)
+create_menu(<name>,<fam>,<x>,<y>,<w>,<h>,<default>,<entries>,<font>,<alignment>,<pers_status>,<picture>)
+create_value_edit(<name>,<fam>,<x>,<y>,<w>,<min>,<max>,<default>,<disp_ratio>,<pers_status>,<font>,<picture>)
+create_file_selector(<name>,<fam>,<x>,<y>,<w>,<h>,<col_width>,<file_type>,<root_folder>,<font>)
+create_table(<name>,<fam>,<x>,<y>,<w>,<h>,<columns>,<range>,<pers_status>)
 create_level_meter(<name>,<fam>,<x>,<y>,<w>,<h>,<orientation>,<group>,<slot>,<channel>,<bus>)
+create_waveform(<name>,<fam>,<x>,<y>,<w>,<h>,<zone_name>,<zone_flags>)
+create_text_edit(<name>,<fam>,<x>,<y>,<w>,<h>,<text>,<font>,<alignment>,<background>)
 
 [functions_with_forced_parenthesis]
 mf_reset
