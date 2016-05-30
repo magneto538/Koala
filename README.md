@@ -38,7 +38,7 @@ Now you are ready to use Koala.
 # Downloads and contacts
 - [Koala User's Manual](http://davidemagni.com/wp-content/uploads/2016/05/Koala-v1.0-User-Manual.pdf)
 - [Contact Koala Support](mailto:koala@davidemagni.com)
-- [Koala page](http://davidemagni.com/?page_id=709) on [davidemagni.com](http://davidemagni.com)
+- [Koala's web page](http://davidemagni.com/?page_id=709) on [davidemagni.com](http://davidemagni.com)
 
 # GNU General Public License (GPL)
 **Koala** is an open source project released under GNU General Public License (GPL).
