@@ -1,0 +1,214 @@
+{
+
+********* KOALA - AN ADVANCED SCRIPTING LIBRARY FOR KSP DEVELOPERS *********
+
+This file is part of Koala - An advanced scripting library for KSP developers.
+
+Copyright (c) 2016 Davide Magni
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer 
+in the documentation and/or other materials provided with the distribution.
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+CONTACTS
+
+koala@davidemagni.com
+www.davidemagni.com
+Skype: magneto538
+Twitter: magneto538
+
+}   
+
+macro DEBUG.custom_button(#n#, text, #line_1#, #line_2#, #line_3#)
+	USE_CODE_IF(ENABLE_DEBUG)	
+		on ui_control (DEBUG.custom_button_#n#)
+			set_control_par_str(get_ui_id(DEBUG.custom_button_#n#), CONTROL_PAR_TEXT, text)
+			#line_1#
+			#line_2#
+			#line_3#
+			DEBUG.custom_button_#n# := 0
+		end on
+	END_USE_CODE
+end macro
+
+macro DEBUG.custom_value_edit(#n#, #min#, #max#, #line_1#, #line_2#, #line_3#)
+	USE_CODE_IF(ENABLE_DEBUG)	
+		on ui_control (DEBUG.custom_ve_#n#)
+			if (DEBUG.custom_ve_#n# < #min#)
+				DEBUG.custom_ve_#n# := #min#
+			end if
+			if (DEBUG.custom_ve_#n# > #max#)
+				DEBUG.custom_ve_#n# := #max#
+			end if
+			#line_1#
+			#line_2#
+			#line_3#
+		end on
+	END_USE_CODE
+end macro
+
+macro DEBUG.show_value(lbl_idx, #var#)
+	USE_CODE_IF(ENABLE_DEBUG)
+		set_control_par(DEBUG.var_name_ids[lbl_idx - 1], CONTROL_PAR_FONT_TYPE, CONSOLE.YELLOW)
+		set_control_par(DEBUG.var_name_ids[lbl_idx - 1], CONTROL_PAR_TEXT_ALIGNMENT, RIGHT)	
+		set_control_par_str(DEBUG.var_name_ids[lbl_idx - 1], CONTROL_PAR_TEXT, "#var#")
+		set_control_par_str(DEBUG.var_value_ids[lbl_idx - 1], CONTROL_PAR_TEXT, #var#)
+	END_USE_CODE
+end macro
+
+{PRIVATE}
+
+macro DEBUG.label(#name#, fam, x, y, text, font, alignment)
+	USE_CODE_IF(ENABLE_DEBUG)	
+		declare ui_label DEBUG.#name#(1, 1)
+		DEBUG.add_ctrl(DEBUG.#name#, fam)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_X, x)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_Y, y)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_WIDTH, DEBUG.col_width)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_HEIGHT, 18)
+		set_control_par_str(get_ui_id(DEBUG.#name#), CONTROL_PAR_TEXT, text)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_FONT_TYPE, font)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_TEXT_ALIGNMENT, alignment)
+	END_USE_CODE
+end macro
+
+macro DEBUG.log_label(#name#, fam, x, y, width, height, text, font, alignment)
+	USE_CODE_IF(ENABLE_DEBUG)	
+		declare ui_label DEBUG.#name#(3, 2)
+		DEBUG.add_ctrl(DEBUG.#name#, fam)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_X, x)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_Y, y)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_WIDTH, width)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_HEIGHT, height)
+		set_control_par_str(get_ui_id(DEBUG.#name#), CONTROL_PAR_TEXT, text)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_FONT_TYPE, font)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_TEXT_ALIGNMENT, alignment)
+	END_USE_CODE
+end macro
+
+
+macro DEBUG.midi_mon(#name#, fam, x, y, text, font, alignment)
+	USE_CODE_IF(ENABLE_DEBUG)	
+		declare ui_label DEBUG.#name#(3, 2)
+		DEBUG.add_ctrl(DEBUG.#name#, fam)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_X, x)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_Y, y)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_WIDTH, DEBUG.col_width)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_HEIGHT, 400)
+		set_control_par_str(get_ui_id(DEBUG.#name#), CONTROL_PAR_TEXT, text)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_FONT_TYPE, font)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_TEXT_ALIGNMENT, alignment)
+	END_USE_CODE
+end macro
+
+macro DEBUG.bg_label(#name#, fam, x, y, w, h, text)
+	USE_CODE_IF(ENABLE_DEBUG)	
+		declare ui_label DEBUG.#name#(1, 1)
+		DEBUG.add_ctrl(DEBUG.#name#, fam)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_X, x)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_Y, y)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_WIDTH, w)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_HEIGHT, h)
+		set_control_par_str(get_ui_id(DEBUG.#name#), CONTROL_PAR_TEXT, text)
+	END_USE_CODE
+end macro
+
+macro DEBUG.button(#name#, fam, x, y, default, text, pers_status)
+	USE_CODE_IF(ENABLE_DEBUG)	
+		declare ui_button DEBUG.#name#
+		DEBUG.add_ctrl(DEBUG.#name#, fam)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_X, x)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_Y, y)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_WIDTH, DEBUG.col_width)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_HEIGHT, 18)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_DEFAULT_VALUE, default)	
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_VALUE, default)	
+		set_control_par_str(get_ui_id(DEBUG.#name#), CONTROL_PAR_TEXT, text)
+		if (pers_status = PERSISTENT)
+			make_persistent(DEBUG.#name#)
+		end if		
+	END_USE_CODE
+end macro
+
+macro DEBUG.value_edit(#name#, fam, x, y, min, max, default, disp_ratio, font, text, pers_status)
+	USE_CODE_IF(ENABLE_DEBUG)	
+		declare ui_value_edit DEBUG.#name# (min, max, disp_ratio)
+		DEBUG.add_ctrl(DEBUG.#name#, fam)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_X, x)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_Y, y)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_WIDTH, DEBUG.col_width)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_DEFAULT_VALUE, default)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_VALUE, default)	
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_FONT_TYPE, font)	
+		set_control_par_str(get_ui_id(DEBUG.#name#), CONTROL_PAR_TEXT, text)
+		if (pers_status = PERSISTENT)
+			make_persistent(DEBUG.#name#)
+		end if		
+	END_USE_CODE
+end macro
+
+macro DEBUG.slider(#name#, fam, x, y, min, max, default, pers_status)
+	USE_CODE_IF(ENABLE_DEBUG)	
+		declare ui_slider DEBUG.#name# (min, max)
+		DEBUG.add_ctrl(DEBUG.#name#, fam)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_X, x)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_Y, y)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_DEFAULT_VALUE, default)	
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_VALUE, default)	
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_MOUSE_BEHAVIOUR, 700)
+		if (pers_status = PERSISTENT)
+			make_persistent(DEBUG.#name#)
+		end if				
+	END_USE_CODE
+end macro
+
+macro DEBUG.menu(#name#, fam, x, y, default, pers_status)
+	USE_CODE_IF(ENABLE_DEBUG)
+		declare ui_menu DEBUG.#name#
+		DEBUG.add_ctrl(DEBUG.#name#, fam)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_X, x)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_Y, y)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_WIDTH, DEBUG.col_width)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_DEFAULT_VALUE, default)
+		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_VALUE, default)
+		if (pers_status = PERSISTENT)
+			make_persistent(DEBUG.#name#)
+		end if		
+	END_USE_CODE
+end macro
+
+macro DEBUG.page_button(#name#)
+	USE_CODE_IF(ENABLE_DEBUG)	
+		on ui_control (DEBUG.#name#)
+			if (DEBUG.#name# = 1)
+				DEBUG.selected_page := DEBUG.#name#_id
+			else 
+				DEBUG.selected_page := DEBUG.page_none
+			end if
+			call DEBUG.view
+		end on
+	END_USE_CODE
+end macro
+
+macro empty {needed as placeholder for unused arguments in functions}
+end macro

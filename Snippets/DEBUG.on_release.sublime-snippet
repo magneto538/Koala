@@ -1,0 +1,7 @@
+<snippet>
+	<content><![CDATA[
+DEBUG.on_release
+]]></content>
+	<tabTrigger>DEBUG.on_release</tabTrigger>
+	<scope>source.ksp</scope>
+</snippet>

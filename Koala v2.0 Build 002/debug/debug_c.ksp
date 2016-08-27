@@ -1,0 +1,229 @@
+{
+
+********* KOALA - AN ADVANCED SCRIPTING LIBRARY FOR KSP DEVELOPERS *********
+
+This file is part of Koala - An advanced scripting library for KSP developers.
+
+Copyright (c) 2016 Davide Magni
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer 
+in the documentation and/or other materials provided with the distribution.
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+CONTACTS
+
+koala@davidemagni.com
+www.davidemagni.com
+Skype: magneto538
+Twitter: magneto538
+
+}   
+
+{Generic Family - Show/Hide debugging options}
+
+DEBUG.page_button(page_log)
+DEBUG.page_button(page_ui)
+DEBUG.page_button(page_event)
+DEBUG.page_button(page_groups)
+DEBUG.page_button(page_custom)
+
+{UI Family - Adjust position}
+
+on ui_control (DEBUG.adjust_pos_x)
+	if (DEBUG.SELECTED_UI_ID # 0)
+		set_control_par(DEBUG.SELECTED_UI_ID, CONTROL_PAR_POS_X, DEBUG.adjust_pos_x)
+	else 
+		message("### DEBUGGER: Click on a UI Control to display/set its data.")
+		DEBUG.adjust_pos_x := 0
+	end if
+end on
+
+on ui_control (DEBUG.adjust_pos_y)
+	if (DEBUG.SELECTED_UI_ID # 0)
+		set_control_par(DEBUG.SELECTED_UI_ID, CONTROL_PAR_POS_Y, DEBUG.adjust_pos_y)	
+	else 
+		message("### DEBUGGER: Click on a UI Control to display/set its data.")
+		DEBUG.adjust_pos_y := 0
+	end if
+end on
+
+on ui_control (DEBUG.adjust_width)
+	if (DEBUG.SELECTED_UI_ID # 0)
+		set_control_par(DEBUG.SELECTED_UI_ID, CONTROL_PAR_WIDTH, DEBUG.adjust_width)	
+	else 
+		message("### DEBUGGER: Click on a UI Control to display/set its data.")
+		DEBUG.adjust_width := 0
+	end if
+end on
+
+on ui_control (DEBUG.adjust_height)
+	if (DEBUG.SELECTED_UI_ID # 0)
+		set_control_par(DEBUG.SELECTED_UI_ID, CONTROL_PAR_HEIGHT, DEBUG.adjust_height)	
+	else 
+		message("### DEBUGGER: Click on a UI Control to display/set its data.")
+		DEBUG.adjust_height := 0
+	end if
+end on
+
+
+
+on ui_control (DEBUG.midi_mon_clear)
+	call DEBUG.midi_monitor_reset_view
+	DEBUG.midi_mon_clear := 0
+end on
+
+on ui_control (DEBUG.midi_mon_freeze)
+	{Conditional button. When on, no more messages will be displayed on monitor.}
+end on
+
+on ui_control (DEBUG.midi_mon_note_on)
+	{Conditional button. When on, Note On messages wil be monitored.}
+end on
+
+on ui_control (DEBUG.midi_mon_note_off)
+	{Conditional button. When on, Note Off messages wil be monitored.}
+end on
+
+on ui_control (DEBUG.midi_mon_cc)
+	{Conditional button. When on, MIDI CC messages wil be monitored.}
+end on
+
+on ui_control (DEBUG.midi_mon_pb)
+	{Conditional button. When on, Pitch bend messages wil be monitored.}
+end on
+
+on ui_control (DEBUG.midi_mon_play)
+	call DEBUG.panic
+	if (DEBUG.midi_mon_play = ON)
+		DEBUG.play_count := DEBUG.midi_mon_play_start
+		while (DEBUG.play_count <= DEBUG.midi_mon_play_end and DEBUG.midi_mon_play = ON)
+			play_note(DEBUG.play_count, DEBUG.midi_mon_play_vel, 0, DURATION_QUARTER)
+			set_ctrl_text(get_ui_id(DEBUG.midi_mon_play), "Note " & DEBUG.play_count & ", Vel. " & DEBUG.midi_mon_play_vel)
+			wait(DURATION_QUARTER)
+			inc(DEBUG.play_count)
+		end while
+		set_ctrl_text(get_ui_id(DEBUG.midi_mon_play), "Play...")		
+		DEBUG.midi_mon_play := OFF
+	else 
+		set_ctrl_text(get_ui_id(DEBUG.midi_mon_play), "Play...")				
+	end if
+end on
+
+on ui_control (DEBUG.midi_mon_play_start)
+	if (DEBUG.midi_mon_play_end < DEBUG.midi_mon_play_start)
+		DEBUG.midi_mon_play_end := DEBUG.midi_mon_play_start
+	end if
+end on
+
+on ui_control (DEBUG.midi_mon_play_end)
+	if (DEBUG.midi_mon_play_start > DEBUG.midi_mon_play_end)
+		DEBUG.midi_mon_play_start := DEBUG.midi_mon_play_end
+	end if
+end on
+
+on ui_control (DEBUG.midi_mon_kill)
+	call DEBUG.panic	
+	message("### DEBUGGER: All Notes Off, All Voices Killed")	
+	DEBUG.midi_mon_kill := 0
+end on
+
+on ui_control (DEBUG.midi_cc_test_value)
+	set_controller(DEBUG.midi_cc_test, DEBUG.midi_cc_test_value)
+end on
+
+on ui_control (DEBUG.midi_cc_test)
+	set_value(get_ui_id(DEBUG.midi_cc_test_value), CC[DEBUG.midi_cc_test])					
+end on
+
+on ui_control (DEBUG.midi_mon_freeze_engine)
+	if (DEBUG.midi_mon_freeze_engine = ON)
+		call DEBUG.panic	
+	end if
+	{Conditional button. When on, ALL EVENTS WILL BE IGNORED!}	
+end on
+
+on ui_control (DEBUG.ui_family_name)
+	call DEBUG.fam_menu_filter
+end on
+
+on ui_control (DEBUG.ui_type)
+	call DEBUG.fam_menu_filter	
+end on
+
+on ui_control (DEBUG.var_name)
+
+	if (DEBUG.var_name # 0)
+
+		set_menu_item_visibility(get_ui_id(DEBUG.var_name), 0, 0)
+		DEBUG.SELECTED_UI_ID := _UI_IDS[DEBUG.var_name]
+		call DEBUG.var_menu_text_update
+
+	end if
+
+end on
+
+
+{Groups page}
+
+on ui_control (DEBUG.groups_folder)
+	call DEBUG.groups_folder_filter
+end on
+
+on ui_control (DEBUG.groups_name)
+
+end on
+
+
+{Logger page}
+
+on ui_control (DEBUG.logger_switch)
+
+	DEBUG.logger_switch := 0
+
+	if ( logger_switch_status = 0 )
+		logger_switch_status := 1
+	else 
+		logger_switch_status := 0
+	end if
+
+	call DEBUG.view
+
+end on
+
+on ui_control (DEBUG.logger_clear)
+
+	DEBUG.logger_clear := 0
+
+	DEBUG.set_ctrl_text(get_ui_id(DEBUG.logger_window), "")	
+
+end on
+
+on ui_control (DEBUG.logger_start)
+
+	if ( DEBUG.logger_start = 1 )
+		DEBUG.add_log_simple("### _________ KOALA LOGGER STARTED _________ ###")
+	else
+		DEBUG.add_log_simple("### _________ KOALA LOGGER ENDED _________ ###")	
+	end if
+
+end on

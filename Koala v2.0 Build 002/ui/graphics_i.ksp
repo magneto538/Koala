@@ -1,0 +1,151 @@
+{
+
+********* KOALA - AN ADVANCED SCRIPTING LIBRARY FOR KSP DEVELOPERS *********
+
+This file is part of Koala - An advanced scripting library for KSP developers.
+
+Copyright (c) 2016 Davide Magni
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer 
+in the documentation and/or other materials provided with the distribution.
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+CONTACTS
+
+koala@davidemagni.com
+www.davidemagni.com
+Skype: magneto538
+Twitter: magneto538
+
+}   
+
+{UI Controls IDs}
+
+declare const SWITCHES := 1
+declare const BUTTONS := 2
+declare const KNOBS := 3
+declare const TEXT_LABELS := 4
+declare const PIC_LABELS := 5
+declare const MENUS := 6
+declare const FILE_SELECTOR := 7
+declare const VALUE_EDITS := 8
+declare const SLIDERS := 9
+declare const TABLES := 10
+declare const LEVEL_METERS := 11
+declare const WAVEFORMS := 12
+declare const TEXT_EDITS := 13
+
+{UI fonts}
+
+const CONSOLE
+	WHITE := 0
+	LIGHTGREY := 10
+	GREY1 := 3
+	GREY2 := 11
+	DARKGREY1 := 8
+	DARKGREY2 := 2
+	BLACK := 9
+	YELLOW := 4
+	RED := 6
+end const
+
+const REGULAR
+	WHITE := 18
+	LIGHTGREY := 13
+	GREY1 := 14
+	GREY2 := 23
+	DARKGREY1 := 15
+	DARKGREY2 := 12
+	BLACK := 22
+end const 
+
+const BOLD
+	WHITE := 17
+	LIGHTGREY := 1
+	GREY1 := 20
+	GREY2 := 21
+	DARKGREY1 := 16
+	BLACK := 19
+	YELLOW := 5
+	RED := 7
+end const 
+
+declare const LEFT := 0
+declare const CENTER := 1
+declare const RIGHT := 2
+
+{Visibility constants}
+declare const VISIBLE := 0 {HIDE_PART_NOTHING value}
+declare const INVISIBLE := 16 {HIDE_WHOLE_CONTROL value}
+
+{UI Level Meter constants}
+declare const LEFT_CH := 0
+declare const RIGHT_CH := 1
+declare const VERTICAL := 1
+declare const HORIZONTAL := 0
+
+{Persistence constants}
+declare const PERSISTENT := 1
+declare const NOT_PERSISTENT := 0
+
+
+{---------------------- PRIVATE ----------------------}
+
+
+{UI arrays}
+declare const _EOA := -1
+declare _UI_COUNT := 0
+
+declare _UI_IDS[MAX_ARRAY_SIZE] := (_EOA)
+declare _UI_FAMILIES[MAX_ARRAY_SIZE] := (_EOA)
+
+declare _UI_TYPE[MAX_ARRAY_SIZE] := (_EOA)
+declare _UI_POS_X[MAX_ARRAY_SIZE] := (_EOA)
+declare _UI_POS_Y[MAX_ARRAY_SIZE] := (_EOA)
+declare _UI_WIDTH[MAX_ARRAY_SIZE] := (_EOA)
+declare _UI_HEIGHT[MAX_ARRAY_SIZE] := (_EOA)
+declare _UI_DEFAULT_VALUE[MAX_ARRAY_SIZE] := (_EOA)
+declare _UI_CURR_VISIBILITY[MAX_ARRAY_SIZE] := (_EOA)
+declare _UI_DEF_VISIBILITY[MAX_ARRAY_SIZE] := (_EOA)
+declare !_UI_PICTURE[MAX_ARRAY_SIZE]
+declare !_UI_TEXT[MAX_ARRAY_SIZE]
+declare _UI_FONT_TYPE[MAX_ARRAY_SIZE] := (_EOA)
+declare _UI_FONT_ALIGNMENT[MAX_ARRAY_SIZE] := (_EOA)
+declare _UI_PICTURE_STATE[MAX_ARRAY_SIZE] := (_EOA)
+declare !_UI_CTRL_NAMES[MAX_ARRAY_SIZE]
+
+_UI_IDS[0] := 0
+_UI_FAMILIES[0] := 0
+
+_UI_TYPE[0] := 0
+_UI_POS_X[0] := 0
+_UI_POS_Y[0] := 0
+_UI_CURR_VISIBILITY[0] := 0
+_UI_HEIGHT[0] := 0
+_UI_DEFAULT_VALUE[0] := 0
+!_UI_PICTURE[0] := "N/A"
+!_UI_TEXT[0] := "N/A"
+_UI_FONT_TYPE[0] := 0
+_UI_FONT_ALIGNMENT[0] := 0
+_UI_PICTURE_STATE[0] := 0
+!_UI_CTRL_NAMES[MAX_ARRAY_SIZE] := "N/A"

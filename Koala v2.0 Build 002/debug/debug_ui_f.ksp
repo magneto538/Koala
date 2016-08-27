@@ -1,0 +1,346 @@
+{
+
+********* KOALA - AN ADVANCED SCRIPTING LIBRARY FOR KSP DEVELOPERS *********
+
+This file is part of Koala - An advanced scripting library for KSP developers.
+
+Copyright (c) 2016 Davide Magni
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer 
+in the documentation and/or other materials provided with the distribution.
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+CONTACTS
+
+koala@davidemagni.com
+www.davidemagni.com
+Skype: magneto538
+Twitter: magneto538
+
+}  
+
+{GUI creation}
+	function DEBUG.add_ctrl(name, fam_id)
+		USE_CODE_IF(ENABLE_DEBUG)
+			inc(DEBUG.UI_COUNT)
+			DEBUG.UI_IDS[DEBUG.UI_COUNT] := get_ui_id(name)
+			DEBUG.UI_FAMILIES[DEBUG.UI_COUNT] := fam_id
+		END_USE_CODE
+	end function
+
+	function DEBUG.pos_y(row) -> return
+		USE_CODE_IF(ENABLE_DEBUG)
+			return := DEBUG.row1+(18*row)
+		END_USE_CODE
+	end function
+
+	function DEBUG.pos_x(col) -> return
+		USE_CODE_IF(ENABLE_DEBUG)
+			return := (DEBUG.col_width+5)*col
+		END_USE_CODE
+	end function
+
+	function DEBUG.set_type(type)
+		USE_CODE_IF(ENABLE_DEBUG)
+			!DEBUG.UI_TYPES[_UI_COUNT] := type
+		END_USE_CODE
+	end function
+
+	function DEBUG.set_persistence(pers_status)
+		USE_CODE_IF(ENABLE_DEBUG)
+			select pers_status
+				case PERSISTENT 
+					!DEBUG.UI_PERSISTENCE[_UI_COUNT] := "Y"		
+				case NOT_PERSISTENT
+					!DEBUG.UI_PERSISTENCE[_UI_COUNT] := "N"
+			end select	
+		END_USE_CODE
+	end function
+
+	function DEBUG.resize_ctrl(ui_id, w, h)
+		set_control_par(ui_id, CONTROL_PAR_WIDTH, w)
+		set_control_par(ui_id, CONTROL_PAR_HEIGHT, h)
+	end function
+
+	function DEBUG.set_pos(ui_id, x, y)
+		set_control_par(ui_id, CONTROL_PAR_POS_X, x)
+		set_control_par(ui_id, CONTROL_PAR_POS_Y, y)
+	end function
+
+	function DEBUG.shift_ctrl(ui_id, off_x, off_y)
+		set_control_par(ui_id, CONTROL_PAR_POS_X, get_pos_x(ui_id) + off_x)
+		set_control_par(ui_id, CONTROL_PAR_POS_Y, get_pos_y(ui_id) + off_y)
+	end function
+
+	function DEBUG.set_ctrl_pic(ui_id, picture)
+		set_control_par_str(ui_id, CONTROL_PAR_PICTURE, picture)
+	end function
+
+	function DEBUG.set_ctrl_text(ui_id, text)
+		set_control_par_str(ui_id, CONTROL_PAR_TEXT, text)
+	end function
+
+	function DEBUG.set_font(ui_id, font, alignment)
+		set_control_par(ui_id, CONTROL_PAR_FONT_TYPE, font)	
+		set_control_par(ui_id, CONTROL_PAR_TEXT_ALIGNMENT, alignment)
+	end function
+
+	function DEBUG.set_value(ui_id, value)
+		set_control_par(ui_id, CONTROL_PAR_VALUE, value)
+	end function
+
+	function DEBUG.set_picture_state(ui_id, value)
+		set_control_par(ui_id, CONTROL_PAR_PICTURE_STATE, value)
+	end function 
+
+
+{GUI visibility}
+	function DEBUG.view
+		USE_CODE_IF(ENABLE_DEBUG)
+
+			DEBUG.page_log := 0	
+			DEBUG.page_ui := 0	
+			DEBUG.page_event := 0	
+			DEBUG.page_groups := 0	
+			DEBUG.page_custom := 0		
+
+			set_control_par(get_ui_id(DEBUG.bg_label), CONTROL_PAR_HIDE, HIDE_WHOLE_CONTROL)
+
+			DEBUG.set_family_visibility(DEBUG.LOG_FAMILY, INVISIBLE)
+			DEBUG.set_family_visibility(DEBUG.UI_FAMILY, INVISIBLE)
+			DEBUG.set_family_visibility(DEBUG.EVENT_FAMILY, INVISIBLE)
+			DEBUG.set_family_visibility(DEBUG.GROUPS_FAMILY, INVISIBLE)
+			DEBUG.set_family_visibility(DEBUG.CUSTOM_FAMILY, INVISIBLE)
+
+			restore_visibility_settings(ALL_FAMILIES)	
+
+			select DEBUG.selected_page
+
+				case DEBUG.page_log_id
+					DEBUG.page_log := 1
+					DEBUG.set_visibility(get_ui_id(DEBUG.bg_label), VISIBLE)
+					DEBUG.logger_page_visibility
+
+				case DEBUG.page_ui_id
+					DEBUG.page_ui := 1
+					DEBUG.set_visibility(get_ui_id(DEBUG.bg_label), VISIBLE)
+					DEBUG.set_family_visibility(DEBUG.UI_FAMILY, VISIBLE)
+					DEBUG.var_menu_text_update
+
+				case DEBUG.page_event_id
+					DEBUG.page_event := 1
+					DEBUG.set_visibility(get_ui_id(DEBUG.bg_label), VISIBLE)
+					DEBUG.set_family_visibility(DEBUG.EVENT_FAMILY, VISIBLE)
+					DEBUG.temp_set_fam_visibility(ALL_FAMILIES, INVISIBLE)
+
+				case DEBUG.page_groups_id
+					DEBUG.page_groups := 1
+					DEBUG.set_visibility(get_ui_id(DEBUG.bg_label), VISIBLE)
+					DEBUG.set_family_visibility(DEBUG.GROUPS_FAMILY, VISIBLE)
+
+				case DEBUG.page_custom_id
+					DEBUG.page_custom := 1
+					DEBUG.set_visibility(get_ui_id(DEBUG.bg_label), VISIBLE)
+					DEBUG.set_family_visibility(DEBUG.CUSTOM_FAMILY, VISIBLE)
+
+			end select
+
+		END_USE_CODE
+	end function
+
+	function DEBUG.set_visibility(ui_id, value)
+		set_control_par(ui_id, CONTROL_PAR_HIDE, value)
+	end function 
+
+	function DEBUG.set_family_visibility(fam, value)
+		USE_CODE_IF(ENABLE_DEBUG)
+			_j := 1
+			while (DEBUG.UI_IDS[_j] # _EOA)
+				if (DEBUG.UI_FAMILIES[_j] = fam)			
+					set_control_par(DEBUG.UI_IDS[_j], CONTROL_PAR_HIDE, value)
+				end if
+				inc(_j)
+			end while
+		END_USE_CODE
+	end function
+
+	function DEBUG.temp_set_fam_visibility(fam, value)
+		if (fam = ALL_FAMILIES)
+			_j := 1
+			while (_UI_IDS[_j] # _EOA)	
+				set_control_par(_UI_IDS[_j], CONTROL_PAR_HIDE, value)
+				inc(_j)
+			end while
+		else
+			_j := 1		
+			while (_UI_IDS[_j] # _EOA)
+				if (_UI_FAMILIES[_j] = fam)		
+					set_control_par(_UI_IDS[_j], CONTROL_PAR_HIDE, value)
+				end if
+				inc(_j)
+			end while
+		end if
+	end function
+
+	function DEBUG.logger_page_visibility
+		USE_CODE_IF(ENABLE_DEBUG)
+
+			DEBUG.set_family_visibility(DEBUG.LOG_FAMILY, VISIBLE)
+
+			if ( logger_switch_status = 0 )
+				DEBUG.set_ctrl_text( get_ui_id(DEBUG.logger_switch), "_")
+
+				DEBUG.resize_ctrl(get_ui_id(DEBUG.logger_window), (DEBUG.col_width * 8), 400)
+				DEBUG.set_pos(get_ui_id(DEBUG.logger_window), DEBUG.pos_x(0), 20)
+
+				DEBUG.temp_set_fam_visibility(ALL_FAMILIES, INVISIBLE)
+			else 
+				DEBUG.set_ctrl_text( get_ui_id(DEBUG.logger_switch), "^")
+
+				DEBUG.resize_ctrl(get_ui_id(DEBUG.logger_window), (DEBUG.col_width * 4), 90)
+				DEBUG.set_pos(get_ui_id(DEBUG.logger_window), DEBUG.pos_x(3), DEBUG.pos_y(1))
+
+				DEBUG.set_visibility(DEBUG.logger_lbl, INVISIBLE)
+				DEBUG.set_visibility(DEBUG.bg_label_logger, INVISIBLE)			
+			end if
+			
+		END_USE_CODE
+	end function
+
+	function DEBUG.midi_monitor_reset_view
+		USE_CODE_IF(ENABLE_DEBUG)
+			DEBUG.set_ctrl_text(get_ui_id(DEBUG.midi_event_counter), "")
+			DEBUG.set_ctrl_text(get_ui_id(DEBUG.midi_msg), "")
+			DEBUG.set_ctrl_text(get_ui_id(DEBUG.midi_event), "")
+			DEBUG.set_ctrl_text(get_ui_id(DEBUG.midi_byte1), "")
+			DEBUG.set_ctrl_text(get_ui_id(DEBUG.midi_byte2), "")
+			DEBUG.set_ctrl_text(get_ui_id(DEBUG.midi_src), "")
+			DEBUG.set_ctrl_text(get_ui_id(DEBUG.midi_ch), "")
+		END_USE_CODE
+	end function
+
+
+{GUI update}
+	function DEBUG.fam_menu_filter
+		USE_CODE_IF(ENABLE_DEBUG)
+			declare DEBUG.menu_visibility
+
+			_j := 1
+			while (_UI_IDS[_j] # _EOA)
+				DEBUG.menu_visibility := 1
+
+				if (_UI_FAMILIES[_j] # DEBUG.ui_family_name or _UI_TYPE[_j] # DEBUG.ui_type)
+					DEBUG.menu_visibility := 0
+				end if
+
+				if (DEBUG.ui_family_name = ALL_FAMILIES and _UI_TYPE[_j] = DEBUG.ui_type)
+					DEBUG.menu_visibility := 1
+				end if
+
+				if (DEBUG.ui_type = ALL_TYPES and _UI_FAMILIES[_j] = DEBUG.ui_family_name)
+					DEBUG.menu_visibility := 1
+				end if
+
+				if (DEBUG.ui_type = ALL_TYPES and DEBUG.ui_family_name = ALL_FAMILIES)
+					DEBUG.menu_visibility := 1
+				end if
+
+				set_menu_item_visibility(get_ui_id(DEBUG.var_name), _j, DEBUG.menu_visibility)
+				inc(_j)
+			end while
+
+			DEBUG.var_name := 0
+			set_menu_item_visibility(get_ui_id(DEBUG.var_name), 0, 1)	
+			DEBUG.SELECTED_UI_ID := DEBUG.var_name
+
+			call DEBUG.var_menu_text_update
+		END_USE_CODE
+	end function
+
+	function DEBUG.var_menu_text_update
+		USE_CODE_IF(ENABLE_DEBUG)
+			if (DEBUG.var_name # 0)
+
+				DEBUG.set_ctrl_text(get_ui_id(DEBUG.ui_id), "UI ID: " & _UI_IDS[DEBUG.var_name])
+				DEBUG.set_ctrl_text(get_ui_id(DEBUG.value), "Value: " & get_value(_UI_IDS[DEBUG.var_name]))
+
+				DEBUG.set_ctrl_text(get_ui_id(DEBUG.ui_pos_x), "Pos. X: " & get_pos_x(_UI_IDS[DEBUG.var_name]))
+				DEBUG.set_ctrl_text(get_ui_id(DEBUG.ui_pos_y), "Pos. Y: " & get_pos_y(_UI_IDS[DEBUG.var_name]))
+				DEBUG.set_ctrl_text(get_ui_id(DEBUG.ui_width), "Width: " & get_width(_UI_IDS[DEBUG.var_name]))
+				DEBUG.set_ctrl_text(get_ui_id(DEBUG.ui_height), "Height: " & get_height(_UI_IDS[DEBUG.var_name]))
+
+				DEBUG.set_value(get_ui_id(DEBUG.adjust_pos_x), get_pos_x(_UI_IDS[DEBUG.var_name]))
+				DEBUG.set_value(get_ui_id(DEBUG.adjust_pos_y), get_pos_y(_UI_IDS[DEBUG.var_name]))
+
+				DEBUG.set_value(get_ui_id(DEBUG.adjust_width), get_width(_UI_IDS[DEBUG.var_name]))
+				DEBUG.set_value(get_ui_id(DEBUG.adjust_height), get_height(_UI_IDS[DEBUG.var_name]))
+
+				DEBUG.set_ctrl_text(get_ui_id(DEBUG.ui_persistence_status), "Persistent: " & !DEBUG.UI_PERSISTENCE[DEBUG.var_name])
+				DEBUG.set_ctrl_text(get_ui_id(DEBUG.number), "Ctrl No.: " & DEBUG.var_name)
+			else
+
+				DEBUG.set_ctrl_text(get_ui_id(DEBUG.ui_id), "UI ID: -")
+				DEBUG.set_ctrl_text(get_ui_id(DEBUG.value), "Value: -")
+
+				DEBUG.set_ctrl_text(get_ui_id(DEBUG.ui_pos_x), "Pos. X: -")
+				DEBUG.set_ctrl_text(get_ui_id(DEBUG.ui_pos_y), "Pos. Y: -")
+				DEBUG.set_ctrl_text(get_ui_id(DEBUG.ui_width), "Width: -")
+				DEBUG.set_ctrl_text(get_ui_id(DEBUG.ui_height), "Height: -")
+
+				DEBUG.set_value(get_ui_id(DEBUG.adjust_pos_x), 0)
+				DEBUG.set_value(get_ui_id(DEBUG.adjust_pos_y), 0)
+
+				DEBUG.set_ctrl_text(get_ui_id(DEBUG.ui_persistence_status), "Persistent: -")
+				DEBUG.set_ctrl_text(get_ui_id(DEBUG.number), "Ctrl No.: -")		
+
+			end if
+
+		END_USE_CODE	
+	end function
+
+	function DEBUG.groups_folder_filter
+		USE_CODE_IF(ENABLE_DEBUG)
+			declare DEBUG.menu_visibility
+
+			_j := 0
+			while (_j < NUM_GROUPS)
+
+				DEBUG.menu_visibility := 0
+
+				if (GRP.folders[_j] = DEBUG.groups_folder or DEBUG.groups_folder = 0)
+					DEBUG.menu_visibility := 1
+				end if
+
+				set_menu_item_visibility(get_ui_id(DEBUG.groups_name), _j, DEBUG.menu_visibility)
+
+				inc(_j)
+			end while
+
+			if ( DEBUG.groups_folder # 0 )
+				DEBUG.groups_name := search(GRP.folders, DEBUG.groups_folder)
+			else 
+				DEBUG.groups_name := 0
+			end if
+
+		END_USE_CODE
+	end function

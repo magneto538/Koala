@@ -1,0 +1,127 @@
+{
+
+********* KOALA - AN ADVANCED SCRIPTING LIBRARY FOR KSP DEVELOPERS *********
+
+This file is part of Koala - An advanced scripting library for KSP developers.
+
+Copyright (c) 2016 Davide Magni
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer 
+in the documentation and/or other materials provided with the distribution.
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+CONTACTS
+
+koala@davidemagni.com
+www.davidemagni.com
+Skype: magneto538
+Twitter: magneto538
+
+}   
+
+function DEBUG.panic
+	for _j := 0 to 127
+		note_off(_j)
+	end for
+	set_controller(123, 0) {All Notes Off}
+	fade_out(ALL_EVENTS, 1, 1)
+end function
+
+function DEBUG.midi_monitor(msg, note, byte1, byte2, src, ch)
+	USE_CODE_IF(ENABLE_DEBUG)
+
+		if (DEBUG.event_count < _MAX_KSP_VALUE)
+			inc(DEBUG.event_count)
+		else 
+			DEBUG.event_count := 0
+		end if
+
+		if (DEBUG.midi_mon_freeze = OFF)
+			inc(DEBUG.midi_mon_count)
+			if (DEBUG.midi_mon_count = 28)
+				DEBUG.midi_mon_count := 0
+				call DEBUG.midi_monitor_reset_view
+			end if
+			add_text_line(DEBUG.midi_event_counter, DEBUG.event_count)
+			add_text_line(DEBUG.midi_msg, msg)
+			add_text_line(DEBUG.midi_event, note)
+			add_text_line(DEBUG.midi_byte1, byte1)
+			add_text_line(DEBUG.midi_byte2, byte2)
+			add_text_line(DEBUG.midi_src, src)
+			add_text_line(DEBUG.midi_ch, ch)
+		end if
+	END_USE_CODE
+end function
+
+function DEBUG.add_log_simple(text)
+	USE_CODE_IF(ENABLE_DEBUG)
+
+		declare @txt
+		@txt := timer(KSP_TIMER)
+		@txt := @txt & " --- "
+
+		@txt := @txt & text
+
+		add_text_line(DEBUG.logger_window, @txt)
+		print(@txt)
+
+	END_USE_CODE
+end function
+
+
+function DEBUG.ucb_log_line
+	USE_CODE_IF(ENABLE_DEBUG)
+
+		declare @txt 
+
+		if ( DEBUG.logger_start = 1 and DEBUG.logger_show_ucb = 1 )
+
+			select _UI_TYPE[search(_UI_IDS, DEBUG.SELECTED_UI_ID)]
+
+				case SWITCHES
+					@txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' pressed. Value: " & get_value(DEBUG.SELECTED_UI_ID)
+				case BUTTONS
+					@txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' pressed. Value: " & get_value(DEBUG.SELECTED_UI_ID)
+				case KNOBS
+					@txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' moved. Value: " & get_value(DEBUG.SELECTED_UI_ID)			
+				case MENUS
+					@txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' changed. Selected entry: " & get_value(DEBUG.SELECTED_UI_ID)	
+				case FILE_SELECTOR
+					@txt := "New file selected on '" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & ". Selected entry: " & get_value(DEBUG.SELECTED_UI_ID)
+				case VALUE_EDITS
+					@txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' changed. Value: " & get_value(DEBUG.SELECTED_UI_ID)
+				case SLIDERS
+					@txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' moved. Value: " & get_value(DEBUG.SELECTED_UI_ID)			
+				case TABLES
+					@txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' changed. Value: " & get_value(DEBUG.SELECTED_UI_ID)						
+				case TEXT_EDITS
+		
+			end select
+
+			DEBUG.add_log( @txt )
+
+		end if 
+		
+	END_USE_CODE
+end function
+

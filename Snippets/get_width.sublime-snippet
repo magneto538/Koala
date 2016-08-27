@@ -1,0 +1,7 @@
+<snippet>
+	<content><![CDATA[
+get_width(${1:ui_id})
+]]></content>
+	<tabTrigger>get_width</tabTrigger>
+	<scope>source.ksp</scope>
+</snippet>

@@ -1,0 +1,88 @@
+{
+
+********* KOALA - AN ADVANCED SCRIPTING LIBRARY FOR KSP DEVELOPERS *********
+
+This file is part of Koala - An advanced scripting library for KSP developers.
+
+Copyright (c) 2016 Davide Magni
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer 
+in the documentation and/or other materials provided with the distribution.
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+CONTACTS
+
+koala@davidemagni.com
+www.davidemagni.com
+Skype: magneto538
+Twitter: magneto538
+
+}   
+
+{1 - on init}
+macro Koala.init
+	import "Koala/global/global_i.ksp"
+	import "Koala/ui/graphics_i.ksp"
+	import "Koala/ui/ctrl_default_i.ksp"
+	import "Koala/families/families_i.ksp"
+	import "Koala/tools/tools_i.ksp"
+	import "Koala/event/event_i.ksp"	
+	import "Koala/engine/engine_i.ksp"	
+	import "Koala/groups/groups_i.ksp"	
+
+	USE_CODE_IF(ENABLE_DEBUG)
+		declare @KOALA_VERSION := "2.0.0"
+		import "Koala/debug/debug_i.ksp"
+		DEBUG.on_init
+	END_USE_CODE
+end macro
+
+{2 - macros}
+import "Koala/ui/ui_ctrl_m.ksp"
+
+{3 - functions}
+import "Koala/ui/graphics_p.ksp"
+import "Koala/tools/tools_p.ksp"
+import "Koala/families/families_p.ksp"
+import "Koala/engine/engine_p.ksp"
+import "Koala/groups/groups_p.ksp"	
+
+import "Koala/ui/graphics_f.ksp"
+import "Koala/families/families_f.ksp"
+import "Koala/io/io_f.ksp"
+import "Koala/tools/tools_f.ksp"
+import "Koala/event/event_f.ksp"
+import "Koala/engine/engine_f.ksp"
+import "Koala/groups/groups_f.ksp"	
+
+{4 - callbacks}
+
+{5 - debug}
+import "Koala/debug/debug_ui_f.ksp"
+import "Koala/debug/debug_operations_f.ksp"
+import "Koala/debug/debug_user_f.ksp"
+import "Koala/debug/debug_m.ksp"
+
+USE_CODE_IF(ENABLE_DEBUG)
+	import "Koala/debug/debug_c.ksp"
+END_USE_CODE

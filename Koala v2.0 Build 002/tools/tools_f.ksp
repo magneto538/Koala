@@ -1,0 +1,262 @@
+{
+
+********* KOALA - AN ADVANCED SCRIPTING LIBRARY FOR KSP DEVELOPERS *********
+
+This file is part of Koala - An advanced scripting library for KSP developers.
+
+Copyright (c) 2016 Davide Magni
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer 
+in the documentation and/or other materials provided with the distribution.
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+CONTACTS
+
+koala@davidemagni.com
+www.davidemagni.com
+Skype: magneto538
+Twitter: magneto538
+
+}  
+ 
+{Look for the greater/smaller value inside an array}
+function max_value(array) -> return
+	return := array[0]
+	for _j := 1 to num_elements(array)-1
+		if (return <= array[_j])
+			return := array[_j]
+		end if
+	end for
+end function
+
+function min_value(array) -> return
+	return := array[0]
+	for _j := 1 to num_elements(array)-1
+		if (return >= array[_j])
+			return := array[_j]
+		end if
+	end for
+end function
+
+
+{Find how many of a specified value are present inside an array}
+function count_entries(array, value) -> return
+	declare entries_count
+
+	entries_count := 0
+	for _j := 0 to num_elements(array)-1
+		if (array[_j] = value)
+			inc(entries_count)
+		end if
+	end for
+
+	return := entries_count
+
+end function
+
+{Copy an array into another. 4 modes: NORMAL, INVERTED, ASC_SORT, DESC_SORT}
+function copy(source_arr, target_arr, mode)
+	select mode 
+		case NORMAL
+			_copy_array_size_compare(source_arr, target_arr)
+			for _j := 0 to _SMALLEST_ARR
+				target_arr[_j] := source_arr[_j]
+			end for
+		case INVERT 
+			_copy_array_size_compare(source_arr, target_arr)
+			_k := 0
+			for _j := _SMALLEST_ARR downto 0
+				target_arr[_k] := source_arr[_j]
+				inc(_k)
+			end for
+		case SORT_ASC
+			_copy_array_size_compare(source_arr, target_arr)
+			for _j := 0 to _SMALLEST_ARR
+				target_arr[_j] := source_arr[_j]
+			end for
+			sort(target_arr, 0)
+		case SORT_DESC
+			_copy_array_size_compare(source_arr, target_arr)
+			for _j := 0 to _SMALLEST_ARR
+				target_arr[_j] := source_arr[_j]
+			end for
+			sort(target_arr, 1)
+	end select
+end function
+
+{Reverse the order of an array}
+function reverse(arr)
+	declare temp
+
+	for _j := 0 to ((num_elements(arr) - 1) / 2)
+		temp := arr[_j]
+		arr[_j] := arr[ (num_elements(arr) - 1) - _j ]
+		arr[ (num_elements(arr) - 1) - _j ] := temp
+	end for	
+
+end function
+
+
+{Concatenate two arrays inside a third array}
+
+function concat(source_arr_1, source_arr_2, target_arr, mode)
+	select mode
+		case SEQUENTIAL {arr1 first, then arr2}
+			for _j := 0 to num_elements(source_arr_1)-1
+				target_arr[_j] := source_arr_1[_j]
+			end for
+
+			for _j := 0 to num_elements(source_arr_2)-1
+				target_arr[_j + num_elements(source_arr_1)] := source_arr_2[_j]
+			end for
+
+		case MIXED {arr1[0], arr2[0], arr1[1], arr2[1], ...}
+
+			_j := 0
+			_k := 0
+			while (_j < num_elements(target_arr))
+
+				if (_k < num_elements(source_arr_1))
+					target_arr[_j] := source_arr_1[_k]
+					inc(_j)					
+				end if
+
+				if (_k < num_elements(source_arr_2))
+					target_arr[_j] := source_arr_2[_k]
+					inc(_j)										
+				end if
+
+				inc(_k)
+
+			end while
+
+	end select
+end function
+
+{Copy a matrix into an array (or another matrix) by line. 4 modes: NORMAL, INVERTED, ASC_SORT, DESC_SORT}
+
+function copy_matrix(source_mtx, target_arr, source_cols, row_to_copy, mode)
+	select mode 
+		case NORMAL
+			_copy_matrix_size_compare(source_mtx, target_arr, source_cols, row_to_copy)
+			 _k := source_cols*(row_to_copy)
+			for _j := 0 to _SMALLEST_ARR
+				target_arr[_j] := source_mtx[_k]
+				inc(_k)
+			end for
+		case INVERT 
+			_copy_matrix_size_compare(source_mtx, target_arr, source_cols, row_to_copy)
+			 _k := source_cols*(row_to_copy)
+			for _j := _SMALLEST_ARR downto 0
+				target_arr[_j] := source_mtx[_k]
+				inc(_k)
+			end for
+		case SORT_ASC
+			_copy_matrix_size_compare(source_mtx, target_arr, source_cols, row_to_copy)
+			 _k := source_cols*(row_to_copy)
+			for _j := 0 to _SMALLEST_ARR
+				target_arr[_j] := source_mtx[_k]
+				inc(_k)
+			end for
+			sort(target_arr, 0)
+		case SORT_DESC
+			_copy_matrix_size_compare(source_mtx, target_arr, source_cols, row_to_copy)
+			 _k := source_cols*(row_to_copy)
+			for _j := 0 to _SMALLEST_ARR
+				target_arr[_j] := source_mtx[_k]
+				inc(_k)
+			end for
+			sort(target_arr, 1)
+	end select
+end function
+
+
+{Get ctrl number}
+function search_ctrl_number(ui_id) -> return
+	return := search(_UI_IDS, ui_id)
+end function
+
+
+{Load all idxs of array with the same value}
+function set_array(array, value)
+	for _j := 0 to num_elements(array)
+		array[_j] := value
+	end for
+end function
+
+
+{Get the Engine Timer}
+function timer(source) -> return
+
+	declare KSP_MSECONDS := 0
+	declare KSP_SECONDS := 0
+	declare KSP_MINUTES := 0
+	declare KSP_HOURS := 0
+	declare @KSP_CLOCK
+
+	declare timebase
+
+	if ( source = ENGINE_UPTIME )
+		timebase := ENGINE_UPTIME
+	end if
+
+	if ( source = KSP_TIMER )
+		timebase := KSP_TIMER / 1000
+	end if
+
+	KSP_MSECONDS := ( timebase ) mod 1000
+	KSP_SECONDS := ( timebase / 1000 ) mod 60
+	KSP_MINUTES := ( timebase / 60000 ) mod 60
+	KSP_HOURS := ( timebase / 3600000 ) mod 60
+
+	if (KSP_HOURS < 10)
+		@KSP_CLOCK := "0" & KSP_HOURS & ":"
+	else 
+		@KSP_CLOCK := KSP_HOURS & ":"
+	end if
+
+	if (KSP_MINUTES < 10)
+		@KSP_CLOCK := @KSP_CLOCK & "0" & KSP_MINUTES & ":"
+	else 
+		@KSP_CLOCK := @KSP_CLOCK & KSP_MINUTES & ":"
+	end if
+
+	if (KSP_SECONDS < 10)
+		@KSP_CLOCK := @KSP_CLOCK & "0" & KSP_SECONDS & ":"
+	else 
+		@KSP_CLOCK := @KSP_CLOCK & KSP_SECONDS & ":"
+	end if
+
+	select KSP_MSECONDS
+		case 0 to 9 
+			@KSP_CLOCK := @KSP_CLOCK & "00" & KSP_MSECONDS
+		case 10 to 99
+			@KSP_CLOCK := @KSP_CLOCK & "0" & KSP_MSECONDS
+		case 100 to 999
+			@KSP_CLOCK := @KSP_CLOCK & KSP_MSECONDS
+	end select
+
+	return := @KSP_CLOCK
+
+end function
+

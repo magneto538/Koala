@@ -1,0 +1,7 @@
+<snippet>
+	<content><![CDATA[
+create_pic_label(${1:name}, ${2:fam}, ${3:x}, ${4:y}, ${5:w}, ${6:h}, ${7:picture})
+]]></content>
+	<tabTrigger>create_pic_label</tabTrigger>
+	<scope>source.ksp</scope>
+</snippet>

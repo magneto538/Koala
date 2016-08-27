@@ -1,0 +1,311 @@
+{
+
+********* KOALA - AN ADVANCED SCRIPTING LIBRARY FOR KSP DEVELOPERS *********
+
+This file is part of Koala - An advanced scripting library for KSP developers.
+
+Copyright (c) 2016 Davide Magni
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer 
+in the documentation and/or other materials provided with the distribution.
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+CONTACTS
+
+koala@davidemagni.com
+www.davidemagni.com
+Skype: magneto538
+Twitter: magneto538
+
+}   	
+
+macro create_family(#fam#, id)
+	declare const #fam# := id
+	USE_CODE_IF(ENABLE_DEBUG)
+		add_menu_item(DEBUG.ui_family_name, "#fam#", id)
+	END_USE_CODE
+end macro
+
+function shift_family(fam, offset_x, offset_y)
+	if (fam = ALL_FAMILIES)
+		_j := 1
+		while (_UI_IDS[_j] # _EOA)
+			shift_ctrl(_UI_IDS[_j], offset_x, offset_y)
+			inc(_j)
+		end while
+	else
+		_j := 1
+		while (_UI_IDS[_j] # _EOA)
+			if (_UI_FAMILIES[_j] = fam)		
+				shift_ctrl(_UI_IDS[_j], offset_x, offset_y)
+			end if
+			inc(_j)
+		end while
+	end if
+end function
+
+function set_family_visibility(fam, value)
+	if (fam = ALL_FAMILIES)
+		_j := 1
+		while (_UI_IDS[_j] # _EOA)	
+			set_visibility(_UI_IDS[_j], value)
+			inc(_j)
+		end while
+	else
+		_j := 1		
+		while (_UI_IDS[_j] # _EOA)
+			if (_UI_FAMILIES[_j] = fam)		
+				set_visibility(_UI_IDS[_j], value)
+			end if
+			inc(_j)
+		end while
+	end if
+end function
+
+{Set/get values of all controls of a Family inside/from an array}
+function get_family_values(fam, array)
+	if (fam = ALL_FAMILIES)
+		_j := 1
+		while (_UI_IDS[_j] # _EOA and _j < num_elements(array))
+			array[_j] := get_control_par(_UI_IDS[_j], CONTROL_PAR_VALUE)
+			inc(_j)
+		end while
+	else
+		_j := 1	
+		while (_UI_IDS[_j] # _EOA and _j < num_elements(array))
+			if (_UI_FAMILIES[_j] = fam)			
+				array[_j] := get_control_par(_UI_IDS[_j], CONTROL_PAR_VALUE)
+			end if
+			inc(_j)
+		end while
+	end if
+end function
+
+function set_family_values(fam, array)
+	if (fam = ALL_FAMILIES)
+		_j := 1
+		while (_UI_IDS[_j] # _EOA and _j < num_elements(array))
+			set_value(_UI_IDS[_j], array[_j])
+			inc(_j)
+		end while
+	else
+		_j := 1	
+		while (_UI_IDS[_j] # _EOA and _j < num_elements(array))
+			if (_UI_FAMILIES[_j] = fam)			
+				set_value(_UI_IDS[_j], array[_j])
+			end if
+			inc(_j)
+		end while
+	end if
+end function
+
+{Return amount of ctrls assigned to a certain family}
+function get_family_ctrl_amount(fam) -> return
+	if (fam = ALL_FAMILIES)
+		_j := 1
+		_k := 0
+		while (_UI_IDS[_j] # _EOA)
+			inc(_j)
+			inc(_k)
+		end while
+		return := _k
+	else
+		_j := 1	
+		_k := 0
+		while (_UI_IDS[_j] # _EOA)
+			if (_UI_FAMILIES[_j] = fam)			
+				inc(_k)				
+			end if
+			inc(_j)
+		end while
+		return := _k
+	end if
+end function
+
+
+{Reset Families}
+
+function reset_family_visibility(fam)
+	if (fam = ALL_FAMILIES)
+		_j := 1		
+		while (_UI_IDS[_j] # _EOA)
+			reset_visibility(_UI_IDS[_j])
+			inc(_j)
+		end while
+	else
+		_j := 1		
+		while (_UI_IDS[_j] # _EOA)
+			if (_UI_FAMILIES[_j] = fam)		
+				reset_visibility(_UI_IDS[_j])
+			end if
+			inc(_j)
+		end while
+	end if
+end function
+
+function reset_family_text(fam)
+	if (fam = ALL_FAMILIES)
+		_j := 1		
+		while (_UI_IDS[_j] # _EOA)
+			reset_ctrl_text(_UI_IDS[_j])
+			inc(_j)
+		end while
+	else
+		_j := 1		
+		while (_UI_IDS[_j] # _EOA)
+			if (_UI_FAMILIES[_j] = fam)		
+				reset_ctrl_text(_UI_IDS[_j])
+			end if
+			inc(_j)
+		end while
+	end if
+end function
+
+{Reset UI to default values}
+function reset_family_pics(fam)
+	if (fam = ALL_FAMILIES)
+		_j := 1		
+		while (_UI_IDS[_j] # _EOA)
+			reset_ctrl_pic(_UI_IDS[_j])
+			inc(_j)
+		end while
+	else
+		_j := 1		
+		while (_UI_IDS[_j] # _EOA)
+			if (_UI_FAMILIES[_j] = fam)		
+				reset_ctrl_pic(_UI_IDS[_j])
+			end if
+			inc(_j)
+		end while
+	end if
+end function
+
+{Reset UI to default values}
+function reset_family_values(fam)
+	if (fam = ALL_FAMILIES)
+		_j := 1		
+		while (_UI_IDS[_j] # _EOA)
+			reset_value(_UI_IDS[_j])
+			inc(_j)
+		end while
+	else
+		_j := 1		
+		while (_UI_IDS[_j] # _EOA)
+			if (_UI_FAMILIES[_j] = fam)
+				reset_value(_UI_IDS[_j])
+			end if
+			inc(_j)
+		end while
+	end if
+end function
+
+
+{Reset UI Controls to default positions}
+function reset_family_pos(fam)
+	if (fam = ALL_FAMILIES)
+		_j := 1
+		while (_UI_IDS[_j] # _EOA)
+			reset_pos(_UI_IDS[_j])
+			inc(_j)
+		end while
+	else
+		_j := 1		
+		while (_UI_IDS[_j] # _EOA)
+			if (_UI_FAMILIES[_j] = fam)		
+				reset_pos(_UI_IDS[_j])
+			end if
+			inc(_j)
+		end while
+	end if
+end function
+
+
+{Reset UI Text to default}
+function reset_family_font(fam)
+	if (fam = ALL_FAMILIES)
+		_j := 1
+		while (_UI_IDS[_j] # _EOA)
+			reset_font(_UI_IDS[_j])
+			inc(_j)
+		end while
+	else
+		_j := 1		
+		while (_UI_IDS[_j] # _EOA)
+			if (_UI_FAMILIES[_j] = fam)			
+				reset_font(_UI_IDS[_j])				
+			end if
+			inc(_j)
+		end while
+	end if
+end function
+
+
+{ADVANCED GRAPHIC FEATURES}
+{Place some controls on a grid according to their family and type}
+
+function place_on_grid(fam, type, start_x, start_y, col_w, row_h, ctrl_per_row)
+	_k := 0
+	_i := 0
+	if (fam = ALL_FAMILIES and type = ALL_TYPES)
+		_j := 1
+		while (_UI_IDS[_j] # _EOA)	
+			_family_on_grid_math(fam, type, start_x, start_y, col_w, row_h, ctrl_per_row)
+		end while
+	end if 
+	if (fam # ALL_FAMILIES and type = ALL_TYPES)
+		_j := 1
+		while (_UI_IDS[_j] # _EOA)
+			if (_UI_FAMILIES[_j] = fam)
+				_family_on_grid_math(fam, type, start_x, start_y, col_w, row_h, ctrl_per_row)
+			end if
+			inc(_j)
+		end while
+	end if 
+	if (fam # ALL_FAMILIES and type # ALL_TYPES)
+		_j := 1
+		while (_UI_IDS[_j] # _EOA)
+			if (_UI_FAMILIES[_j] = fam and _UI_TYPE[_j] = type)		
+				_family_on_grid_math(fam, type, start_x, start_y, col_w, row_h, ctrl_per_row)
+			end if
+			inc(_j)
+		end while
+	end if
+end function
+
+function restore_visibility_settings(fam)
+	if (fam = ALL_FAMILIES)
+		_j := 1		
+		while (_UI_IDS[_j] # _EOA)
+			set_control_par(_UI_IDS[_j], CONTROL_PAR_HIDE, _UI_CURR_VISIBILITY[_j])
+			inc(_j)
+		end while
+	else
+		_j := 1		
+		while (_UI_IDS[_j] # _EOA)
+			if (_UI_FAMILIES[_j] = fam)		
+				set_control_par(_UI_IDS[_j], CONTROL_PAR_HIDE, _UI_CURR_VISIBILITY[_j])
+			end if
+			inc(_j)
+		end while
+	end if
+end function

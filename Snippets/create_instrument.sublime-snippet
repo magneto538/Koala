@@ -1,0 +1,7 @@
+<snippet>
+	<content><![CDATA[
+create_instrument(${1:height}, ${2:wallpaper}, ${3:icon}, ${4:title})
+]]></content>
+	<tabTrigger>create_instrument</tabTrigger>
+	<scope>source.ksp</scope>
+</snippet>

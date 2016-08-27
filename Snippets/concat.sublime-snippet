@@ -1,0 +1,7 @@
+<snippet>
+	<content><![CDATA[
+concat(${1:source_arr_1}, ${2:source_arr_2}, ${3:target_arr}, ${4:mode})
+]]></content>
+	<tabTrigger>concat</tabTrigger>
+	<scope>source.ksp</scope>
+</snippet>

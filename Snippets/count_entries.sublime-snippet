@@ -1,0 +1,7 @@
+<snippet>
+	<content><![CDATA[
+count_entries(${1:array}, ${2:value})
+]]></content>
+	<tabTrigger>count_entries</tabTrigger>
+	<scope>source.ksp</scope>
+</snippet>

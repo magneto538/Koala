@@ -1,0 +1,141 @@
+{
+
+********* KOALA - AN ADVANCED SCRIPTING LIBRARY FOR KSP DEVELOPERS *********
+
+This file is part of Koala - An advanced scripting library for KSP developers.
+
+Copyright (c) 2016 Davide Magni
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+CONTACTS
+
+koala@davidemagni.com
+www.davidemagni.com
+Skype: magneto538
+Twitter: magneto538
+
+}   
+
+{Create a Group folder}
+macro create_group_folder(#folder_name#)
+
+	inc(GRP.folder_ids)
+
+	declare #folder_name# := GRP.folder_ids
+	declare #folder_name#_groups[MAX_GROUPS] := (_EOA)
+	declare #folder_name#_count := 0
+
+	USE_CODE_IF(ENABLE_DEBUG)
+		add_menu_item(DEBUG.groups_folder, "#folder_name#", GRP.folder_ids)
+	END_USE_CODE
+
+end macro
+
+{Add a group to folder by id or by name}
+macro add_group_id(#folder_name#, group_id)
+
+	if ( GRP.folders[group_id] # #folder_name# )
+
+		GRP.folders[group_id] := #folder_name#
+		#folder_name#_groups[#folder_name#_count] := group_id
+		inc(#folder_name#_count)
+
+	end if
+
+end macro
+
+macro add_group_name(#folder_name#, group_name)
+
+	if ( GRP.folders[ find_group(group_name) ] # #folder_name# )
+
+		GRP.folders[ find_group(group_name) ] := #folder_name#
+		#folder_name#_groups[#folder_name#_count] := find_group(group_name)
+		inc(#folder_name#_count)
+
+	end if
+
+end macro
+
+
+{Operations on folders}
+
+function allow_group_folder(folder_name) 
+	_j := 0
+	while (_j < NUM_GROUPS)
+
+		if (GRP.folders[_j] = folder_name)
+			allow_group(_j)
+		end if
+
+		inc(_j)
+
+	end while
+end function
+
+function disallow_group_folder(folder_name)
+	_j := 0
+	while (_j < NUM_GROUPS)
+
+		if (GRP.folders[_j] = folder_name)
+			disallow_group(_j)
+		end if
+
+		inc(_j)
+
+	end while
+end function
+
+function purge_group_folder(folder_name, mode)
+	_j := 0
+	while (_j < NUM_GROUPS)
+
+		if (GRP.folders[_j] = folder_name)
+			purge_group(_j, mode)
+		end if
+
+		inc(_j)
+
+	end while
+end function
+
+function engine_par_grp(folder_name, engine_par, value, slot)
+
+	_j := 0
+	while (_j < NUM_GROUPS)
+		if (GRP.folders[_j] = folder_name)
+			set_engine_par(engine_par, value, _j, slot, -1)
+		end if
+		inc(_j)
+	end while
+
+end function
+
+function engine_par_all_grp(engine_par, value, slot)
+
+	_j := 0
+	while (_j < NUM_GROUPS)
+		set_engine_par(engine_par, value, _j, slot, -1)
+		inc(_j)
+	end while
+
+end function
+

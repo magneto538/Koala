@@ -1,0 +1,170 @@
+{
+
+********* KOALA - AN ADVANCED SCRIPTING LIBRARY FOR KSP DEVELOPERS *********
+
+This file is part of Koala - An advanced scripting library for KSP developers.
+
+Copyright (c) 2016 Davide Magni
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer 
+in the documentation and/or other materials provided with the distribution.
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+CONTACTS
+
+koala@davidemagni.com
+www.davidemagni.com
+Skype: magneto538
+Twitter: magneto538
+
+}   
+
+!CC_NAME[0] := "Bank Select" 
+!CC_NAME[1] := "Mod Wheel" 
+!CC_NAME[2] := "Breath Ctrl" 
+!CC_NAME[3] := "Undefined" 
+!CC_NAME[4] := "Foot Ctrl" 
+!CC_NAME[5] := "Port. Time" 
+!CC_NAME[6] := "Data Entry MSB" 
+!CC_NAME[7] := "Volume" 
+!CC_NAME[8] := "Balance" 
+!CC_NAME[9] := "Undefined" 
+!CC_NAME[10] := "Pan" 
+!CC_NAME[11] := "Expression" 
+!CC_NAME[12] := "FX Ctrl 1" 
+!CC_NAME[13] := "FX Ctrl 2" 
+!CC_NAME[14] := "Undefined" 
+!CC_NAME[15] := "Undefined" 
+!CC_NAME[16] := "Generic" 
+!CC_NAME[17] := "Generic" 
+!CC_NAME[18] := "Generic" 
+!CC_NAME[19] := "Generic" 
+!CC_NAME[20] := "Undefined" 
+!CC_NAME[21] := "Undefined" 
+!CC_NAME[22] := "Undefined"  
+!CC_NAME[23] := "Undefined"  
+!CC_NAME[24] := "Undefined" 
+!CC_NAME[25] := "Undefined" 
+!CC_NAME[26] := "Undefined" 
+!CC_NAME[27] := "Undefined" 
+!CC_NAME[28] := "Undefined" 
+!CC_NAME[29] := "Undefined" 
+!CC_NAME[30] := "Undefined" 
+!CC_NAME[31] := "Undefined" 
+!CC_NAME[32] := "Bank Select LSB" 
+!CC_NAME[33] := "Mod Wheel LSB" 
+!CC_NAME[34] := "Breath Ctrl LSB" 
+!CC_NAME[35] := "Undefined" 
+!CC_NAME[36] := "Foot Ctrl LSB" 
+!CC_NAME[37] := "Port. Time LSB" 
+!CC_NAME[38] := "Data Entry LSB" 
+!CC_NAME[39] := "Volume LSB" 
+!CC_NAME[40] := "Balance LSB" 
+!CC_NAME[41] := "Undefined" 
+!CC_NAME[42] := "Pan LSB" 
+!CC_NAME[43] := "Expression LSB" 
+!CC_NAME[44] := "FX Ctrl 1 LSB" 
+!CC_NAME[45] := "FX Ctrl 2 LSB" 
+!CC_NAME[46] := "Undefined" 
+!CC_NAME[47] := "Undefined" 
+!CC_NAME[48] := "Generic LSB" 
+!CC_NAME[49] := "Generic LSB" 
+!CC_NAME[50] := "Generic LSB" 
+!CC_NAME[51] := "Generic LSB" 
+!CC_NAME[52] := "Undefined" 
+!CC_NAME[53] := "Undefined" 
+!CC_NAME[54] := "Undefined"  
+!CC_NAME[55] := "Undefined"  
+!CC_NAME[56] := "Undefined" 
+!CC_NAME[57] := "Undefined" 
+!CC_NAME[58] := "Undefined" 
+!CC_NAME[59] := "Undefined" 
+!CC_NAME[60] := "Undefined" 
+!CC_NAME[61] := "Undefined" 
+!CC_NAME[62] := "Undefined" 
+!CC_NAME[63] := "Undefined" 
+!CC_NAME[64] := "Sustain Pdl" 
+!CC_NAME[65] := "Port. On/Off" 
+!CC_NAME[66] := "Sostenuto On/Off" 
+!CC_NAME[67] := "Soft Pdl On/Off" 
+!CC_NAME[68] := "Legato On/Off" 
+!CC_NAME[69] := "Hold 2" 
+!CC_NAME[70] := "Sound Ctrl 1" 
+!CC_NAME[71] := "Sound Ctrl 2" 
+!CC_NAME[72] := "Sound Ctrl 3" 
+!CC_NAME[73] := "Sound Ctrl 4"  
+!CC_NAME[74] := "Sound Ctrl 5" 
+!CC_NAME[75] := "Sound Ctrl 6" 
+!CC_NAME[76] := "Sound Ctrl 7" 
+!CC_NAME[77] := "Sound Ctrl 8" 
+!CC_NAME[78] := "Sound Ctrl 9" 
+!CC_NAME[79] := "Sound Ctrl 10" 
+!CC_NAME[80] := "Generic" 
+!CC_NAME[81] := "Generic"
+!CC_NAME[82] := "Generic"
+!CC_NAME[83] := "Generic"
+!CC_NAME[84] := "Port. Amount"
+!CC_NAME[85] := "Undefined" 
+!CC_NAME[86] := "Undefined"  
+!CC_NAME[87] := "Undefined"  
+!CC_NAME[88] := "Undefined"  
+!CC_NAME[89] := "Undefined"  
+!CC_NAME[90] := "Undefined"  
+!CC_NAME[91] := "FX 1 Depth" 
+!CC_NAME[92] := "FX 2 Depth"
+!CC_NAME[93] := "FX 3 Depth"
+!CC_NAME[94] := "FX 4 Depth"
+!CC_NAME[95] := "FX 5 Depth"
+!CC_NAME[96] := "+1 Data Incr." 
+!CC_NAME[97] := "-1 Data Decr." 
+!CC_NAME[98] := "NRPN LSB" 
+!CC_NAME[99] := "NRPN MSB" 
+!CC_NAME[100] := "RPN LSB" 
+!CC_NAME[101] := "RPN MSB" 
+!CC_NAME[102] := "Undefined"  
+!CC_NAME[103] := "Undefined" 
+!CC_NAME[104] := "Undefined" 
+!CC_NAME[105] := "Undefined" 
+!CC_NAME[106] := "Undefined" 
+!CC_NAME[107] := "Undefined" 
+!CC_NAME[108] := "Undefined" 
+!CC_NAME[109] := "Undefined" 
+!CC_NAME[110] := "Undefined" 
+!CC_NAME[111] := "Undefined" 
+!CC_NAME[112] := "Undefined" 
+!CC_NAME[113] := "Undefined" 
+!CC_NAME[114] := "Undefined" 
+!CC_NAME[115] := "Undefined" 
+!CC_NAME[116] := "Undefined" 
+!CC_NAME[117] := "Undefined" 
+!CC_NAME[118] := "Undefined" 
+!CC_NAME[119] := "Undefined" 
+{Channel mode messages}
+!CC_NAME[120] := "All Sound Off" 
+!CC_NAME[121] := "Reset All Ctrls" 
+!CC_NAME[122] := "Local On/Off" 
+!CC_NAME[123] := "All Notes Off" 
+!CC_NAME[124] := "Omni Mode Off" 
+!CC_NAME[125] := "Omni Mode On" 
+!CC_NAME[126] := "Mono Mode" 
+!CC_NAME[127] := "Poly Mode" 

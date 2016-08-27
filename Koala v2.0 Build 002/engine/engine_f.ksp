@@ -1,0 +1,80 @@
+{
+
+********* KOALA - AN ADVANCED SCRIPTING LIBRARY FOR KSP DEVELOPERS *********
+
+This file is part of Koala - An advanced scripting library for KSP developers.
+
+Copyright (c) 2016 Davide Magni
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+CONTACTS
+
+koala@davidemagni.com
+www.davidemagni.com
+Skype: magneto538
+Twitter: magneto538
+
+}   
+
+{Set an FX in a certain slot}
+function send_fx(fx_type, slot)
+	set_engine_par(ENGINE_PAR_SEND_EFFECT_TYPE, fx_type, -1, slot, 0)
+end function
+
+function bus_fx(fx_type, fx_subtype, slot, bus)
+	set_engine_par(ENGINE_PAR_EFFECT_TYPE, fx_type, -1, slot, bus + NI_BUS_OFFSET)
+	if ( fx_subtype # -1 )
+		set_engine_par(ENGINE_PAR_EFFECT_SUBTYPE, fx_subtype, -1, slot, bus + NI_BUS_OFFSET)
+	end if
+end function
+
+function insert_fx(fx_type, fx_subtype, slot)
+	set_engine_par(ENGINE_PAR_EFFECT_TYPE, fx_type, -1, slot, 1)
+	if ( fx_subtype # -1 )
+		set_engine_par(ENGINE_PAR_EFFECT_SUBTYPE, fx_subtype, -1, slot, 1)
+	end if
+end function
+
+function group_fx(fx_type, fx_subtype, slot, group)
+	set_engine_par(ENGINE_PAR_EFFECT_TYPE, fx_type, group, slot, -1)
+	if ( fx_subtype # -1 )
+		set_engine_par(ENGINE_PAR_EFFECT_SUBTYPE, fx_subtype, group, slot, -1)
+	end if
+end function
+
+
+{Set engine parameters for each FX type}
+function send_fx_par(par, value, slot)
+	set_engine_par(par, value, -1, slot, 0)
+end function
+
+function bus_fx_par(par, value, slot, bus)
+	set_engine_par(par, value, -1, slot, bus + NI_BUS_OFFSET)
+end function
+
+function insert_fx_par(par, value, slot)
+	set_engine_par(par, value, -1, slot, 1)
+end function
+
+function group_fx_par(par, value, slot, group)
+	set_engine_par(par, value, group, slot, -1)
+end function

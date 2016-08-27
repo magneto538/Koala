@@ -1,0 +1,7 @@
+<snippet>
+	<content><![CDATA[
+create_value_edit(${1:name}, ${2:fam}, ${3:x}, ${4:y}, ${5:w}, ${6:min}, ma${3:x}, ${8:default}, ${9:disp_ratio}, ${10:pers_status}, ${11:font}, ${12:picture})
+]]></content>
+	<tabTrigger>create_value_edit</tabTrigger>
+	<scope>source.ksp</scope>
+</snippet>

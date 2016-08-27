@@ -1,0 +1,7 @@
+<snippet>
+	<content><![CDATA[
+get_value(${1:ui_id})
+]]></content>
+	<tabTrigger>get_value</tabTrigger>
+	<scope>source.ksp</scope>
+</snippet>

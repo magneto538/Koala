@@ -1,0 +1,7 @@
+<snippet>
+	<content><![CDATA[
+add_group_name(${1:folder_name}, ${2:group_name})
+]]></content>
+	<tabTrigger>add_group_name</tabTrigger>
+	<scope>source.ksp</scope>
+</snippet>

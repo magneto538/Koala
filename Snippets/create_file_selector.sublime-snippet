@@ -1,0 +1,7 @@
+<snippet>
+	<content><![CDATA[
+create_file_selector(${1:name}, ${2:fam}, ${3:x}, ${4:y}, ${5:w}, ${6:h}, col_widt${6:h}, ${8:file_type}, ${9:root_folder}, ${10:font})
+]]></content>
+	<tabTrigger>create_file_selector</tabTrigger>
+	<scope>source.ksp</scope>
+</snippet>

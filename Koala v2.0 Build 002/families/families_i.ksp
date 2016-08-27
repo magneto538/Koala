@@ -1,0 +1,11 @@
+{
+
+************* KSP EXTENDED COMMANDS LIBRARY *************
+
+Advanced families commands
+v0.1 - Last update 2016-01-09
+
+}		
+
+declare const ALL_FAMILIES := 32768
+declare const ALL_TYPES := 32768
