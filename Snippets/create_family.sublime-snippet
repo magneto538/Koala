@@ -1,7 +1,0 @@
-<snippet>
-	<content><![CDATA[
-create_family(${1:fam}, ${2:id})
-]]></content>
-	<tabTrigger>create_family</tabTrigger>
-	<scope>source.ksp</scope>
-</snippet>

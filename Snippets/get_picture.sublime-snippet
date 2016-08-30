@@ -1,7 +1,0 @@
-<snippet>
-	<content><![CDATA[
-get_picture(${1:ui_id})
-]]></content>
-	<tabTrigger>get_picture</tabTrigger>
-	<scope>source.ksp</scope>
-</snippet>

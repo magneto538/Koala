@@ -1,7 +1,0 @@
-<snippet>
-	<content><![CDATA[
-create_slider(${1:name}, ${2:fam}, ${3:x}, ${4:y}, ${5:w}, ${6:h}, ${7:min}, ma${3:x}, ${9:default}, ${10:pers_status}, ${11:mouse_behaviour}, ${12:picture})
-]]></content>
-	<tabTrigger>create_slider</tabTrigger>
-	<scope>source.ksp</scope>
-</snippet>

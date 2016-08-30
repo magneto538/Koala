@@ -1,7 +1,0 @@
-<snippet>
-	<content><![CDATA[
-place_on_grid(${1:fam}, ${2:type}, ${3:start_x}, ${4:start_y}, ${5:col_w}, ${6:row_h}, ${7:ctrl_per_row})
-]]></content>
-	<tabTrigger>place_on_grid</tabTrigger>
-	<scope>source.ksp</scope>
-</snippet>

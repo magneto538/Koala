@@ -1,7 +1,0 @@
-<snippet>
-	<content><![CDATA[
-create_button(${1:name}, ${2:fam}, ${3:x}, ${4:y}, ${5:w}, ${6:h}, ${7:default}, ${8:pers_status}, ${9:text}, ${10:picture})
-]]></content>
-	<tabTrigger>create_button</tabTrigger>
-	<scope>source.ksp</scope>
-</snippet>

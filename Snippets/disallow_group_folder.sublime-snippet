@@ -1,7 +1,0 @@
-<snippet>
-	<content><![CDATA[
-disallow_group_folder(${1:folder_name})
-]]></content>
-	<tabTrigger>disallow_group_folder</tabTrigger>
-	<scope>source.ksp</scope>
-</snippet>

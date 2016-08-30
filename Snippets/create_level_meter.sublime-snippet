@@ -1,7 +1,0 @@
-<snippet>
-	<content><![CDATA[
-create_level_meter(${1:name}, ${2:fam}, ${3:x}, ${4:y}, ${5:w}, ${6:h}, ${7:orientation}, ${8:group}, ${9:slot}, ${10:channel}, ${11:bus})
-]]></content>
-	<tabTrigger>create_level_meter</tabTrigger>
-	<scope>source.ksp</scope>
-</snippet>

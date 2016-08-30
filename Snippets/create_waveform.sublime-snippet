@@ -1,7 +1,0 @@
-<snippet>
-	<content><![CDATA[
-create_waveform(${1:name}, ${2:fam}, ${3:x}, ${4:y}, ${5:w}, ${6:h}, zone_${1:name}, ${8:zone_flags})
-]]></content>
-	<tabTrigger>create_waveform</tabTrigger>
-	<scope>source.ksp</scope>
-</snippet>

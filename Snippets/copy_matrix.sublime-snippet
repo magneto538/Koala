@@ -1,7 +1,0 @@
-<snippet>
-	<content><![CDATA[
-copy_matrix(${1:source_mtx}, ${2:target_arr}, ${3:source_cols}, ${4:row_to_copy}, ${5:mode})
-]]></content>
-	<tabTrigger>copy_matrix</tabTrigger>
-	<scope>source.ksp</scope>
-</snippet>

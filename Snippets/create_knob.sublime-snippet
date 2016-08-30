@@ -1,7 +1,0 @@
-<snippet>
-	<content><![CDATA[
-create_knob(${1:name}, ${2:fam}, ${3:x}, ${4:y}, ${5:min}, ma${3:x}, ${7:default}, ${8:disp_ratio}, ${9:pers_status}, ${10:unit}, ${11:text})
-]]></content>
-	<tabTrigger>create_knob</tabTrigger>
-	<scope>source.ksp</scope>
-</snippet>

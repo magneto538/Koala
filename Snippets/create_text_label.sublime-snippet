@@ -1,7 +1,0 @@
-<snippet>
-	<content><![CDATA[
-create_text_label(${1:name}, ${2:fam}, ${3:x}, ${4:y}, ${5:w}, ${6:h}, ${7:text}, ${8:font}, ${9:alignment}, ${10:background})
-]]></content>
-	<tabTrigger>create_text_label</tabTrigger>
-	<scope>source.ksp</scope>
-</snippet>

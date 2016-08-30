@@ -1,0 +1,122 @@
+{
+
+********* KOALA - AN ADVANCED SCRIPTING LIBRARY FOR KSP DEVELOPERS *********
+
+This file is part of Koala - An advanced scripting library for KSP developers.
+
+Copyright (c) 2016 Davide Magni
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer 
+in the documentation and/or other materials provided with the distribution.
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+CONTACTS
+
+koala@davidemagni.com
+www.davidemagni.com
+Skype: magneto538
+Twitter: magneto538
+
+}  
+
+SET_CONDITION(ENABLE_DEBUG)
+
+import "Koala/Koala.ksp"
+
+on init
+	activate_logger("/Volumes/Data/Davide/Desktop/Log.nka")
+	Koala.init
+	create_instrument(540, "", "", "Koala v2.0.0 - TEMPLATE SCRIPT")
+
+end on 
+
+on persistence_changed 
+	DEBUG.on_persistence_changed
+
+	{Your script here}
+
+end on
+
+on listener 
+	DEBUG.on_listener
+
+	{Your script here}
+
+end on
+
+on note 
+	DEBUG.on_note
+
+	{Your script here}
+
+	DEBUG.groups_monitor
+end on
+
+on release 
+	DEBUG.on_release
+
+	{Your script here}
+
+end on
+
+on controller 
+	DEBUG.on_controller
+
+	{Your script here}
+
+end on
+
+on pgs_changed
+	DEBUG.on_pgs_changed
+
+	{Your script here}
+
+end on
+
+on poly_at
+	DEBUG.on_poly_at
+
+	{Your script here}
+
+end on 
+
+on rpn 
+	DEBUG.on_rpn_nrpn
+
+	{Your script here}
+
+end on
+
+on async_complete
+	DEBUG.on_async_complete
+
+	{Your script here}
+
+end on
+
+on nrpn 
+	DEBUG.on_rpn_nrpn
+
+	{Your script here}
+
+end on

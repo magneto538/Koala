@@ -1,7 +1,0 @@
-<snippet>
-	<content><![CDATA[
-message_3(${1:a}, ${2:b}, ${3:c})
-]]></content>
-	<tabTrigger>message_3</tabTrigger>
-	<scope>source.ksp</scope>
-</snippet>

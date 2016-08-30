@@ -1,7 +1,0 @@
-<snippet>
-	<content><![CDATA[
-group_fx(${1:fx_type}, ${2:slot}, ${3:group})
-]]></content>
-	<tabTrigger>group_fx</tabTrigger>
-	<scope>source.ksp</scope>
-</snippet>

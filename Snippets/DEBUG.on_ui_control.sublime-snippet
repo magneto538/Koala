@@ -1,7 +1,0 @@
-<snippet>
-	<content><![CDATA[
-DEBUG.on_ui_control(${1:name})
-]]></content>
-	<tabTrigger>DEBUG.on_ui_control</tabTrigger>
-	<scope>source.ksp</scope>
-</snippet>

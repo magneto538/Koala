@@ -1,7 +1,0 @@
-<snippet>
-	<content><![CDATA[
-copy(${1:source_arr}, ${2:target_arr}, ${3:mode})
-]]></content>
-	<tabTrigger>copy</tabTrigger>
-	<scope>source.ksp</scope>
-</snippet>

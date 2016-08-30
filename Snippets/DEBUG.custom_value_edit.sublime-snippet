@@ -1,7 +1,0 @@
-<snippet>
-	<content><![CDATA[
-DEBUG.custom_value_edit(${1:n}, mi${1:n}, ${3:max}, ${4:line_1}, ${5:line_2}, ${6:line_3})
-]]></content>
-	<tabTrigger>DEBUG.custom_value_edit</tabTrigger>
-	<scope>source.ksp</scope>
-</snippet>

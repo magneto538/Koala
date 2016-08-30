@@ -1,7 +1,0 @@
-<snippet>
-	<content><![CDATA[
-purge_group_folder(${1:folder_name}, ${2:mode})
-]]></content>
-	<tabTrigger>purge_group_folder</tabTrigger>
-	<scope>source.ksp</scope>
-</snippet>

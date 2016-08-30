@@ -1,7 +1,0 @@
-<snippet>
-	<content><![CDATA[
-get_family_values(${1:fam}, ${2:array})
-]]></content>
-	<tabTrigger>get_family_values</tabTrigger>
-	<scope>source.ksp</scope>
-</snippet>

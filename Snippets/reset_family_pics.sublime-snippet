@@ -1,7 +1,0 @@
-<snippet>
-	<content><![CDATA[
-reset_family_pics(${1:fam})
-]]></content>
-	<tabTrigger>reset_family_pics</tabTrigger>
-	<scope>source.ksp</scope>
-</snippet>
