@@ -67,14 +67,6 @@ macro DEBUG.custom_value_edit(#n#, #min#, #max#, #line_1#, #line_2#, #line_3#)
 	END_USE_CODE
 end macro
 
-macro DEBUG.show_value(lbl_idx, #var#)
-	USE_CODE_IF(ENABLE_DEBUG)
-		set_control_par(DEBUG.var_name_ids[lbl_idx - 1], CONTROL_PAR_FONT_TYPE, CONSOLE.YELLOW)
-		set_control_par(DEBUG.var_name_ids[lbl_idx - 1], CONTROL_PAR_TEXT_ALIGNMENT, RIGHT)	
-		set_control_par_str(DEBUG.var_name_ids[lbl_idx - 1], CONTROL_PAR_TEXT, "#var#")
-		set_control_par_str(DEBUG.var_value_ids[lbl_idx - 1], CONTROL_PAR_TEXT, #var#)
-	END_USE_CODE
-end macro
 
 {PRIVATE}
 
