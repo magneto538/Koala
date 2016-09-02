@@ -315,3 +315,6 @@ function DEBUG.add_log(text)
 
 	END_USE_CODE
 end function
+
+macro empty {needed as placeholder for unused arguments in functions}
+end macro

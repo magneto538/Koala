@@ -210,5 +210,3 @@ macro DEBUG.page_button(#name#)
 	END_USE_CODE
 end macro
 
-macro empty {needed as placeholder for unused arguments in functions}
-end macro
