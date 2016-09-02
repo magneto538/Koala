@@ -44,7 +44,7 @@ SET_CONDITION(ENABLE_DEBUG)
 import "Koala/Koala.ksp"
 
 on init
-	activate_logger("/Volumes/Data/Davide/Desktop/Log.nka")
+	activate_logger("/path_to_log_file/log.nka")
 	Koala.init
 	create_instrument(540, "", "", "Koala v2.0.0 - TEMPLATE SCRIPT")
 

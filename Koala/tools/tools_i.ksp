@@ -61,4 +61,11 @@ read_persistent_var(TIMES_STARTED)
 inc(TIMES_STARTED)
 make_persistent(TIMES_STARTED)
 
+{Timer data}
+declare KSP_MSECONDS := 0
+declare KSP_SECONDS := 0
+declare KSP_MINUTES := 0
+declare KSP_HOURS := 0
+declare @KSP_CLOCK
 
+declare timer_timebase

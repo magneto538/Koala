@@ -38,8 +38,6 @@ Twitter: magneto538
 {Create a Group folder}
 macro create_group_folder(#folder_name#)
 
-	inc(GRP.folder_ids)
-
 	declare #folder_name# := GRP.folder_ids
 	declare #folder_name#_groups[MAX_GROUPS] := (_EOA)
 	declare #folder_name#_count := 0
@@ -48,7 +46,15 @@ macro create_group_folder(#folder_name#)
 		add_menu_item(DEBUG.groups_folder, "#folder_name#", GRP.folder_ids)
 	END_USE_CODE
 
+	inc(GRP.folder_ids)
+
 end macro
+
+function get_group_folder(group_id) -> return
+
+	return := GRP.folders[group_id]
+
+end function
 
 {Add a group to folder by id or by name}
 macro add_group_id(#folder_name#, group_id)

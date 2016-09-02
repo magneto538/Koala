@@ -77,7 +77,7 @@ function DEBUG.add_log_simple(text)
 	USE_CODE_IF(ENABLE_DEBUG)
 
 		declare @txt
-		@txt := timer(KSP_TIMER)
+		@txt := timer()
 		@txt := @txt & " --- "
 
 		@txt := @txt & text

@@ -206,28 +206,14 @@ end function
 
 
 {Get the Engine Timer}
-function timer(source) -> return
+function timer() -> return
 
-	declare KSP_MSECONDS := 0
-	declare KSP_SECONDS := 0
-	declare KSP_MINUTES := 0
-	declare KSP_HOURS := 0
-	declare @KSP_CLOCK
+	timer_timebase := KSP_TIMER / 1000
 
-	declare timebase
-
-	if ( source = ENGINE_UPTIME )
-		timebase := ENGINE_UPTIME
-	end if
-
-	if ( source = KSP_TIMER )
-		timebase := KSP_TIMER / 1000
-	end if
-
-	KSP_MSECONDS := ( timebase ) mod 1000
-	KSP_SECONDS := ( timebase / 1000 ) mod 60
-	KSP_MINUTES := ( timebase / 60000 ) mod 60
-	KSP_HOURS := ( timebase / 3600000 ) mod 60
+	KSP_MSECONDS := ( timer_timebase ) mod 1000
+	KSP_SECONDS := ( timer_timebase / 1000 ) mod 60
+	KSP_MINUTES := ( timer_timebase / 60000 ) mod 60
+	KSP_HOURS := ( timer_timebase / 3600000 ) mod 60
 
 	if (KSP_HOURS < 10)
 		@KSP_CLOCK := "0" & KSP_HOURS & ":"

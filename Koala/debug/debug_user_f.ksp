@@ -308,7 +308,7 @@ function DEBUG.add_log(text)
 	USE_CODE_IF(ENABLE_DEBUG)
 
 		declare @DEBUG.timer
-		@DEBUG.timer := timer(KSP_TIMER)
+		@DEBUG.timer := timer()
 
 		add_text_line(DEBUG.logger_window, @DEBUG.timer & " --- " & !DEBUG.logger_cb_types[NI_CALLBACK_TYPE] & " " & text)
 		print(@DEBUG.timer & " --- " & !DEBUG.logger_cb_types[NI_CALLBACK_TYPE] & " " & text)
