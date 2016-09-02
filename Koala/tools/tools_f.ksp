@@ -196,6 +196,10 @@ function search_ctrl_number(ui_id) -> return
 	return := search(_UI_IDS, ui_id)
 end function
 
+function search_ctrl_id(ctrl_num) -> return
+	return := _UI_IDS[ctrl_num]
+end function
+
 
 {Load all idxs of array with the same value}
 function set_array(array, value)
