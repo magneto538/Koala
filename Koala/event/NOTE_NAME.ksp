@@ -42,36 +42,36 @@ Twitter: magneto538
 _j := 0
 _i := -2
 while (_j < 127)
-	_k := 0
-	while (_k < 12)
-		select _k
-			case 0
-				!NOTE_NAME[_j] := "C" & _i
-			case 1
-				!NOTE_NAME[_j] := "C#" & _i
-			case 2
-				!NOTE_NAME[_j] := "D" & _i
-			case 3
-				!NOTE_NAME[_j] := "D#" & _i
-			case 4
-				!NOTE_NAME[_j] := "E" & _i
-			case 5
-				!NOTE_NAME[_j] := "F" & _i
-			case 6
-				!NOTE_NAME[_j] := "F#" & _i
-			case 7
-				!NOTE_NAME[_j] := "G" & _i
-			case 8
-				!NOTE_NAME[_j] := "G#" & _i
-			case 9
-				!NOTE_NAME[_j] := "A" & _i
-			case 10
-				!NOTE_NAME[_j] := "A#" & _i
-			case 11
-				!NOTE_NAME[_j] := "B" & _i
-		end select
-		inc(_k)
-		inc(_j)
-	end while
-	inc(_i)
+	select _j mod 12
+		case 0
+			!NOTE_NAME[_j] := "C" & _i
+		case 1
+			!NOTE_NAME[_j] := "C#" & _i
+		case 2
+			!NOTE_NAME[_j] := "D" & _i
+		case 3
+			!NOTE_NAME[_j] := "D#" & _i
+		case 4
+			!NOTE_NAME[_j] := "E" & _i
+		case 5
+			!NOTE_NAME[_j] := "F" & _i
+		case 6
+			!NOTE_NAME[_j] := "F#" & _i
+		case 7
+			!NOTE_NAME[_j] := "G" & _i
+		case 8
+			!NOTE_NAME[_j] := "G#" & _i
+		case 9
+			!NOTE_NAME[_j] := "A" & _i
+		case 10
+			!NOTE_NAME[_j] := "A#" & _i
+		case 11
+			!NOTE_NAME[_j] := "B" & _i
+	end select
+	inc(_j)
+
+	if (_j mod 12 = 0)
+		inc(_i)
+	end if
+
 end while
