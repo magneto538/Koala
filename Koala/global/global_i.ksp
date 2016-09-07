@@ -43,7 +43,7 @@ Twitter: magneto538
 
 	declare const MAX_ARRAY_SIZE := 32768
 	declare const MAX_GROUPS := 4096
-	declare const _MAX_KSP_VALUE := 2147483647 {This is the maximum value assignable to a variable in Kontakt. 
+	declare const _MAX_KSP_VALUE := 2147483646 {This is the maximum value assignable to a variable in Kontakt. 
 												This is also the biggest number for 32 bit applications. 
 												The next value, 2147483648, will be displayed as -2147483648, 
 												because there are no more bits to represent it.}
