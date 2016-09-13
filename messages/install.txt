@@ -1,0 +1,13 @@
+Thanks for downloading Koala!
+
+Koala is an advanced scripting library for Kontakt KSP developers. 
+The Koala project is open source and covered by MIT licensing system.
+
+See how to install and use Koala on the official Wiki here: https://github.com/magneto538/Koala/wiki
+
+If you have any trouble or suggestion, please open an Issue at https://github.com/magneto538/Koala.
+
+If you want to collaborate with the Koala project, please drop an email at koala@davidemagni.com.
+
+Happy scripting!
+magneto538

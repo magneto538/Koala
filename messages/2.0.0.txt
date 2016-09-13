@@ -1,0 +1,9 @@
+* Added the Logger page to the Debugger
+* Added the Groups page to the Debugger
+* Added DEBUG. functions for all the callbacks
+* Added new groups functions
+* Added new UI controls functions
+* Added integration with SublimeKSP by Sam Windell
+* Fixed a couple constants with wrong values
+* Fixed NOTE_NAMES[] loading
+* Minor bugfixes
