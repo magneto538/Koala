@@ -1,3 +1,5 @@
+KOALA v2.0.0 - CHANGELOG
+
 * Added the Logger page to the Debugger
 * Added the Groups page to the Debugger
 * Added DEBUG. functions for all the callbacks
