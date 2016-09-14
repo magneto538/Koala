@@ -145,3 +145,8 @@ function engine_par_all_grp(engine_par, value, slot)
 
 end function
 
+function group_allow_state(group) -> return 
+
+	return := get_event_par_arr(EVENT_ID, EVENT_PAR_ALLOW_GROUP, group)
+
+end function

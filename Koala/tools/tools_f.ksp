@@ -203,7 +203,7 @@ end function
 
 {Load all idxs of array with the same value}
 function set_array(array, value)
-	for _j := 0 to num_elements(array)
+	for _j := 0 to num_elements(array)-1
 		array[_j] := value
 	end for
 end function
