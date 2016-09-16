@@ -72,7 +72,7 @@ function DEBUG.on_note
 
 			@txt := "Key " & EVENT_NOTE & " (" & !NOTE_NAME[EVENT_NOTE] & ") " & "pressed. Velocity: " & EVENT_VELOCITY & ". Slot: " & !DEBUG.source_txt[get_event_par(EVENT_ID, EVENT_PAR_SOURCE)+1] & ". MIDI Channel: " & MIDI_CHANNEL
 
-			DEBUG.add_log( @txt )
+			DEBUG.add_log_p( @txt )
 
 		end if 
 
@@ -97,7 +97,7 @@ function DEBUG.on_release
 
 			@txt := "Key " & EVENT_NOTE & " (" & !NOTE_NAME[EVENT_NOTE] & ") " & "released. Slot: " & !DEBUG.source_txt[get_event_par(EVENT_ID, EVENT_PAR_SOURCE)+1] & ". MIDI Channel: " & MIDI_CHANNEL
 
-			DEBUG.add_log( @txt )
+			DEBUG.add_log_p( @txt )
 			
 		end if 
 
@@ -122,7 +122,7 @@ function DEBUG.groups_monitor
 		DEBUG.set_ctrl_text(get_ui_id(DEBUG.groups_affected), num_elements(GROUPS_AFFECTED))
 
 		if ( DEBUG.logger_start = 1 and DEBUG.logger_show_grp_mon = 1 ) 
-			DEBUG.add_log( "Groups affected: " & num_elements(GROUPS_AFFECTED) & ". Voices playing on current instrument: " & PLAYED_VOICES_INST )
+			DEBUG.add_log_p( "Groups affected: " & num_elements(GROUPS_AFFECTED) & ". Voices playing on current instrument: " & PLAYED_VOICES_INST )
 		end if
 
 	END_USE_CODE
@@ -186,7 +186,7 @@ function DEBUG.on_controller
 		end if
 
 		if ( DEBUG.logger_start = 1 and DEBUG.logger_show_ccb = 1 )
-			DEBUG.add_log( @txt )
+			DEBUG.add_log_p( @txt )
 		end if 
 		
 	END_USE_CODE
@@ -199,9 +199,9 @@ function DEBUG.on_init
 
 		DEBUG.start_time := KSP_TIMER
 
-		DEBUG.add_log( "Script applied. Instrument loaded " & TIMES_STARTED & " time(s). Engine uptime (ms): " & ENGINE_UPTIME )
-		DEBUG.add_log( "Koala v" & @KOALA_VERSION & " is being loaded..." )		
-		DEBUG.add_log( "The Instrument is being loaded..." )		
+		DEBUG.add_log_p( "Script applied. Instrument loaded " & TIMES_STARTED & " time(s). Engine uptime (ms): " & ENGINE_UPTIME )
+		DEBUG.add_log_p( "Koala v" & @KOALA_VERSION & " is being loaded..." )		
+		DEBUG.add_log_p( "The Instrument is being loaded..." )		
 
 	END_USE_CODE
 end function
@@ -209,7 +209,7 @@ end function
 function DEBUG.on_persistence_changed
 	USE_CODE_IF(ENABLE_DEBUG)
 
-		DEBUG.add_log( "'on init' callback was successfully executed in " & KSP_TIMER - DEBUG.start_time & " microseconds" )
+		DEBUG.add_log_p( "'on init' callback was successfully executed in " & KSP_TIMER - DEBUG.start_time & " microseconds" )
 
 	END_USE_CODE
 end function
@@ -246,8 +246,8 @@ function DEBUG.on_listener
 
 			end select
 
-			DEBUG.add_log( @DEBUG.txt )
-			DEBUG.add_log( "Host BPM: " & ( ms_to_ticks(60000000)/960 ) & ". Host time signature: " & SIGNATURE_NUM & "/" & SIGNATURE_DENOM )
+			DEBUG.add_log_p( @DEBUG.txt )
+			DEBUG.add_log_p( "Host BPM: " & ( ms_to_ticks(60000000)/960 ) & ". Host time signature: " & SIGNATURE_NUM & "/" & SIGNATURE_DENOM )
 
 			DEBUG.host_transp_status := NI_TRANSPORT_RUNNING
 
@@ -260,7 +260,7 @@ function DEBUG.on_pgs_changed
 	USE_CODE_IF(ENABLE_DEBUG)
 
 		if ( DEBUG.logger_start = 1 and DEBUG.logger_show_pgcb = 1 and DEBUG.logger_show_lcb = 1 )
-			DEBUG.add_log( "Callback executed" )
+			DEBUG.add_log_p( "Callback executed" )
 		end if
 
 	END_USE_CODE
@@ -270,7 +270,7 @@ function DEBUG.on_poly_at
 	USE_CODE_IF(ENABLE_DEBUG)
 
 		if ( DEBUG.logger_start = 1 and DEBUG.logger_show_pacb = 1 and DEBUG.logger_show_lcb = 1 )
-			DEBUG.add_log( "Callback triggered by Key " & POLY_AT_NUM & " (" & !NOTE_NAME[POLY_AT_NUM] & "). Value: " & POLY_AT[POLY_AT_NUM] & ". MIDI Channel: " & MIDI_CHANNEL)
+			DEBUG.add_log_p( "Callback triggered by Key " & POLY_AT_NUM & " (" & !NOTE_NAME[POLY_AT_NUM] & "). Value: " & POLY_AT[POLY_AT_NUM] & ". MIDI Channel: " & MIDI_CHANNEL)
 		end if
 
 	END_USE_CODE
@@ -280,7 +280,7 @@ function DEBUG.on_rpn_nrpn
 	USE_CODE_IF(ENABLE_DEBUG)
 
 		if ( DEBUG.logger_start = 1 and DEBUG.logger_show_rncb = 1 and DEBUG.logger_show_lcb = 1 )
-			DEBUG.add_log( "Parameter number: " & RPN_ADDRESS & " . Parameter value: " & RPN_VALUE & ". MIDI Channel: " & MIDI_CHANNEL)
+			DEBUG.add_log_p( "Parameter number: " & RPN_ADDRESS & " . Parameter value: " & RPN_VALUE & ". MIDI Channel: " & MIDI_CHANNEL)
 		end if
 
 	END_USE_CODE
@@ -297,7 +297,7 @@ function DEBUG.on_async_complete
 
 		if ( DEBUG.logger_start = 1 and DEBUG.logger_show_acb = 1 and DEBUG.logger_show_lcb = 1 and NI_ASYNC_ID # LOGGER_ASYNC_ID)
 
-			DEBUG.add_log( "Callback triggered by ID " & NI_ASYNC_ID & ". Exit status: " & NI_ASYNC_EXIT_STATUS )
+			DEBUG.add_log_p( "Callback triggered by ID " & NI_ASYNC_ID & ". Exit status: " & NI_ASYNC_EXIT_STATUS )
 
 		end if		
 
@@ -310,8 +310,10 @@ function DEBUG.add_log(text)
 		declare @DEBUG.timer
 		@DEBUG.timer := timer()
 
-		add_text_line(DEBUG.logger_window, @DEBUG.timer & " --- " & !DEBUG.logger_cb_types[NI_CALLBACK_TYPE] & " " & text)
-		print(@DEBUG.timer & " --- " & !DEBUG.logger_cb_types[NI_CALLBACK_TYPE] & " " & text)
+		if ( DEBUG.logger_start = 1 and DEBUG.logger_show_user = 1)
+			add_text_line(DEBUG.logger_window, @DEBUG.timer & " --- " &  "[USER - " & !DEBUG.logger_cb_types[NI_CALLBACK_TYPE] & "] " & text)
+			print(@DEBUG.timer & " --- " & "[USER - " & !DEBUG.logger_cb_types[NI_CALLBACK_TYPE] & "] " & text)
+		end if
 
 	END_USE_CODE
 end function

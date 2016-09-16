@@ -149,37 +149,25 @@ DEBUG.button(logger_show_pgcb, DEBUG.LOG_FAMILY, DEBUG.pos_x(1), DEBUG.pos_y(5),
 
 DEBUG.button(logger_show_rncb, DEBUG.LOG_FAMILY, DEBUG.pos_x(2), DEBUG.pos_y(1), 0, "RPN/NRPN", PERSISTENT)
 DEBUG.button(logger_show_acb, DEBUG.LOG_FAMILY, DEBUG.pos_x(2), DEBUG.pos_y(2), 0, "ASYNC", PERSISTENT)
+DEBUG.button(logger_show_user, DEBUG.LOG_FAMILY, DEBUG.pos_x(2), DEBUG.pos_y(3), 0, "USER", PERSISTENT)
 
-DEBUG.logger_show_ucb := 1
-DEBUG.logger_show_ncb := 1
-DEBUG.logger_show_rcb := 1
-DEBUG.logger_show_ccb := 1
-
-DEBUG.logger_show_lcb := 1
-DEBUG.logger_show_grp_mon := 1
-DEBUG.logger_show_pcb := 1
-DEBUG.logger_show_pgcb := 1
-
-DEBUG.logger_show_pacb := 1
-DEBUG.logger_show_rncb := 1
-DEBUG.logger_show_acb := 1
 
 declare !DEBUG.logger_cb_types[15]
-!DEBUG.logger_cb_types[0] := "[<undefined>]"
-!DEBUG.logger_cb_types[NI_CB_TYPE_NOTE] := "[NOTE]"
-!DEBUG.logger_cb_types[NI_CB_TYPE_RELEASE] := "[RELEASE]"
-!DEBUG.logger_cb_types[NI_CB_TYPE_CONTROLLER] := "[CONTROLLER]"
-!DEBUG.logger_cb_types[NI_CB_TYPE_POLY_AT] := "[POLY_AT]"
-!DEBUG.logger_cb_types[NI_CB_TYPE_INIT] := "[INIT]"
-!DEBUG.logger_cb_types[NI_CB_TYPE_UI_CONTROL] := "[UI_CONTROL]"
-!DEBUG.logger_cb_types[NI_CB_TYPE_UI_UPDATE] := "[UI_UPDATE]"
-!DEBUG.logger_cb_types[NI_CB_TYPE_PGS] := "[PGS]"
-!DEBUG.logger_cb_types[9] := "[<undefined>]"
-!DEBUG.logger_cb_types[NI_CB_TYPE_RPN] := "[RPN]"
-!DEBUG.logger_cb_types[NI_CB_TYPE_NRPN] := "[NRPN]"
-!DEBUG.logger_cb_types[NI_CB_TYPE_LISTENER] := "[LISTENER]"
-!DEBUG.logger_cb_types[13] := "[ASYNC]"
-!DEBUG.logger_cb_types[NI_CB_TYPE_PERSISTENCE_CHANGED] := "[PERS_CHANGED]"
+!DEBUG.logger_cb_types[0] := "<undefined>"
+!DEBUG.logger_cb_types[NI_CB_TYPE_NOTE] := "NOTE"
+!DEBUG.logger_cb_types[NI_CB_TYPE_RELEASE] := "RELEASE"
+!DEBUG.logger_cb_types[NI_CB_TYPE_CONTROLLER] := "CONTROLLER"
+!DEBUG.logger_cb_types[NI_CB_TYPE_POLY_AT] := "POLY_AT"
+!DEBUG.logger_cb_types[NI_CB_TYPE_INIT] := "INIT"
+!DEBUG.logger_cb_types[NI_CB_TYPE_UI_CONTROL] := "UI_CONTROL"
+!DEBUG.logger_cb_types[NI_CB_TYPE_UI_UPDATE] := "UI_UPDATE"
+!DEBUG.logger_cb_types[NI_CB_TYPE_PGS] := "PGS"
+!DEBUG.logger_cb_types[9] := "<undefined>"
+!DEBUG.logger_cb_types[NI_CB_TYPE_RPN] := "RPN"
+!DEBUG.logger_cb_types[NI_CB_TYPE_NRPN] := "NRPN"
+!DEBUG.logger_cb_types[NI_CB_TYPE_LISTENER] := "LISTENER"
+!DEBUG.logger_cb_types[13] := "ASYNC"
+!DEBUG.logger_cb_types[NI_CB_TYPE_PERSISTENCE_CHANGED] := "PERS_CHANGED"
 
 {UI data}
 DEBUG.label(ui_family_name_lbl, DEBUG.UI_FAMILY, DEBUG.pos_x(0), DEBUG.pos_y(1), "Family:", CONSOLE.WHITE, LEFT)
