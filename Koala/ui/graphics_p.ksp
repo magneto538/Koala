@@ -91,3 +91,8 @@ function _update_init_value(ui_id, array, new_value)
 	end if
 end function
 
+function _store_ctrl_bounds(min, max)
+	_UI_CTRL_MIN[_UI_COUNT] := min
+	_UI_CTRL_MAX[_UI_COUNT] := max
+end function
+

@@ -184,6 +184,15 @@ function get_def_picture(ui_id) -> return
 	return := !_UI_PICTURE[search_ctrl_number(ui_id)]
 end function
 
+function get_ctrl_min(ui_id) -> return
+	return := _UI_CTRL_MIN[search_ctrl_number(ui_id)]
+end function
+
+function get_ctrl_max(ui_id) -> return
+	return := _UI_CTRL_MAX[search_ctrl_number(ui_id)]
+end function
+
+
 function get_type(ui_id) -> return
 	return := _UI_TYPE[search_ctrl_number(ui_id)]
 end function
