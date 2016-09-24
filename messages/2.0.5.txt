@@ -1,0 +1,29 @@
+KOALA v2.0.5 - CHANGELOG
+* Added get_ctrl_family, which allows to retrieve the UI Ctrl Family
+
+KOALA v2.0.4 - CHANGELOG
+* Added get_ctrl_min and get_ctrl_max, which return the minimum and maximum value of a specific UI control
+
+KOALA v2.0.3 - CHANGELOG
+* Updated change log messages. No other modifications were made. 
+
+KOALA v2.0.2 - CHANGELOG
+* The Logger now distinguishes between system and user logs. Logs added using DEBUG.add_log are now displayed with the label ‘USER’.
+* User logs can now be shown/hidden just like the others.
+* Added Persistency to all Logger categories.
+
+KOALA v2.0.1 - CHANGELOG
+* Fixed a bug in set_array, which caused an Out Of Bounds script warning
+* Added group_allow_state, which returns the current allow state of a Group
+
+KOALA v2.0.0 - CHANGELOG
+
+* Added the Logger page to the Debugger
+* Added the Groups page to the Debugger
+* Added DEBUG. functions for all the callbacks
+* Added new groups functions
+* Added new UI controls functions
+* Added integration with SublimeKSP by Sam Windell
+* Fixed a couple constants with wrong values
+* Fixed NOTE_NAMES[] loading
+* Minor bugfixes
