@@ -230,5 +230,5 @@ function get_picture_state(ui_id) -> return
 end function
 
 function get_ctrl_family(ui_id) -> return
-	return := UI_FAMILIES[search_ctrl_number(ui_id)]
+	return := _UI_FAMILIES[search_ctrl_number(ui_id)]
 end function
