@@ -150,3 +150,16 @@ function group_allow_state(group) -> return
 	return := get_event_par_arr(EVENT_ID, EVENT_PAR_ALLOW_GROUP, group)
 
 end function
+
+function group_folder_allow_state(folder_name, event, allow_state)
+	_j := 0
+	while (_j < NUM_GROUPS)
+
+		if (GRP.folders[_j] = folder_name)
+			set_event_par_arr(event, EVENT_PAR_ALLOW_GROUP, allow_state, _j)
+		end if
+
+		inc(_j)
+
+	end while
+end function
