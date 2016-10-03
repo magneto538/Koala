@@ -62,6 +62,8 @@ end function
 function resize_ctrl(ui_id, w, h)
 	set_control_par(ui_id, CONTROL_PAR_WIDTH, w)
 	set_control_par(ui_id, CONTROL_PAR_HEIGHT, h)
+	_update_init_value(ui_id, _UI_WIDTH, w)
+	_update_init_value(ui_id, _UI_HEIGHT, h)	
 end function
 
 function set_pos(ui_id, x, y)
@@ -110,6 +112,8 @@ function set_picture_state(ui_id, value)
 	set_control_par(ui_id, CONTROL_PAR_PICTURE_STATE, value)
 	_update_init_value(ui_id, _UI_PICTURE_STATE, value)
 end function 
+
+
 
 {Reset UI Controls functions}
 function reset_pos(ui_id)
