@@ -78,3 +78,21 @@ end function
 function group_fx_par(par, value, slot, group)
 	set_engine_par(par, value, group, slot, -1)
 end function
+
+
+{Get engine paerameters for each FX type}
+function get_send_fx_par(par, slot) -> return
+	return := get_engine_par(par, -1, slot, 0)
+end function
+
+function get_bus_fx_par(par, slot, bus) -> return
+	return := get_engine_par(par, -1, slot, bus + NI_BUS_OFFSET)
+end function
+
+function get_insert_fx_par(par, slot) -> return
+	return := get_engine_par(par, -1, slot, 1)
+end function
+
+function get_group_fx_par(par, slot, group) -> return
+	return := get_engine_par(par, group, slot, -1)
+end function
