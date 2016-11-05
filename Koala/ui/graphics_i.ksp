@@ -58,7 +58,7 @@ declare const TEXT_EDITS := 13
 {UI fonts}
 
 const CONSOLE
-	WHITE := 0
+	WHITE := 100
 	LIGHTGREY := 10
 	GREY1 := 3
 	GREY2 := 11
