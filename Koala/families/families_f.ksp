@@ -46,6 +46,10 @@ macro create_family(#fam#, id)
 	END_USE_CODE
 end macro
 
+function assign_family(ui_id, fam)
+	_UI_FAMILIES[ search_ctrl_number(ui_id) ] := fam
+end function
+
 function shift_family(fam, offset_x, offset_y)
 	if (fam = ALL_FAMILIES)
 		_j := 1
