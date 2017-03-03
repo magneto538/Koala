@@ -40,8 +40,8 @@ Twitter: magneto538
 }   
 
 function _family_on_grid_math(fam, type, start_x, start_y, col_w, row_h, ctrl_per_row)
-	set_control_par(_UI_IDS[_j], CONTROL_PAR_POS_X, start_x + col_w*_k)
-	set_control_par(_UI_IDS[_j], CONTROL_PAR_POS_Y, start_y + row_h*_i)
+	_UI_IDS[_j] -> pos_x := start_x + col_w*_k
+	_UI_IDS[_j] -> pos_y := start_y + row_h*_i
 	_UI_POS_X[_j] := start_x + col_w*_k
 	_UI_POS_Y[_j] := start_y + row_h*_i
 	_update_init_value(_UI_IDS[_j], _UI_POS_X, _UI_POS_X[_j])

@@ -37,13 +37,13 @@ www.davidemagni.com
 Skype: magneto538
 Twitter: magneto538
 
-}  
+}
  
-{Look for the greater/smaller value inside an array}
+// Look for the greater/smaller value inside an array
 function max_value(array) -> return
 	return := array[0]
 	for _j := 1 to num_elements(array)-1
-		if (return <= array[_j])
+		if return <= array[_j]
 			return := array[_j]
 		end if
 	end for
@@ -52,29 +52,26 @@ end function
 function min_value(array) -> return
 	return := array[0]
 	for _j := 1 to num_elements(array)-1
-		if (return >= array[_j])
+		if return >= array[_j]
 			return := array[_j]
 		end if
 	end for
 end function
 
 
-{Find how many of a specified value are present inside an array}
+// Find how many of a specified value are present inside an array
 function count_entries(array, value) -> return
 	declare entries_count
-
 	entries_count := 0
 	for _j := 0 to num_elements(array)-1
-		if (array[_j] = value)
+		if array[_j] = value
 			inc(entries_count)
 		end if
 	end for
-
 	return := entries_count
-
 end function
 
-{Copy an array into another. 4 modes: NORMAL, INVERTED, ASC_SORT, DESC_SORT}
+// Copy an array into another. 4 modes: NORMAL, INVERTED, ASC_SORT, DESC_SORT
 function copy(source_arr, target_arr, mode)
 	select mode 
 		case NORMAL
@@ -104,57 +101,46 @@ function copy(source_arr, target_arr, mode)
 	end select
 end function
 
-{Reverse the order of an array}
+// Reverse the order of an array
 function reverse(arr)
 	declare temp
-
 	for _j := 0 to ((num_elements(arr) - 1) / 2)
 		temp := arr[_j]
 		arr[_j] := arr[ (num_elements(arr) - 1) - _j ]
 		arr[ (num_elements(arr) - 1) - _j ] := temp
 	end for	
-
 end function
 
 
-{Concatenate two arrays inside a third array}
-
+// Concatenate two arrays inside a third array
 function concat(source_arr_1, source_arr_2, target_arr, mode)
 	select mode
-		case SEQUENTIAL {arr1 first, then arr2}
+		case SEQUENTIAL // arr1 first, then arr2
 			for _j := 0 to num_elements(source_arr_1)-1
 				target_arr[_j] := source_arr_1[_j]
 			end for
-
 			for _j := 0 to num_elements(source_arr_2)-1
 				target_arr[_j + num_elements(source_arr_1)] := source_arr_2[_j]
 			end for
 
-		case MIXED {arr1[0], arr2[0], arr1[1], arr2[1], ...}
-
+		case MIXED // arr1[0], arr2[0], arr1[1], arr2[1], ...
 			_j := 0
 			_k := 0
-			while (_j < num_elements(target_arr))
-
-				if (_k < num_elements(source_arr_1))
+			while _j < num_elements(target_arr)
+				if _k < num_elements(source_arr_1)
 					target_arr[_j] := source_arr_1[_k]
 					inc(_j)					
 				end if
-
-				if (_k < num_elements(source_arr_2))
+				if _k < num_elements(source_arr_2)
 					target_arr[_j] := source_arr_2[_k]
 					inc(_j)										
 				end if
-
 				inc(_k)
-
 			end while
-
 	end select
 end function
 
-{Copy a matrix into an array (or another matrix) by line. 4 modes: NORMAL, INVERTED, ASC_SORT, DESC_SORT}
-
+// Copy a matrix into an array (or another matrix) by line. 4 modes: NORMAL, INVERTED, ASC_SORT, DESC_SORT
 function copy_matrix(source_mtx, target_arr, source_cols, row_to_copy, mode)
 	select mode 
 		case NORMAL
@@ -190,8 +176,7 @@ function copy_matrix(source_mtx, target_arr, source_cols, row_to_copy, mode)
 	end select
 end function
 
-
-{Get ctrl number}
+// Get ctrl number
 function search_ctrl_number(ui_id) -> return
 	return := search(_UI_IDS, ui_id)
 end function
@@ -200,38 +185,39 @@ function search_ctrl_id(ctrl_num) -> return
 	return := _UI_IDS[ctrl_num]
 end function
 
-
-{Load all idxs of array with the same value}
+// Load all idxs of array with the same value
 function set_array(array, value)
 	for _j := 0 to num_elements(array)-1
 		array[_j] := value
 	end for
 end function
 
+// Get the Engine Timer
+function set_timer()
+	declare KSP_MSECONDS
+	declare KSP_SECONDS
+	declare KSP_MINUTES
+	declare KSP_HOURS
+	declare @KSP_CLOCK
 
-{Get the Engine Timer}
-function timer() -> return
+	KSP_MSECONDS := ( KSP_TIMER / 1000 ) mod 1000
+	KSP_SECONDS := ( KSP_TIMER / 1000 / 1000 ) mod 60
+	KSP_MINUTES := ( KSP_TIMER / 1000 / 60000 ) mod 60
+	KSP_HOURS := ( KSP_TIMER / 1000 / 3600000 ) mod 60
 
-	timer_timebase := KSP_TIMER / 1000
-
-	KSP_MSECONDS := ( timer_timebase ) mod 1000
-	KSP_SECONDS := ( timer_timebase / 1000 ) mod 60
-	KSP_MINUTES := ( timer_timebase / 60000 ) mod 60
-	KSP_HOURS := ( timer_timebase / 3600000 ) mod 60
-
-	if (KSP_HOURS < 10)
+	if KSP_HOURS < 10
 		@KSP_CLOCK := "0" & KSP_HOURS & ":"
 	else 
 		@KSP_CLOCK := KSP_HOURS & ":"
 	end if
 
-	if (KSP_MINUTES < 10)
+	if KSP_MINUTES < 10
 		@KSP_CLOCK := @KSP_CLOCK & "0" & KSP_MINUTES & ":"
 	else 
 		@KSP_CLOCK := @KSP_CLOCK & KSP_MINUTES & ":"
 	end if
 
-	if (KSP_SECONDS < 10)
+	if KSP_SECONDS < 10
 		@KSP_CLOCK := @KSP_CLOCK & "0" & KSP_SECONDS & ":"
 	else 
 		@KSP_CLOCK := @KSP_CLOCK & KSP_SECONDS & ":"
@@ -246,13 +232,14 @@ function timer() -> return
 			@KSP_CLOCK := @KSP_CLOCK & KSP_MSECONDS
 	end select
 
-	return := @KSP_CLOCK
-
+	@timer := @KSP_CLOCK
 end function
 
-{Used to softly terminate any loop without using exit}
+// Used to softly terminate any loop without using exit
 function break(counter)
+	counter := _MAX_KSP_VALUE-1
+end function
 
-	counter := _MAX_KSP_VALUE
-
+function break_downto(counter)
+	counter := _MIN_KSP_VALUE-1
 end function

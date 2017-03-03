@@ -40,7 +40,7 @@ Twitter: magneto538
 }   
 
 function _copy_array_size_compare(source_arr, target_arr)
-	if (num_elements(source_arr) <= num_elements(target_arr))
+	if num_elements(source_arr) <= num_elements(target_arr)
 		_SMALLEST_ARR := num_elements(source_arr) - 1
 	else 
 		_SMALLEST_ARR := num_elements(target_arr) - 1
@@ -48,14 +48,14 @@ function _copy_array_size_compare(source_arr, target_arr)
 end function
 
 function _copy_matrix_size_compare(source_mtx, target_arr, source_cols, row_to_copy)
-	if (row_to_copy = ALL_ROWS)
-		if (num_elements(source_mtx) <= num_elements(target_arr))
+	if row_to_copy = ALL_ROWS
+		if num_elements(source_mtx) <= num_elements(target_arr)
 			_SMALLEST_ARR := num_elements(source_mtx) - 1
 		else 
 			_SMALLEST_ARR := num_elements(target_arr) - 1
 		end if
 	else 
-		if (source_cols <= num_elements(target_arr))
+		if source_cols <= num_elements(target_arr)
 			_SMALLEST_ARR := source_cols - 1
 		else 
 			_SMALLEST_ARR := num_elements(target_arr) - 1

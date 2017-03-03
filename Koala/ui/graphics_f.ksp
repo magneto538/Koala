@@ -1,5 +1,4 @@
 {
-
 ********* KOALA - AN ADVANCED SCRIPTING LIBRARY FOR KSP DEVELOPERS *********
 
 This file is part of Koala - An advanced scripting library for KSP developers.
@@ -39,26 +38,39 @@ Twitter: magneto538
 
 }   
 
-{UI initialization}
+// UI initialization
 function create_instrument(height, wallpaper, icon, title)
-
 	make_perfview	
-	set_control_par_str(INST_WALLPAPER_ID, CONTROL_PAR_PICTURE, wallpaper)
-	set_control_par_str(INST_ICON_ID, CONTROL_PAR_PICTURE, icon)
+
+	INST_WALLPAPER_ID -> picture := wallpaper 
+	INST_ICON_ID -> picture := icon 
+
+	INST_HEIGHT := height
+	message("")
 
 	USE_CODE_IF_NOT(ENABLE_DEBUG)
-		set_ui_height_px(height)
 	    set_script_title(title)
-	    message("")
+	    set_ui_height_px(height)
 	END_USE_CODE
 
-	USE_CODE_IF(ENABLE_DEBUG)		
-		set_ui_height_px(540)
+	USE_CODE_IF(ENABLE_DEBUG)
 	    set_script_title("### " & title)
+	    if height <= 540 
+    		set_ui_height_px(540)
+    	else 
+    		set_ui_height_px(height)
+	    end if
 	END_USE_CODE
 end function
 
-{UI Controls functions}
+function set_ui_data(width, hex_color)
+	INST_WIDTH := width 
+	INST_COLOR := hex_color
+	set_ui_width_px(width)
+	set_ui_color(hex_color)
+end function
+
+// UI Controls functions
 function resize_ctrl(ui_id, w, h)
 	set_control_par(ui_id, CONTROL_PAR_WIDTH, w)
 	set_control_par(ui_id, CONTROL_PAR_HEIGHT, h)
@@ -113,9 +125,63 @@ function set_picture_state(ui_id, value)
 	_update_init_value(ui_id, _UI_PICTURE_STATE, value)
 end function 
 
+function set_xy_automation_data(ui_id, auto_id, auto_name)
+	set_control_par_arr(ui_id, CONTROL_PAR_AUTOMATION_ID, auto_id, auto_id)
+	set_control_par_str_arr(ui_id, CONTROL_PAR_AUTOMATION_NAME, auto_name, auto_id)
+end function
+
+function set_automation_data(ui_id, auto_id, auto_name)
+	set_control_par(ui_id, CONTROL_PAR_AUTOMATION_ID, auto_id)
+	set_control_par_str(ui_id, CONTROL_PAR_AUTOMATION_NAME, auto_name)
+end function
+
+function set_cursor_value(name, cursor_nr, axis, value)
+	name[cursor_nr*2 + axis] := value
+end function
+
+// XY advanced stuff
+define _XY_TO_PAR(xy_name, axis, cursor_nr, range_min, range_max) := ( real_to_int( xy_name[cursor_nr*2 + axis] * int_to_real(range_max - range_min) ) + range_min )
+
+function xy_to_ctrl(xy_name, axis, cursor_nr, target_id, range_min, range_max)
+	if cursor_nr # -1
+		set_value(target_id, _XY_TO_PAR(xy_name, axis, cursor_nr, range_min, range_max) )
+	end if
+end function
+
+function xy_to_ep(xy_name, axis, cursor_nr, range_min, range_max, engine_par, group, slot, generic)
+	if cursor_nr # -1
+		set_engine_par(engine_par, _XY_TO_PAR(xy_name, axis, cursor_nr, range_min, range_max), group, slot, generic)
+	end if
+end function
+
+// The denominator is so long because the function outputs -1 if no cursor is selected
+function active_cursor(ui_id) -> return
+	return := (get_control_par(ui_id, CONTROL_PAR_ACTIVE_INDEX) / (2 - abs( math.sign(get_control_par(ui_id, CONTROL_PAR_ACTIVE_INDEX), 0) - 1 ) ))
+end function
+
+// Set XY pad cursor from midi CC and vice-versa
+function cc_to_xy(xy_name, axis, cursor_nr, cc_number)
+	if cursor_nr # -1
+		xy_name[cursor_nr*2 + axis] := int_to_real(CC[cc_number]) / 127.0
+	end if
+end function
+
+function xy_to_cc(xy_name, axis, cursor_nr, cc_number)
+	set_controller(cc_number, real_to_int(xy_name[cursor_nr*2 + axis]) * 127)
+end function
 
 
-{Reset UI Controls functions}
+// Turn a slider or knob value into a percentage value (both from 0 to 100 and from 0 to 1 with real numbers)
+function value_to_perc(ui_id) -> return 
+	return := (get_value(ui_id) - get_ctrl_min(ui_id)) * 100 / (get_ctrl_max(ui_id) - get_ctrl_min(ui_id))
+end function
+
+function value_to_dec(ui_id) -> return 
+	return := int_to_real(get_value(ui_id) - get_ctrl_min(ui_id)) / int_to_real(get_ctrl_max(ui_id) - get_ctrl_min(ui_id))
+end function
+
+
+// Reset UI Controls functions
 function reset_pos(ui_id)
 	set_control_par(ui_id, CONTROL_PAR_POS_X, _UI_POS_X[search_ctrl_number(ui_id)])
 	set_control_par(ui_id, CONTROL_PAR_POS_Y, _UI_POS_Y[search_ctrl_number(ui_id)])
@@ -146,7 +212,7 @@ function reset_picture_state(ui_id)
 	set_control_par(ui_id, CONTROL_PAR_PICTURE_STATE, _UI_PICTURE_STATE[search_ctrl_number(ui_id)])	
 end function
 
-{Set UI Level Meter colours. Colours are HEX values. "9" is needed to let Kontakt know that value is a number.}
+// Set UI Level Meter colours. Colours are HEX values. "9" is needed to let Kontakt know that value is a number.
 function set_level_meter_color(ui_id, bg_color, off_color, on_color, overload_color, peak_color)
 	set_control_par(ui_id, CONTROL_PAR_BG_COLOR, bg_color)
 	set_control_par(ui_id, CONTROL_PAR_OFF_COLOR, off_color)
@@ -155,7 +221,7 @@ function set_level_meter_color(ui_id, bg_color, off_color, on_color, overload_co
 	set_control_par(ui_id, CONTROL_PAR_PEAK_COLOR, peak_color)
 end function
 
-{Add menu entries. Used as a macro because I need to use the Wild Card #.}
+// Add menu entries. Used as a macro because I need to use the Wild Card #.
 macro add_menu_entry(#name#, text, visibility)
 	!#name#_entries[_#name#_COUNT] := text
 	add_menu_item(#name#, text, _#name#_COUNT)
@@ -163,7 +229,7 @@ macro add_menu_entry(#name#, text, visibility)
 	inc(_#name#_COUNT)
 end macro
 
-{Get values}
+// Get values
 function get_def_pos_x(ui_id) -> return
 	return := _UI_POS_X[search_ctrl_number(ui_id)]
 end function
@@ -195,7 +261,6 @@ end function
 function get_ctrl_max(ui_id) -> return
 	return := _UI_CTRL_MAX[search_ctrl_number(ui_id)]
 end function
-
 
 function get_type(ui_id) -> return
 	return := _UI_TYPE[search_ctrl_number(ui_id)]
@@ -235,4 +300,12 @@ end function
 
 function get_ctrl_family(ui_id) -> return
 	return := _UI_FAMILIES[search_ctrl_number(ui_id)]
+end function
+
+function get_cursors_num(name) -> return
+	return := (num_elements(name)/2)
+end function
+
+function get_cursor_value(name, cursor_nr, axis) -> return
+	return := name[cursor_nr*2 + axis]
 end function

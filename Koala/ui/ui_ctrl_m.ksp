@@ -1,31 +1,64 @@
 {
 
-************* KSP EXTENDED COMMANDS LIBRARY *************
+********* KOALA - AN ADVANCED SCRIPTING LIBRARY FOR KSP DEVELOPERS *********
 
-Add, initialize and manage GUI controls
+This file is part of Koala - An advanced scripting library for KSP developers.
 
-v0.1 - Last update 2016-01-09
+Copyright (c) 2016 Davide Magni
 
-}		
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-macro create_button(#name#, #fam#, x, y, w, h, default, pers_status, text, picture)
+- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer 
+in the documentation and/or other materials provided with the distribution.
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+CONTACTS
+
+koala@davidemagni.com
+www.davidemagni.com
+Skype: magneto538
+Twitter: magneto538
+
+}  	
+
+macro create_button(#name#, #fam#, x, y, w, h, default, pers_status, txt, pic)
 	declare ui_button #name#
 	_add_ctrl(#name#, #fam#)	
 	_store_pos_data(x, y)
 	_store_size_data(w, h)
 	_store_def_value(default)
-	_store_ctrl_text(text)
-	_store_ctrl_pic(picture)
+	_store_ctrl_text(txt)
+	_store_ctrl_pic(pic)
 	_store_visibility(get_ui_id(#name#), VISIBLE)	
 	_ctrl_type(BUTTONS)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_X, x)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_Y, y)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_WIDTH, w)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_HEIGHT, h)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_DEFAULT_VALUE, default)	
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_VALUE, default)	
-	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_PICTURE, picture)
-	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_TEXT, text)
+
+	#name# -> pos_x := x
+	#name# -> pos_y := y
+	#name# -> width := w
+	#name# -> height := h
+	#name# -> default_value := default
+	#name# -> value := default
+	#name# -> picture := pic
+	#name# -> text := txt
+
 	if (pers_status = PERSISTENT)
 		make_persistent(#name#)
 	end if	
@@ -35,24 +68,26 @@ macro create_button(#name#, #fam#, x, y, w, h, default, pers_status, text, pictu
 	END_USE_CODE
 end macro
 
-macro create_switch(#name#, #fam#, x, y, w, h, default, pers_status, text, picture)
+macro create_switch(#name#, #fam#, x, y, w, h, default, pers_status, txt, pic)
 	declare ui_switch #name#
 	_add_ctrl(#name#, #fam#)		
 	_store_pos_data(x, y)
 	_store_size_data(w, h)
 	_store_def_value(default)
-	_store_ctrl_text(text)	
-	_store_ctrl_pic(picture)
+	_store_ctrl_text(txt)	
+	_store_ctrl_pic(pic)
 	_store_visibility(get_ui_id(#name#), VISIBLE)	
 	_ctrl_type(SWITCHES)	
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_X, x)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_Y, y)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_WIDTH, w)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_HEIGHT, h)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_DEFAULT_VALUE, default)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_VALUE, default)	
-	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_TEXT, text)
-	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_PICTURE, picture)
+
+	#name# -> pos_x := x
+	#name# -> pos_y := y
+	#name# -> width := w
+	#name# -> height := h
+	#name# -> default_value := default
+	#name# -> value := default
+	#name# -> picture := pic
+	#name# -> text := txt
+
 	if (pers_status = PERSISTENT)
 		make_persistent(#name#)
 	end if	
@@ -62,7 +97,7 @@ macro create_switch(#name#, #fam#, x, y, w, h, default, pers_status, text, pictu
 	END_USE_CODE
 end macro
 
-macro create_text_label(#name#, #fam#, x, y, w, h, text, font, alignment, background)
+macro create_text_label(#name#, #fam#, x, y, w, h, txt, font, alignment, background)
 	declare ui_label #name# (1, 1)
 	_add_ctrl(#name#, #fam#)		
 	_store_pos_data(x, y)
@@ -72,56 +107,62 @@ macro create_text_label(#name#, #fam#, x, y, w, h, text, font, alignment, backgr
 	_store_ctrl_pic(background)
 	_store_visibility(get_ui_id(#name#), VISIBLE)	
 	_ctrl_type(TEXT_LABELS)	
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_X, x)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_Y, y)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_WIDTH, w)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_HEIGHT, h)
-	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_TEXT, text)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_FONT_TYPE, font)	
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_TEXT_ALIGNMENT, alignment)	
-	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_PICTURE, background)
+
+	#name# -> pos_x := x
+	#name# -> pos_y := y
+	#name# -> width := w
+	#name# -> height := h
+	#name# -> text := txt
+	#name# -> font_type := font
+	#name# -> text_alignment := alignment
+	#name# -> picture := background
+
 	USE_CODE_IF(ENABLE_DEBUG)
 		add_menu_item(DEBUG.var_name, !_UI_CTRL_NAMES[_UI_COUNT], _UI_COUNT)
 	END_USE_CODE
 end macro
 
-macro create_pic_label(#name#, #fam#, x, y, w, h, picture)
+macro create_pic_label(#name#, #fam#, x, y, w, h, pic)
 	declare ui_label #name# (1, 1)
 	_add_ctrl(#name#, #fam#)
 	_store_pos_data(x, y)
 	_store_size_data(w, h)
-	_store_ctrl_pic(picture)
+	_store_ctrl_pic(pic)
 	_store_visibility(get_ui_id(#name#), VISIBLE)	
 	_ctrl_type(PIC_LABELS)	
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_X, x)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_Y, y)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_WIDTH, w)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_HEIGHT, h)
-	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_TEXT, "")
-	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_PICTURE, picture)	
+
+	#name# -> pos_x := x
+	#name# -> pos_y := y
+	#name# -> width := w
+	#name# -> height := h
+	#name# -> text := ""
+	#name# -> picture := pic
+
 	USE_CODE_IF(ENABLE_DEBUG)
 		add_menu_item(DEBUG.var_name, !_UI_CTRL_NAMES[_UI_COUNT], _UI_COUNT)
 	END_USE_CODE
 end macro
 
-macro create_slider(#name#, #fam#, x, y, w, h, min, max, default, pers_status, mouse_behaviour, picture)
+macro create_slider(#name#, #fam#, x, y, w, h, min, max, default, pers_status, mouse_b, pic)
 	declare ui_slider #name# (min, max)
 	_add_ctrl(#name#, #fam#)		
 	_store_pos_data(x, y)
 	_store_size_data(w, h)
 	_store_def_value(default)
-	_store_ctrl_pic(picture)	
+	_store_ctrl_pic(pic)	
 	_store_visibility(get_ui_id(#name#), VISIBLE)	
 	_ctrl_type(SLIDERS)	
 	_store_ctrl_bounds(min, max)	
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_X, x)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_Y, y)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_WIDTH, w)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_HEIGHT, h)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_DEFAULT_VALUE, default)	
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_VALUE, default)	
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_MOUSE_BEHAVIOUR, mouse_behaviour)	
-	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_PICTURE, picture)
+	
+	#name# -> pos_x := x
+	#name# -> pos_y := y
+	#name# -> width := w
+	#name# -> height := h
+	#name# -> default_value := default
+	#name# -> value := default
+	#name# -> picture := pic
+	#name# -> mouse_behaviour := mouse_b
+
 	if (pers_status = PERSISTENT)
 		make_persistent(#name#)
 	end if	
@@ -131,22 +172,25 @@ macro create_slider(#name#, #fam#, x, y, w, h, min, max, default, pers_status, m
 	END_USE_CODE
 end macro
 
-macro create_knob(#name#, #fam#, x, y, min, max, default, disp_ratio, pers_status, unit, text)
+macro create_knob(#name#, #fam#, x, y, min, max, default, disp_ratio, pers_status, disp_unit, txt)
 	declare ui_knob #name# (min, max, disp_ratio)
 	_add_ctrl(#name#, #fam#)		
 	_store_pos_data(x, y)
 	_store_size_data(0, 0)
 	_store_def_value(default)
-	_store_ctrl_text(text)	
+	_store_ctrl_text(txt)	
 	_store_visibility(get_ui_id(#name#), VISIBLE)		
 	_ctrl_type(KNOBS)
 	_store_ctrl_bounds(min, max)	
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_X, x)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_Y, y)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_DEFAULT_VALUE, default)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_VALUE, default)	
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_UNIT, unit)
-	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_TEXT, text)	
+	
+	#name# -> pos_x := x
+	#name# -> pos_y := y
+	#name# -> default_value := default
+	#name# -> value := default
+	#name# -> unit := disp_unit
+	#name# -> text := txt
+
+	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_TEXT, txt)	
 	if (pers_status = PERSISTENT)
 		make_persistent(#name#)
 	end if	
@@ -156,7 +200,7 @@ macro create_knob(#name#, #fam#, x, y, min, max, default, disp_ratio, pers_statu
 	END_USE_CODE
 end macro
 
-macro create_menu(#name#, #fam#, x, y, w, h, default, entries, font, alignment, pers_status, picture)
+macro create_menu(#name#, #fam#, x, y, w, h, default, entries, font, alignment, pers_status, pic)
 	declare ui_menu #name#
 	declare !#name#_entries[entries]
 	declare _#name#_COUNT := 0	
@@ -165,19 +209,21 @@ macro create_menu(#name#, #fam#, x, y, w, h, default, entries, font, alignment, 
 	_store_size_data(w, h)
 	_store_def_value(default)
 	_store_ctrl_font_type(font)	
-	_store_ctrl_font_alignment(font)	
-	_store_ctrl_pic(picture)
+	_store_ctrl_font_alignment(alignment)	
+	_store_ctrl_pic(pic)
 	_store_visibility(get_ui_id(#name#), VISIBLE)	
 	_ctrl_type(MENUS)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_X, x)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_Y, y)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_WIDTH, w)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_HEIGHT, h)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_DEFAULT_VALUE, default)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_FONT_TYPE, font)		
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_TEXT_ALIGNMENT, alignment)	
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_VALUE, default)	
-	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_PICTURE, picture)
+	
+	#name# -> pos_x := x
+	#name# -> pos_y := y
+	#name# -> width := w
+	#name# -> height := h
+	#name# -> default_value := default
+	#name# -> value := default
+	#name# -> font_type := font
+	#name# -> picture := pic
+	#name# -> text_alignment := alignment
+
 	if (pers_status = PERSISTENT)
 		make_persistent(#name#)
 	end if	
@@ -187,25 +233,27 @@ macro create_menu(#name#, #fam#, x, y, w, h, default, entries, font, alignment, 
 	END_USE_CODE
 end macro
 
-macro create_value_edit(#name#, #fam#, x, y, w, min, max, default, disp_ratio, pers_status, font, picture)
+macro create_value_edit(#name#, #fam#, x, y, w, min, max, default, disp_ratio, pers_status, font, pic)
 	declare ui_value_edit #name# (min, max, disp_ratio)
 	_add_ctrl(#name#, #fam#)		
 	_store_pos_data(x, y)
 	_store_size_data(w, 0)
 	_store_def_value(default)
 	_store_ctrl_font_type(font)		
-	_store_ctrl_pic(picture)	
+	_store_ctrl_pic(pic)	
 	_store_visibility(get_ui_id(#name#), VISIBLE)	
 	_ctrl_type(VALUE_EDITS)
 	_store_ctrl_bounds(min, max)	
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_X, x)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_Y, y)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_WIDTH, w)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_DEFAULT_VALUE, default)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_VALUE, default)	
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_FONT_TYPE, font)	
-	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_PICTURE, picture)
-	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_TEXT, "")
+	
+	#name# -> pos_x := x
+	#name# -> pos_y := y
+	#name# -> width := w
+	#name# -> default_value := default
+	#name# -> value := default
+	#name# -> font_type := font
+	#name# -> picture := pic
+	#name# -> text := ""
+
 	if (pers_status = PERSISTENT)
 		make_persistent(#name#)
 	end if	
@@ -222,30 +270,34 @@ macro create_file_selector(#name#, #fam#, x, y, w, h, col_width, file_type, root
 	_store_size_data(w, h)
 	_store_visibility(get_ui_id(#name#), VISIBLE)	
 	_ctrl_type(FILE_SELECTOR)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_X, x)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_Y, y)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_WIDTH, w)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_HEIGHT, h)	
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_COLUMN_WIDTH, col_width)	
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_FILE_TYPE, file_type)
-	set_control_par_str(get_ui_id(#name#), CONTROL_PAR_BASEPATH, root_folder)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_FONT_TYPE, font)
+	
+	#name# -> pos_x := x
+	#name# -> pos_y := y
+	#name# -> width := w
+	#name# -> height := h
+	#name# -> column_width := col_width
+	#name# -> file_type := file_type
+	#name# -> font_type := font
+	#name# -> basepath := root_folder
+
 	USE_CODE_IF(ENABLE_DEBUG)
 		add_menu_item(DEBUG.var_name, !_UI_CTRL_NAMES[_UI_COUNT], _UI_COUNT)
 	END_USE_CODE
 end macro
 
 macro create_table(#name#, #fam#, x, y, w, h, columns, range, pers_status)
-	declare ui_table #name# [columns](1, 1, range)
+	declare ui_table #name#[columns](1, 1, range)
 	_add_ctrl(#name#, #fam#)		
 	_store_pos_data(x, y)
 	_store_size_data(w, h)
 	_store_visibility(get_ui_id(#name#), VISIBLE)	
 	_ctrl_type(TABLES)	
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_X, x)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_Y, y)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_WIDTH, w)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_HEIGHT, h)
+
+	#name# -> pos_x := x
+	#name# -> pos_y := y
+	#name# -> width := w
+	#name# -> height := h
+
 	if (pers_status = PERSISTENT)
 		make_persistent(#name#)
 	end if	
@@ -262,12 +314,14 @@ macro create_level_meter(#name#, #fam#, x, y, w, h, orientation, group, slot, ch
 	_store_size_data(w, h)
 	_store_visibility(get_ui_id(#name#), VISIBLE)	
 	_ctrl_type(LEVEL_METERS)	
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_X, x)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_Y, y)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_WIDTH, w)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_HEIGHT, h)	
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_VERTICAL, orientation)	
+
+	#name# -> pos_x := x
+	#name# -> pos_y := y
+	#name# -> width := w
+	#name# -> height := h
+	#name# -> vertical := orientation
 	attach_level_meter(get_ui_id(#name#), group, slot, channel, bus)
+
 	USE_CODE_IF(ENABLE_DEBUG)
 		add_menu_item(DEBUG.var_name, !_UI_CTRL_NAMES[_UI_COUNT], _UI_COUNT)
 	END_USE_CODE
@@ -280,35 +334,71 @@ macro create_waveform(#name#, #fam#, x, y, w, h, zone_name, zone_flags)
 	_store_size_data(w, h)
 	_store_visibility(get_ui_id(#name#), VISIBLE)	
 	_ctrl_type(WAVEFORMS)	
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_X, x)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_POS_Y, y)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_WIDTH, w)
-	set_control_par(get_ui_id(#name#), CONTROL_PAR_HEIGHT, h)	
-	attach_zone(#name#, find_zone(zone_name), zone_flags)		
+
+	#name# -> pos_x := x
+	#name# -> pos_y := y
+	#name# -> width := w
+	#name# -> height := h	
+	attach_zone(#name#, find_zone(zone_name), zone_flags)	
+
 	USE_CODE_IF(ENABLE_DEBUG)
 		add_menu_item(DEBUG.var_name, !_UI_CTRL_NAMES[_UI_COUNT], _UI_COUNT)
 	END_USE_CODE
 end macro
 
-macro create_text_edit(#name#, #fam#, x, y, w, h, text, font, alignment, background)
+macro create_text_edit(#name#, #fam#, x, y, w, h, txt, font, alignment, background)
 	declare ui_text_edit @#name#
-	_add_ctrl(@#name#, #fam#)		
+	_add_ctrl(#name#, #fam#)		
 	_store_pos_data(x, y)
 	_store_size_data(w, h)
 	_store_ctrl_font_type(font)	
+	_store_ctrl_text(txt)
 	_store_ctrl_font_alignment(alignment)		
-	_store_ctrl_pic(background)
-	_store_visibility(get_ui_id(@#name#), VISIBLE)	
+	_store_visibility(get_ui_id(#name#), VISIBLE)	
 	_ctrl_type(TEXT_EDITS)	
-	set_control_par(get_ui_id(@#name#), CONTROL_PAR_POS_X, x)
-	set_control_par(get_ui_id(@#name#), CONTROL_PAR_POS_Y, y)
-	set_control_par(get_ui_id(@#name#), CONTROL_PAR_WIDTH, w)
-	set_control_par(get_ui_id(@#name#), CONTROL_PAR_HEIGHT, h)
-	set_control_par_str(get_ui_id(@#name#), CONTROL_PAR_TEXT, text)
-	set_control_par(get_ui_id(@#name#), CONTROL_PAR_FONT_TYPE, font)	
-	set_control_par(get_ui_id(@#name#), CONTROL_PAR_TEXT_ALIGNMENT, alignment)	
-	set_control_par_str(get_ui_id(@#name#), CONTROL_PAR_PICTURE, background)
+	
+	#name# -> pos_x := x
+	#name# -> pos_y := y
+	#name# -> width := w
+	#name# -> height := h
+	#name# -> text := txt
+	#name# -> font_type := font
+	#name# -> text_alignment := alignment
+	{#name# -> picture := background}
+
 	USE_CODE_IF(ENABLE_DEBUG)
 		add_menu_item(DEBUG.var_name, !_UI_CTRL_NAMES[_UI_COUNT], _UI_COUNT)
 	END_USE_CODE
 end macro
+
+macro create_xy(#name#, #fam#, x, y, w, h, default, cursors, cursors_pic, pers_status, m_behav_x, m_behav_y, m_mode, background)
+	declare ui_xy ?#name#[cursors*2]
+	_add_ctrl(#name#, #fam#)		
+	_store_pos_data(x, y)
+	_store_size_data(w, h)	
+	_store_visibility(get_ui_id(#name#), VISIBLE)	
+	_ctrl_type(XY_PADS)	
+	
+	#name# -> pos_x := x
+	#name# -> pos_y := y
+	#name# -> width := w
+	#name# -> height := h
+	#name# -> picture := background
+	#name# -> mouse_behaviour_x := m_behav_x
+	#name# -> mouse_behaviour_x := m_behav_y
+	#name# -> mouse_mode := m_mode
+
+	for _j := 0 to (cursors*2)-1
+		set_control_par_str_arr( get_ui_id(#name#), CONTROL_PAR_CURSOR_PICTURE, cursors_pic, _j)
+		?#name#[_j] := default
+	end for
+
+	if (pers_status = PERSISTENT)
+		make_persistent(#name#)
+	end if	
+	USE_CODE_IF(ENABLE_DEBUG)
+		add_menu_item(DEBUG.var_name, !_UI_CTRL_NAMES[_UI_COUNT], _UI_COUNT)
+		DEBUG.set_persistence(pers_status)
+	END_USE_CODE
+end macro
+

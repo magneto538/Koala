@@ -39,33 +39,26 @@ Twitter: magneto538
 
 }   
 
-{copy_array and copy_matrix}
-declare const NORMAL := 1
-declare const INVERT := 2
-declare const SORT_ASC := 4
+// copy_array and copy_matrix
+declare const NORMAL 	:= 1
+declare const INVERT 	:= 2
+declare const SORT_ASC 	:= 4
 declare const SORT_DESC := 8
 
 declare _SMALLEST_ARR
 
-declare const ALL_ROWS := 90000
+declare const ALL_ROWS 	:= 90000
 
-{concat_arrays modes}
-declare const SEQUENTIAL := 1
-declare const MIXED := 2
+// concat_arrays modes
+declare const SEQUENTIAL 	:= 1
+declare const MIXED 		:= 2
 
-{Info: how many times has the instrument been started?}
-	
+
+// Info: how many times has the instrument been started?
 declare TIMES_STARTED
-
 read_persistent_var(TIMES_STARTED)
 inc(TIMES_STARTED)
 make_persistent(TIMES_STARTED)
 
-{Timer data}
-declare KSP_MSECONDS := 0
-declare KSP_SECONDS := 0
-declare KSP_MINUTES := 0
-declare KSP_HOURS := 0
-declare @KSP_CLOCK
-
-declare timer_timebase
+// Timer data
+declare @timer

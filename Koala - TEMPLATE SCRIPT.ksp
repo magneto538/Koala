@@ -1,5 +1,4 @@
 {
-
 ********* KOALA - AN ADVANCED SCRIPTING LIBRARY FOR KSP DEVELOPERS *********
 
 This file is part of Koala - An advanced scripting library for KSP developers.
@@ -44,30 +43,30 @@ SET_CONDITION(ENABLE_DEBUG)
 import "Koala/Koala.ksp"
 
 on init
-	activate_logger("/path_to_log_file/log.nka")
+	activate_logger( get_folder(GET_FOLDER_PATCH_DIR) & "/log.nka")
 	Koala.init
-	create_instrument(540, "", "", "Koala v2.0 - TEMPLATE SCRIPT")
+	create_instrument(540, "", "", "Koala v2.1 - TEMPLATE SCRIPT")
 
 end on 
 
 on persistence_changed 
 	DEBUG.on_persistence_changed
 
-	{Your script here}
+	// Your script here
 
 end on
 
 on listener 
 	DEBUG.on_listener
 
-	{Your script here}
+	// Your script here
 
 end on
 
 on note 
 	DEBUG.on_note
 
-	{Your script here}
+	// Your script here
 
 	DEBUG.groups_monitor
 end on
@@ -75,48 +74,48 @@ end on
 on release 
 	DEBUG.on_release
 
-	{Your script here}
+	// Your script here
 
 end on
 
 on controller 
 	DEBUG.on_controller
 
-	{Your script here}
+	// Your script here
 
 end on
 
 on pgs_changed
 	DEBUG.on_pgs_changed
 
-	{Your script here}
+	// Your script here
 
 end on
 
 on poly_at
 	DEBUG.on_poly_at
 
-	{Your script here}
+	// Your script here
 
 end on 
 
 on rpn 
 	DEBUG.on_rpn_nrpn
 
-	{Your script here}
+	// Your script here
 
 end on
 
 on async_complete
 	DEBUG.on_async_complete
 
-	{Your script here}
+	// Your script here
 
 end on
 
 on nrpn 
 	DEBUG.on_rpn_nrpn
 
-	{Your script here}
+	// Your script here
 
 end on

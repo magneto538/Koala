@@ -1,5 +1,4 @@
 {
-
 ********* KOALA - AN ADVANCED SCRIPTING LIBRARY FOR KSP DEVELOPERS *********
 
 This file is part of Koala - An advanced scripting library for KSP developers.
@@ -36,47 +35,58 @@ koala@davidemagni.com
 www.davidemagni.com
 Skype: magneto538
 Twitter: magneto538
-
 }   
 
-declare const DEBUG.row1 := 430
-declare const DEBUG.col_width := 79
+family DEBUG 
+	declare const row1 			:= 430
 
-{UI data - declarations}
+	declare const col_width 	:= 79
+	declare const total_width 	:= 633
 
-declare !DEBUG.UI_TYPES[MAX_ARRAY_SIZE]
-declare !DEBUG.UI_PERSISTENCE[MAX_ARRAY_SIZE]
-declare DEBUG.UI_IDS[MAX_ARRAY_SIZE] := (_EOA)
-declare DEBUG.UI_FAMILIES[MAX_ARRAY_SIZE] := (_EOA)
+	// UI data - declarations
+	declare !UI_TYPES[MAX_ARRAY_SIZE]
+	declare !UI_PERSISTENCE[MAX_ARRAY_SIZE]
+	declare UI_IDS[MAX_ARRAY_SIZE] := (_EOA)
+	declare UI_FAMILIES[MAX_ARRAY_SIZE] := (_EOA)
+
+	declare UI_COUNT := 0
+	declare SELECTED_UI_ID
+
+	declare selected_page
+	declare const page_none 		:= -1
+	declare const page_log_id 		:= 0
+	declare const page_ui_id 		:= 1
+	declare const page_event_id 	:= 2
+	declare const page_groups_id 	:= 3
+	declare const page_custom_id 	:= 4
+
+	declare const GENERIC_FAMILY	:= -9999
+	declare const LOG_FAMILY		:= -9998
+	declare const UI_FAMILY 		:= -9997
+	declare const EVENT_FAMILY 		:= -9996
+	declare const GROUPS_FAMILY 	:= -9995
+	declare const CUSTOM_FAMILY 	:= -9994
+
+	// Event data - declarations
+	declare !source_txt[6]
+	declare midi_mon_count := 0 // When 28 lines are displayed, automatically remove all the text from MIDI Monitor.
+	declare play_count
+	declare event_count
+	declare note_off_count
+	declare note_off_trigger
+
+	// User-defined declarations
+	declare var_name_ids[10]
+	declare var_value_ids[10]
+end family
+
 !DEBUG.UI_PERSISTENCE[0] := "N/A"
 DEBUG.UI_IDS[0] := 0
 DEBUG.UI_FAMILIES[0] := 0
 
-declare DEBUG.UI_COUNT := 0
+read_persistent_var(DEBUG.selected_page)
+make_persistent(DEBUG.selected_page)	
 
-declare DEBUG.SELECTED_UI_ID
-
-declare DEBUG.selected_page
-	declare const DEBUG.page_none := -1
-	declare const DEBUG.page_log_id := 0
-	declare const DEBUG.page_ui_id := 1
-	declare const DEBUG.page_event_id := 2
-	declare const DEBUG.page_groups_id := 3
-	declare const DEBUG.page_custom_id := 4
-
-	read_persistent_var(DEBUG.selected_page)
-	make_persistent(DEBUG.selected_page)	
-
-declare DEBUG.GENERIC_FAMILY := 0
-declare DEBUG.LOG_FAMILY := 1
-declare DEBUG.UI_FAMILY := 2
-declare DEBUG.EVENT_FAMILY := 3
-declare DEBUG.GROUPS_FAMILY := 4
-declare DEBUG.CUSTOM_FAMILY := 5
-
-{Event data - declarations}
-
-declare !DEBUG.source_txt[6]
 !DEBUG.source_txt[0] := "External MIDI"
 !DEBUG.source_txt[1] := "Script Slot 1"
 !DEBUG.source_txt[2] := "Script Slot 2"
@@ -84,49 +94,35 @@ declare !DEBUG.source_txt[6]
 !DEBUG.source_txt[4] := "Script Slot 4"
 !DEBUG.source_txt[5] := "Script Slot 5"
 
-declare DEBUG.midi_mon_count := 0 {When 28 lines are displayed, automatically remove all the text from MIDI Monitor.}
+if 1=1
 
-declare DEBUG.play_count
-declare DEBUG.event_count
-declare DEBUG.note_off_count
-
-declare DEBUG.note_off_trigger
-
-{User-defined declarations}
-declare DEBUG.var_name_ids[10]
-declare DEBUG.var_value_ids[10]
-
-{Debug Console GUI}
-
-if (1=1)
-
-DEBUG.bg_label(bg_label, DEBUG.GENERIC_FAMILY, 0, DEBUG.row1, 633, 540 - DEBUG.row1, "### Koala - DEBUG CONSOLE ###")
+DEBUG.bg_label(bg_label, DEBUG.GENERIC_FAMILY, 0, DEBUG.row1, 633, 110, "### Koala - DEBUG CONSOLE ###")
 DEBUG.bg_label(bg_label_monitor, DEBUG.EVENT_FAMILY, 0, 0, 633, DEBUG.row1 - 2, "")
 DEBUG.bg_label(bg_label_logger, DEBUG.LOG_FAMILY, 0, 0, 633, DEBUG.row1 - 2, "")
 
-DEBUG.button(page_log, DEBUG.GENERIC_FAMILY, 586, DEBUG.pos_y(1), 0, "Log", PERSISTENT)
-DEBUG.button(page_ui, DEBUG.GENERIC_FAMILY, 586, DEBUG.pos_y(2), 1, "UI", PERSISTENT)
-DEBUG.button(page_event, DEBUG.GENERIC_FAMILY, 586, DEBUG.pos_y(3), 0, "Event", PERSISTENT)
-DEBUG.button(page_groups, DEBUG.GENERIC_FAMILY, 586, DEBUG.pos_y(4), 0, "Groups", PERSISTENT)
-DEBUG.button(page_custom, DEBUG.GENERIC_FAMILY, 586, DEBUG.pos_y(5), 0, "Custom", PERSISTENT)
+DEBUG.button(page_log, DEBUG.GENERIC_FAMILY, 0, DEBUG.pos_y(1), 0, "Log", PERSISTENT)
+DEBUG.button(page_ui, DEBUG.GENERIC_FAMILY, 0, DEBUG.pos_y(2), 1, "UI", PERSISTENT)
+DEBUG.button(page_event, DEBUG.GENERIC_FAMILY, 0, DEBUG.pos_y(3), 0, "Mon", PERSISTENT)
+DEBUG.button(page_groups, DEBUG.GENERIC_FAMILY, 0, DEBUG.pos_y(4), 0, "Grp", PERSISTENT)
+DEBUG.button(page_custom, DEBUG.GENERIC_FAMILY, 0, DEBUG.pos_y(5), 0, "Ex", PERSISTENT)
 
-DEBUG.resize_ctrl(get_ui_id(DEBUG.page_log), 45, 18)
-DEBUG.resize_ctrl(get_ui_id(DEBUG.page_ui), 45, 18)
-DEBUG.resize_ctrl(get_ui_id(DEBUG.page_event), 45, 18)
-DEBUG.resize_ctrl(get_ui_id(DEBUG.page_groups), 45, 18)
-DEBUG.resize_ctrl(get_ui_id(DEBUG.page_custom), 45, 18)
+DEBUG.resize_ctrl(get_ui_id(DEBUG.page_log), 35, 18)
+DEBUG.resize_ctrl(get_ui_id(DEBUG.page_ui), 35, 18)
+DEBUG.resize_ctrl(get_ui_id(DEBUG.page_event), 35, 18)
+DEBUG.resize_ctrl(get_ui_id(DEBUG.page_groups), 35, 18)
+DEBUG.resize_ctrl(get_ui_id(DEBUG.page_custom), 35, 18)
 
-{Log page}
+// Log page
 DEBUG.label(logger_lbl, DEBUG.LOG_FAMILY, DEBUG.pos_x(0), 0, "Live Console Logger", CONSOLE.WHITE, LEFT)
 DEBUG.resize_ctrl(get_ui_id(DEBUG.logger_lbl), DEBUG.col_width * 7, 18)
 
 DEBUG.log_label(logger_window, DEBUG.LOG_FAMILY, DEBUG.pos_x(3), DEBUG.pos_y(1), (DEBUG.col_width * 4), 90, "", CONSOLE.YELLOW, LEFT)
 
-DEBUG.button(logger_switch, DEBUG.LOG_FAMILY, 229, DEBUG.pos_y(5), 0, "^", NOT_PERSISTENT)
+DEBUG.button(logger_switch, DEBUG.LOG_FAMILY, 252, DEBUG.pos_y(5), 0, "^", NOT_PERSISTENT)
 DEBUG.resize_ctrl(get_ui_id(DEBUG.logger_switch), 18, 18)
 declare logger_switch_status := 1
 
-DEBUG.button(logger_clear, DEBUG.LOG_FAMILY, 209, DEBUG.pos_y(5), 0, "X", NOT_PERSISTENT)
+DEBUG.button(logger_clear, DEBUG.LOG_FAMILY, 232, DEBUG.pos_y(5), 0, "X", NOT_PERSISTENT)
 DEBUG.resize_ctrl(get_ui_id(DEBUG.logger_clear), 18, 18)
 
 DEBUG.button(logger_start, DEBUG.LOG_FAMILY, DEBUG.pos_x(2), DEBUG.pos_y(4), 0, "Start Logger", NOT_PERSISTENT)
@@ -151,7 +147,6 @@ DEBUG.button(logger_show_rncb, DEBUG.LOG_FAMILY, DEBUG.pos_x(2), DEBUG.pos_y(1),
 DEBUG.button(logger_show_acb, DEBUG.LOG_FAMILY, DEBUG.pos_x(2), DEBUG.pos_y(2), 0, "ASYNC", PERSISTENT)
 DEBUG.button(logger_show_user, DEBUG.LOG_FAMILY, DEBUG.pos_x(2), DEBUG.pos_y(3), 0, "USER", PERSISTENT)
 
-
 declare !DEBUG.logger_cb_types[15]
 !DEBUG.logger_cb_types[0] := "<undefined>"
 !DEBUG.logger_cb_types[NI_CB_TYPE_NOTE] := "NOTE"
@@ -166,10 +161,10 @@ declare !DEBUG.logger_cb_types[15]
 !DEBUG.logger_cb_types[NI_CB_TYPE_RPN] := "RPN"
 !DEBUG.logger_cb_types[NI_CB_TYPE_NRPN] := "NRPN"
 !DEBUG.logger_cb_types[NI_CB_TYPE_LISTENER] := "LISTENER"
-!DEBUG.logger_cb_types[13] := "ASYNC"
+!DEBUG.logger_cb_types[NI_CB_TYPE_ASYNC_COMPLETE] := "ASYNC"
 !DEBUG.logger_cb_types[NI_CB_TYPE_PERSISTENCE_CHANGED] := "PERS_CHANGED"
 
-{UI data}
+// UI data
 DEBUG.label(ui_family_name_lbl, DEBUG.UI_FAMILY, DEBUG.pos_x(0), DEBUG.pos_y(1), "Family:", CONSOLE.WHITE, LEFT)
 DEBUG.menu(ui_family_name, DEBUG.UI_FAMILY, DEBUG.pos_x(1), DEBUG.pos_y(1), 0, NOT_PERSISTENT)
 
@@ -191,6 +186,8 @@ add_menu_item(DEBUG.ui_type, "Sliders", 9)
 add_menu_item(DEBUG.ui_type, "Tables", 10)
 add_menu_item(DEBUG.ui_type, "Level Meters", 11)
 add_menu_item(DEBUG.ui_type, "Waveforms", 12)
+add_menu_item(DEBUG.ui_type, "Text Edits", 13)
+add_menu_item(DEBUG.ui_type, "XY Pads", 14)
 
 DEBUG.label(var_name_lbl, DEBUG.UI_FAMILY, DEBUG.pos_x(0), DEBUG.pos_y(3), "UI Control: ", CONSOLE.WHITE, LEFT)
 DEBUG.menu(var_name, DEBUG.UI_FAMILY, DEBUG.pos_x(1), DEBUG.pos_y(3), 0, NOT_PERSISTENT)
@@ -208,29 +205,28 @@ DEBUG.label(ui_pos_y, DEBUG.UI_FAMILY, DEBUG.pos_x(3), DEBUG.pos_y(2), "Pos. Y: 
 DEBUG.label(ui_width, DEBUG.UI_FAMILY, DEBUG.pos_x(3), DEBUG.pos_y(3), "Width: -", CONSOLE.WHITE, LEFT)
 DEBUG.label(ui_height, DEBUG.UI_FAMILY, DEBUG.pos_x(3), DEBUG.pos_y(4), "Height: -", CONSOLE.WHITE, LEFT)
 
-DEBUG.value_edit(adjust_pos_x, DEBUG.UI_FAMILY, DEBUG.pos_x(4), DEBUG.pos_y(1), 0, 633, 0, 1, CONSOLE.WHITE, "Set X", NOT_PERSISTENT)
-DEBUG.value_edit(adjust_pos_y, DEBUG.UI_FAMILY, DEBUG.pos_x(4), DEBUG.pos_y(2), 0, 540, 0, 1, CONSOLE.WHITE, "Set Y", NOT_PERSISTENT)
+DEBUG.value_edit(adjust_pos_x, DEBUG.UI_FAMILY, DEBUG.pos_x(4), DEBUG.pos_y(1), 0, 1000, 0, 1, CONSOLE.WHITE, "Set X", NOT_PERSISTENT)
+DEBUG.value_edit(adjust_pos_y, DEBUG.UI_FAMILY, DEBUG.pos_x(4), DEBUG.pos_y(2), 0, 750, 0, 1, CONSOLE.WHITE, "Set Y", NOT_PERSISTENT)
 
-DEBUG.value_edit(adjust_width, DEBUG.UI_FAMILY, DEBUG.pos_x(4), DEBUG.pos_y(3), 0, 633, 0, 1, CONSOLE.WHITE, "Set W", NOT_PERSISTENT)
-DEBUG.value_edit(adjust_height, DEBUG.UI_FAMILY, DEBUG.pos_x(4), DEBUG.pos_y(4), 0, 540, 0, 1, CONSOLE.WHITE, "Set H", NOT_PERSISTENT)
+DEBUG.value_edit(adjust_width, DEBUG.UI_FAMILY, DEBUG.pos_x(4), DEBUG.pos_y(3), 0, 1000, 0, 1, CONSOLE.WHITE, "Set W", NOT_PERSISTENT)
+DEBUG.value_edit(adjust_height, DEBUG.UI_FAMILY, DEBUG.pos_x(4), DEBUG.pos_y(4), 0, 750, 0, 1, CONSOLE.WHITE, "Set H", NOT_PERSISTENT)
 
-{MIDI Monitor data}
+// MIDI Monitor data
+DEBUG.label(midi_event_counter_lbl, DEBUG.EVENT_FAMILY, DEBUG.pos_x(0) - 40, 0, "Event Nr.", CONSOLE.WHITE, RIGHT)
+DEBUG.label(midi_msg_lbl, DEBUG.EVENT_FAMILY, DEBUG.pos_x(1) - 40, 0, "Event Type", CONSOLE.WHITE, LEFT)
+DEBUG.label(midi_event_lbl, DEBUG.EVENT_FAMILY, DEBUG.pos_x(2) - 40, 0, "Event", CONSOLE.WHITE, LEFT)
+DEBUG.label(midi_byte1_lbl, DEBUG.EVENT_FAMILY, DEBUG.pos_x(3) - 40, 0, "MIDI Byte 1", CONSOLE.WHITE, LEFT)
+DEBUG.label(midi_byte2_lbl, DEBUG.EVENT_FAMILY, DEBUG.pos_x(4) - 40, 0, "MIDI Byte 2", CONSOLE.WHITE, LEFT)
+DEBUG.label(midi_src_lbl, DEBUG.EVENT_FAMILY, DEBUG.pos_x(5) - 40, 0, "Event Source", CONSOLE.WHITE, LEFT)
+DEBUG.label(midi_ch_lbl, DEBUG.EVENT_FAMILY, DEBUG.pos_x(6) - 40, 0, "MIDI Channel", CONSOLE.WHITE, LEFT)
 
-DEBUG.label(midi_event_counter_lbl, DEBUG.EVENT_FAMILY, DEBUG.pos_x(0), 0, "Event Nr.", CONSOLE.WHITE, RIGHT)
-DEBUG.label(midi_msg_lbl, DEBUG.EVENT_FAMILY, DEBUG.pos_x(1), 0, "Event Type", CONSOLE.WHITE, LEFT)
-DEBUG.label(midi_event_lbl, DEBUG.EVENT_FAMILY, DEBUG.pos_x(2), 0, "Event", CONSOLE.WHITE, LEFT)
-DEBUG.label(midi_byte1_lbl, DEBUG.EVENT_FAMILY, DEBUG.pos_x(3), 0, "MIDI Byte 1", CONSOLE.WHITE, LEFT)
-DEBUG.label(midi_byte2_lbl, DEBUG.EVENT_FAMILY, DEBUG.pos_x(4), 0, "MIDI Byte 2", CONSOLE.WHITE, LEFT)
-DEBUG.label(midi_src_lbl, DEBUG.EVENT_FAMILY, DEBUG.pos_x(5), 0, "Event Source", CONSOLE.WHITE, LEFT)
-DEBUG.label(midi_ch_lbl, DEBUG.EVENT_FAMILY, DEBUG.pos_x(6), 0, "MIDI Channel", CONSOLE.WHITE, LEFT)
-
-DEBUG.midi_mon(midi_event_counter, DEBUG.EVENT_FAMILY, DEBUG.pos_x(0), 20, "", CONSOLE.WHITE, RIGHT)
-DEBUG.midi_mon(midi_msg, DEBUG.EVENT_FAMILY, DEBUG.pos_x(1), 20, "", CONSOLE.WHITE, LEFT)
-DEBUG.midi_mon(midi_event, DEBUG.EVENT_FAMILY, DEBUG.pos_x(2), 20, "", CONSOLE.WHITE, LEFT)
-DEBUG.midi_mon(midi_byte1, DEBUG.EVENT_FAMILY, DEBUG.pos_x(3), 20, "", CONSOLE.YELLOW, LEFT)
-DEBUG.midi_mon(midi_byte2, DEBUG.EVENT_FAMILY, DEBUG.pos_x(4), 20, "", CONSOLE.YELLOW, LEFT)
-DEBUG.midi_mon(midi_src, DEBUG.EVENT_FAMILY, DEBUG.pos_x(5), 20, "", CONSOLE.WHITE, LEFT)
-DEBUG.midi_mon(midi_ch, DEBUG.EVENT_FAMILY, DEBUG.pos_x(6), 20, "", CONSOLE.WHITE, LEFT)
+DEBUG.midi_mon(midi_event_counter, DEBUG.EVENT_FAMILY, DEBUG.pos_x(0) - 40, 20, "", CONSOLE.WHITE, RIGHT)
+DEBUG.midi_mon(midi_msg, DEBUG.EVENT_FAMILY, DEBUG.pos_x(1) - 40, 20, "", CONSOLE.WHITE, LEFT)
+DEBUG.midi_mon(midi_event, DEBUG.EVENT_FAMILY, DEBUG.pos_x(2) - 40, 20, "", CONSOLE.WHITE, LEFT)
+DEBUG.midi_mon(midi_byte1, DEBUG.EVENT_FAMILY, DEBUG.pos_x(3) - 40, 20, "", CONSOLE.YELLOW, LEFT)
+DEBUG.midi_mon(midi_byte2, DEBUG.EVENT_FAMILY, DEBUG.pos_x(4) - 40, 20, "", CONSOLE.YELLOW, LEFT)
+DEBUG.midi_mon(midi_src, DEBUG.EVENT_FAMILY, DEBUG.pos_x(5) - 40, 20, "", CONSOLE.WHITE, LEFT)
+DEBUG.midi_mon(midi_ch, DEBUG.EVENT_FAMILY, DEBUG.pos_x(6) - 40, 20, "", CONSOLE.WHITE, LEFT)
 
 DEBUG.button(midi_mon_start, DEBUG.EVENT_FAMILY, DEBUG.pos_x(0), DEBUG.pos_y(1), 0, "Start Monitor", NOT_PERSISTENT)
 
@@ -265,7 +261,7 @@ end for
 
 DEBUG.value_edit(midi_cc_test_value, DEBUG.EVENT_FAMILY, DEBUG.pos_x(3), DEBUG.pos_y(3), 0, 127, 0, 1, CONSOLE.WHITE, "CC Value", PERSISTENT)
 
-{Groups page}
+// Groups page
 DEBUG.label(groups_folder_lbl, DEBUG.GROUPS_FAMILY, DEBUG.pos_x(0), DEBUG.pos_y(1), "Folder:", CONSOLE.WHITE, LEFT)
 DEBUG.menu(groups_folder, DEBUG.GROUPS_FAMILY, DEBUG.pos_x(1), DEBUG.pos_y(1), 0, PERSISTENT)
 
@@ -290,7 +286,7 @@ DEBUG.label(groups_allowed, DEBUG.GROUPS_FAMILY, DEBUG.pos_x(1), DEBUG.pos_y(4),
 DEBUG.label(groups_purged, DEBUG.GROUPS_FAMILY, DEBUG.pos_x(1), DEBUG.pos_y(5), "-", CONSOLE.WHITE, LEFT)		
 
 
-{User-defined data}
+// User-defined data
 DEBUG.label(var_1_name, DEBUG.CUSTOM_FAMILY, DEBUG.pos_x(0), DEBUG.pos_y(1), "<1>", CONSOLE.GREY2, RIGHT)
 DEBUG.label(var_2_name, DEBUG.CUSTOM_FAMILY, DEBUG.pos_x(0), DEBUG.pos_y(2), "<2>", CONSOLE.GREY2, RIGHT)
 DEBUG.label(var_3_name, DEBUG.CUSTOM_FAMILY, DEBUG.pos_x(0), DEBUG.pos_y(3), "<3>", CONSOLE.GREY2, RIGHT)
@@ -351,3 +347,18 @@ DEBUG.view
 
 end if
 
+// CBs filtered by the 'User' ctrl. The only two callbacks that are missing are PCB and ICB, so that the user can use DEBUG.add_log inside those callbacks 
+// without worrying whether the 'User' button is ON or OFF.
+list log_filtered_cbs
+	NI_CB_TYPE_NOTE
+	NI_CB_TYPE_RELEASE
+	NI_CB_TYPE_CONTROLLER
+	NI_CB_TYPE_POLY_AT
+	NI_CB_TYPE_UI_CONTROL
+	NI_CB_TYPE_UI_UPDATE
+	NI_CB_TYPE_PGS
+	NI_CB_TYPE_RPN
+	NI_CB_TYPE_NRPN
+	NI_CB_TYPE_LISTENER
+	NI_CB_TYPE_ASYNC_COMPLETE
+end list

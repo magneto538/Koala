@@ -49,16 +49,15 @@ end function
 
 function DEBUG.midi_monitor(msg, note, byte1, byte2, src, ch)
 	USE_CODE_IF(ENABLE_DEBUG)
-
-		if (DEBUG.event_count < _MAX_KSP_VALUE)
+		if DEBUG.event_count < _MAX_KSP_VALUE
 			inc(DEBUG.event_count)
 		else 
 			DEBUG.event_count := 0
 		end if
 
-		if (DEBUG.midi_mon_freeze = OFF)
+		if DEBUG.midi_mon_freeze = OFF
 			inc(DEBUG.midi_mon_count)
-			if (DEBUG.midi_mon_count = 28)
+			if DEBUG.midi_mon_count = 28
 				DEBUG.midi_mon_count := 0
 				call DEBUG.midi_monitor_reset_view
 			end if
@@ -75,64 +74,53 @@ end function
 
 function DEBUG.add_log_simple(text)
 	USE_CODE_IF(ENABLE_DEBUG)
+		call set_timer
+		@_txt := @timer
+		@_txt := @_txt & " --- "
 
-		declare @txt
-		@txt := timer()
-		@txt := @txt & " --- "
+		@_txt := @_txt & text
 
-		@txt := @txt & text
-
-		add_text_line(DEBUG.logger_window, @txt)
-		print(@txt)
-
+		add_text_line(DEBUG.logger_window, @_txt)
+		print(@_txt)
 	END_USE_CODE
 end function
 
 
 function DEBUG.ucb_log_line
 	USE_CODE_IF(ENABLE_DEBUG)
-
-		declare @txt 
-
-		if ( DEBUG.logger_start = 1 and DEBUG.logger_show_ucb = 1 )
+		if DEBUG.logger_start = 1 and DEBUG.logger_show_ucb = 1 
 
 			select _UI_TYPE[search(_UI_IDS, DEBUG.SELECTED_UI_ID)]
 
 				case SWITCHES
-					@txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' pressed. Value: " & get_value(DEBUG.SELECTED_UI_ID)
+					@_txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' pressed. Value: " & get_value(DEBUG.SELECTED_UI_ID)
 				case BUTTONS
-					@txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' pressed. Value: " & get_value(DEBUG.SELECTED_UI_ID)
+					@_txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' pressed. Value: " & get_value(DEBUG.SELECTED_UI_ID)
 				case KNOBS
-					@txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' moved. Value: " & get_value(DEBUG.SELECTED_UI_ID)			
+					@_txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' moved. Value: " & get_value(DEBUG.SELECTED_UI_ID)			
 				case MENUS
-					@txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' changed. Selected entry: " & get_value(DEBUG.SELECTED_UI_ID)	
+					@_txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' changed. Selected entry: " & get_value(DEBUG.SELECTED_UI_ID)	
 				case FILE_SELECTOR
-					@txt := "New file selected on '" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & ". Selected entry: " & get_value(DEBUG.SELECTED_UI_ID)
+					@_txt := "New file selected on '" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & ". Selected entry: " & get_value(DEBUG.SELECTED_UI_ID)
 				case VALUE_EDITS
-					@txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' changed. Value: " & get_value(DEBUG.SELECTED_UI_ID)
+					@_txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' changed. Value: " & get_value(DEBUG.SELECTED_UI_ID)
 				case SLIDERS
-					@txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' moved. Value: " & get_value(DEBUG.SELECTED_UI_ID)			
+					@_txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' moved. Value: " & get_value(DEBUG.SELECTED_UI_ID)			
 				case TABLES
-					@txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' changed. Value: " & get_value(DEBUG.SELECTED_UI_ID)						
+					@_txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' changed. Value: " & get_value(DEBUG.SELECTED_UI_ID)						
 				case TEXT_EDITS
 		
 			end select
 
-			DEBUG.add_log_p( @txt )
-
-		end if 
-		
+			DEBUG.add_log_p( @_txt )
+		end if
 	END_USE_CODE
 end function
 
 function DEBUG.add_log_p(text)
 	USE_CODE_IF(ENABLE_DEBUG)
-
-		declare @DEBUG.timer
-		@DEBUG.timer := timer()
-
-		add_text_line(DEBUG.logger_window, @DEBUG.timer & " --- [" & !DEBUG.logger_cb_types[NI_CALLBACK_TYPE] & "] " & text)
-		print(@DEBUG.timer & " --- [" & !DEBUG.logger_cb_types[NI_CALLBACK_TYPE] & "] " & text)
-
+		call set_timer
+		add_text_line(DEBUG.logger_window, @timer & " --- [" & !DEBUG.logger_cb_types[NI_CALLBACK_TYPE] & "] " & text)
+		print(@timer & " --- [" & !DEBUG.logger_cb_types[NI_CALLBACK_TYPE] & "] " & text)
 	END_USE_CODE
 end function

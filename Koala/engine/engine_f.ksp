@@ -42,21 +42,21 @@ end function
 
 function bus_fx(fx_type, fx_subtype, slot, bus)
 	set_engine_par(ENGINE_PAR_EFFECT_TYPE, fx_type, -1, slot, bus + NI_BUS_OFFSET)
-	if ( fx_subtype # -1 )
+	if fx_subtype # -1 
 		set_engine_par(ENGINE_PAR_EFFECT_SUBTYPE, fx_subtype, -1, slot, bus + NI_BUS_OFFSET)
 	end if
 end function
 
 function insert_fx(fx_type, fx_subtype, slot)
 	set_engine_par(ENGINE_PAR_EFFECT_TYPE, fx_type, -1, slot, 1)
-	if ( fx_subtype # -1 )
+	if fx_subtype # -1 
 		set_engine_par(ENGINE_PAR_EFFECT_SUBTYPE, fx_subtype, -1, slot, 1)
 	end if
 end function
 
 function group_fx(fx_type, fx_subtype, slot, group)
 	set_engine_par(ENGINE_PAR_EFFECT_TYPE, fx_type, group, slot, -1)
-	if ( fx_subtype # -1 )
+	if fx_subtype # -1 
 		set_engine_par(ENGINE_PAR_EFFECT_SUBTYPE, fx_subtype, group, slot, -1)
 	end if
 end function

@@ -51,244 +51,170 @@ function assign_family(ui_id, fam)
 end function
 
 function shift_family(fam, offset_x, offset_y)
-	if (fam = ALL_FAMILIES)
-		_j := 1
-		while (_UI_IDS[_j] # _EOA)
+	_j := 1
+	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
 			shift_ctrl(_UI_IDS[_j], offset_x, offset_y)
-			inc(_j)
-		end while
-	else
-		_j := 1
-		while (_UI_IDS[_j] # _EOA)
-			if (_UI_FAMILIES[_j] = fam)		
-				shift_ctrl(_UI_IDS[_j], offset_x, offset_y)
-			end if
-			inc(_j)
-		end while
-	end if
+		end if 
+		inc(_j)
+	end while
 end function
 
 function set_family_visibility(fam, value)
-	if (fam = ALL_FAMILIES)
-		_j := 1
-		while (_UI_IDS[_j] # _EOA)	
+	_j := 1
+	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
 			set_visibility(_UI_IDS[_j], value)
-			inc(_j)
-		end while
-	else
-		_j := 1		
-		while (_UI_IDS[_j] # _EOA)
-			if (_UI_FAMILIES[_j] = fam)		
-				set_visibility(_UI_IDS[_j], value)
-			end if
-			inc(_j)
-		end while
-	end if
+		end if 
+		inc(_j)
+	end while
 end function
 
-{Set/get values of all controls of a Family inside/from an array}
+// Set/get values of all controls of a Family inside/from an array
 function get_family_values(fam, array)
-	if (fam = ALL_FAMILIES)
-		_j := 1
-		while (_UI_IDS[_j] # _EOA and _j < num_elements(array))
+	_j := 1
+	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
 			array[_j] := get_control_par(_UI_IDS[_j], CONTROL_PAR_VALUE)
-			inc(_j)
-		end while
-	else
-		_j := 1	
-		while (_UI_IDS[_j] # _EOA and _j < num_elements(array))
-			if (_UI_FAMILIES[_j] = fam)			
-				array[_j] := get_control_par(_UI_IDS[_j], CONTROL_PAR_VALUE)
-			end if
-			inc(_j)
-		end while
-	end if
+		end if 
+		inc(_j)
+	end while
 end function
 
 function set_family_values(fam, array)
-	if (fam = ALL_FAMILIES)
-		_j := 1
-		while (_UI_IDS[_j] # _EOA and _j < num_elements(array))
+	_j := 1
+	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
 			set_value(_UI_IDS[_j], array[_j])
-			inc(_j)
-		end while
-	else
-		_j := 1	
-		while (_UI_IDS[_j] # _EOA and _j < num_elements(array))
-			if (_UI_FAMILIES[_j] = fam)			
-				set_value(_UI_IDS[_j], array[_j])
-			end if
-			inc(_j)
-		end while
-	end if
+		end if 
+		inc(_j)
+	end while
 end function
 
-{Return amount of ctrls assigned to a certain family}
+// Return amount of ctrls assigned to a certain family
 function get_family_ctrl_amount(fam) -> return
-	if (fam = ALL_FAMILIES)
-		_j := 1
-		_k := 0
-		while (_UI_IDS[_j] # _EOA)
-			inc(_j)
+	_j := 1
+	_k := 0
+	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
 			inc(_k)
-		end while
-		return := _k
-	else
-		_j := 1	
-		_k := 0
-		while (_UI_IDS[_j] # _EOA)
-			if (_UI_FAMILIES[_j] = fam)			
-				inc(_k)				
-			end if
-			inc(_j)
-		end while
-		return := _k
-	end if
+		end if
+		inc(_j)
+	end while
+	return := _k
+end function
+
+function get_family_ui_ids(fam, array)
+	_j := 1
+	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
+			array[_j] := _UI_IDS[_j]
+		end if 
+		inc(_j)
+	end while
+end function
+
+function set_family_text(fam, array)
+	_j := 1
+	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
+			set_ctrl_text(_UI_IDS[_j], array[_j])
+		end if 
+		inc(_j)
+	end while
 end function
 
 
-{Reset Families}
-
+// Reset Families
 function reset_family_visibility(fam)
-	if (fam = ALL_FAMILIES)
-		_j := 1		
-		while (_UI_IDS[_j] # _EOA)
+	_j := 1
+	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
 			reset_visibility(_UI_IDS[_j])
-			inc(_j)
-		end while
-	else
-		_j := 1		
-		while (_UI_IDS[_j] # _EOA)
-			if (_UI_FAMILIES[_j] = fam)		
-				reset_visibility(_UI_IDS[_j])
-			end if
-			inc(_j)
-		end while
-	end if
+		end if 
+		inc(_j)
+	end while
 end function
 
 function reset_family_text(fam)
-	if (fam = ALL_FAMILIES)
-		_j := 1		
-		while (_UI_IDS[_j] # _EOA)
+	_j := 1
+	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
 			reset_ctrl_text(_UI_IDS[_j])
-			inc(_j)
-		end while
-	else
-		_j := 1		
-		while (_UI_IDS[_j] # _EOA)
-			if (_UI_FAMILIES[_j] = fam)		
-				reset_ctrl_text(_UI_IDS[_j])
-			end if
-			inc(_j)
-		end while
-	end if
+		end if 
+		inc(_j)
+	end while
 end function
 
-{Reset UI to default values}
+// Reset UI to default values
 function reset_family_pics(fam)
-	if (fam = ALL_FAMILIES)
-		_j := 1		
-		while (_UI_IDS[_j] # _EOA)
+	_j := 1
+	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
 			reset_ctrl_pic(_UI_IDS[_j])
-			inc(_j)
-		end while
-	else
-		_j := 1		
-		while (_UI_IDS[_j] # _EOA)
-			if (_UI_FAMILIES[_j] = fam)		
-				reset_ctrl_pic(_UI_IDS[_j])
-			end if
-			inc(_j)
-		end while
-	end if
+		end if 
+		inc(_j)
+	end while
 end function
 
-{Reset UI to default values}
+// Reset UI to default values
 function reset_family_values(fam)
-	if (fam = ALL_FAMILIES)
-		_j := 1		
-		while (_UI_IDS[_j] # _EOA)
+	_j := 1
+	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
 			reset_value(_UI_IDS[_j])
-			inc(_j)
-		end while
-	else
-		_j := 1		
-		while (_UI_IDS[_j] # _EOA)
-			if (_UI_FAMILIES[_j] = fam)
-				reset_value(_UI_IDS[_j])
-			end if
-			inc(_j)
-		end while
-	end if
+		end if 
+		inc(_j)
+	end while
 end function
 
-
-{Reset UI Controls to default positions}
+// Reset UI Controls to default positions
 function reset_family_pos(fam)
-	if (fam = ALL_FAMILIES)
-		_j := 1
-		while (_UI_IDS[_j] # _EOA)
+	_j := 1
+	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
 			reset_pos(_UI_IDS[_j])
-			inc(_j)
-		end while
-	else
-		_j := 1		
-		while (_UI_IDS[_j] # _EOA)
-			if (_UI_FAMILIES[_j] = fam)		
-				reset_pos(_UI_IDS[_j])
-			end if
-			inc(_j)
-		end while
-	end if
+		end if 
+		inc(_j)
+	end while
 end function
 
-
-{Reset UI Text to default}
+// Reset UI Text to default
 function reset_family_font(fam)
-	if (fam = ALL_FAMILIES)
-		_j := 1
-		while (_UI_IDS[_j] # _EOA)
+	_j := 1
+	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
 			reset_font(_UI_IDS[_j])
-			inc(_j)
-		end while
-	else
-		_j := 1		
-		while (_UI_IDS[_j] # _EOA)
-			if (_UI_FAMILIES[_j] = fam)			
-				reset_font(_UI_IDS[_j])				
-			end if
-			inc(_j)
-		end while
-	end if
+		end if 
+		inc(_j)
+	end while
 end function
 
 
-{ADVANCED GRAPHIC FEATURES}
-{Place some controls on a grid according to their family and type}
-
+// ADVANCED GRAPHIC FEATURES
+// Place some controls on a grid according to their family and type
 function place_on_grid(fam, type, start_x, start_y, col_w, row_h, ctrl_per_row)
 	_k := 0
 	_i := 0
-	if (fam = ALL_FAMILIES and type = ALL_TYPES)
+	if fam = ALL_FAMILIES and type = ALL_TYPES
 		_j := 1
-		while (_UI_IDS[_j] # _EOA)	
+		while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE	
 			_family_on_grid_math(fam, type, start_x, start_y, col_w, row_h, ctrl_per_row)
 		end while
 	end if 
-	if (fam # ALL_FAMILIES and type = ALL_TYPES)
+	if fam # ALL_FAMILIES and type = ALL_TYPES
 		_j := 1
-		while (_UI_IDS[_j] # _EOA)
-			if (_UI_FAMILIES[_j] = fam)
+		while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
+			if _UI_FAMILIES[_j] = fam
 				_family_on_grid_math(fam, type, start_x, start_y, col_w, row_h, ctrl_per_row)
 			end if
 			inc(_j)
 		end while
 	end if 
-	if (fam # ALL_FAMILIES and type # ALL_TYPES)
+	if fam # ALL_FAMILIES and type # ALL_TYPES
 		_j := 1
-		while (_UI_IDS[_j] # _EOA)
-			if (_UI_FAMILIES[_j] = fam and _UI_TYPE[_j] = type)		
+		while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
+			if _UI_FAMILIES[_j] = fam and _UI_TYPE[_j] = type		
 				_family_on_grid_math(fam, type, start_x, start_y, col_w, row_h, ctrl_per_row)
 			end if
 			inc(_j)
@@ -297,19 +223,11 @@ function place_on_grid(fam, type, start_x, start_y, col_w, row_h, ctrl_per_row)
 end function
 
 function restore_visibility_settings(fam)
-	if (fam = ALL_FAMILIES)
-		_j := 1		
-		while (_UI_IDS[_j] # _EOA)
+	_j := 1
+	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
 			set_control_par(_UI_IDS[_j], CONTROL_PAR_HIDE, _UI_CURR_VISIBILITY[_j])
-			inc(_j)
-		end while
-	else
-		_j := 1		
-		while (_UI_IDS[_j] # _EOA)
-			if (_UI_FAMILIES[_j] = fam)		
-				set_control_par(_UI_IDS[_j], CONTROL_PAR_HIDE, _UI_CURR_VISIBILITY[_j])
-			end if
-			inc(_j)
-		end while
-	end if
+		end if 
+		inc(_j)
+	end while
 end function

@@ -1,5 +1,4 @@
 {
-
 ********* KOALA - AN ADVANCED SCRIPTING LIBRARY FOR KSP DEVELOPERS *********
 
 This file is part of Koala - An advanced scripting library for KSP developers.
@@ -35,9 +34,8 @@ Twitter: magneto538
 
 }   
 
-{Create a Group folder}
+// Create a Group folder
 macro create_group_folder(#folder_name#)
-
 	declare #folder_name# := GRP.folder_ids
 	declare #folder_name#_groups[MAX_GROUPS] := (_EOA)
 	declare #folder_name#_count := 0
@@ -47,119 +45,77 @@ macro create_group_folder(#folder_name#)
 	END_USE_CODE
 
 	inc(GRP.folder_ids)
-
 end macro
 
 function get_group_folder(group_id) -> return
-
 	return := GRP.folders[group_id]
-
 end function
 
-{Add a group to folder by id or by name}
+// Add a group to folder by id or by name
 macro add_group_id(#folder_name#, group_id)
-
-	if ( GRP.folders[group_id] # #folder_name# )
-
+	if GRP.folders[group_id] # #folder_name# 
 		GRP.folders[group_id] := #folder_name#
 		#folder_name#_groups[#folder_name#_count] := group_id
 		inc(#folder_name#_count)
-
 	end if
-
 end macro
 
 macro add_group_name(#folder_name#, group_name)
-
-	if ( GRP.folders[ find_group(group_name) ] # #folder_name# )
-
+	if GRP.folders[ find_group(group_name) ] # #folder_name# 
 		GRP.folders[ find_group(group_name) ] := #folder_name#
 		#folder_name#_groups[#folder_name#_count] := find_group(group_name)
 		inc(#folder_name#_count)
-
 	end if
-
 end macro
 
 
-{Operations on folders}
-
+// Operations on folders
 function allow_group_folder(folder_name) 
-	_j := 0
-	while (_j < NUM_GROUPS)
-
-		if (GRP.folders[_j] = folder_name)
+	for _j := 0 to NUM_GROUPS-1
+		if GRP.folders[_j] = folder_name
 			allow_group(_j)
 		end if
-
-		inc(_j)
-
-	end while
+	end for
 end function
 
 function disallow_group_folder(folder_name)
-	_j := 0
-	while (_j < NUM_GROUPS)
-
-		if (GRP.folders[_j] = folder_name)
+	for _j := 0 to NUM_GROUPS-1
+		if GRP.folders[_j] = folder_name
 			disallow_group(_j)
 		end if
-
-		inc(_j)
-
-	end while
+	end for
 end function
 
 function purge_group_folder(folder_name, mode)
-	_j := 0
-	while (_j < NUM_GROUPS)
-
-		if (GRP.folders[_j] = folder_name)
+	for _j := 0 to NUM_GROUPS-1
+		if GRP.folders[_j] = folder_name
 			purge_group(_j, mode)
 		end if
-
-		inc(_j)
-
-	end while
+	end for
 end function
 
 function engine_par_grp(folder_name, engine_par, value, slot)
-
-	_j := 0
-	while (_j < NUM_GROUPS)
-		if (GRP.folders[_j] = folder_name)
+	for _j := 0 to NUM_GROUPS-1
+		if GRP.folders[_j] = folder_name
 			set_engine_par(engine_par, value, _j, slot, -1)
 		end if
-		inc(_j)
-	end while
-
+	end for
 end function
 
 function engine_par_all_grp(engine_par, value, slot)
-
-	_j := 0
-	while (_j < NUM_GROUPS)
+	for _j := 0 to NUM_GROUPS-1
 		set_engine_par(engine_par, value, _j, slot, -1)
-		inc(_j)
-	end while
-
+	end for
 end function
 
-function group_allow_state(group) -> return 
-
+function group_allow_state(group) -> return
 	return := get_event_par_arr(EVENT_ID, EVENT_PAR_ALLOW_GROUP, group)
-
 end function
 
 function group_folder_allow_state(folder_name, event, allow_state)
-	_j := 0
-	while (_j < NUM_GROUPS)
-
-		if (GRP.folders[_j] = folder_name)
+	for _j := 0 to NUM_GROUPS-1
+		if GRP.folders[_j] = folder_name
 			set_event_par_arr(event, EVENT_PAR_ALLOW_GROUP, allow_state, _j)
 		end if
-
-		inc(_j)
-
-	end while
+	end for
 end function

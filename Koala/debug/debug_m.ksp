@@ -54,10 +54,10 @@ end macro
 macro DEBUG.custom_value_edit(#n#, #min#, #max#, #line_1#, #line_2#, #line_3#)
 	USE_CODE_IF(ENABLE_DEBUG)	
 		on ui_control (DEBUG.custom_ve_#n#)
-			if (DEBUG.custom_ve_#n# < #min#)
+			if DEBUG.custom_ve_#n# < #min#
 				DEBUG.custom_ve_#n# := #min#
 			end if
-			if (DEBUG.custom_ve_#n# > #max#)
+			if DEBUG.custom_ve_#n# > #max#
 				DEBUG.custom_ve_#n# := #max#
 			end if
 			#line_1#
@@ -67,9 +67,7 @@ macro DEBUG.custom_value_edit(#n#, #min#, #max#, #line_1#, #line_2#, #line_3#)
 	END_USE_CODE
 end macro
 
-
-{PRIVATE}
-
+// PRIVATE
 macro DEBUG.label(#name#, fam, x, y, text, font, alignment)
 	USE_CODE_IF(ENABLE_DEBUG)	
 		declare ui_label DEBUG.#name#(1, 1)
@@ -136,7 +134,7 @@ macro DEBUG.button(#name#, fam, x, y, default, text, pers_status)
 		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_DEFAULT_VALUE, default)	
 		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_VALUE, default)	
 		set_control_par_str(get_ui_id(DEBUG.#name#), CONTROL_PAR_TEXT, text)
-		if (pers_status = PERSISTENT)
+		if pers_status = PERSISTENT
 			make_persistent(DEBUG.#name#)
 		end if		
 	END_USE_CODE
@@ -153,7 +151,7 @@ macro DEBUG.value_edit(#name#, fam, x, y, min, max, default, disp_ratio, font, t
 		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_VALUE, default)	
 		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_FONT_TYPE, font)	
 		set_control_par_str(get_ui_id(DEBUG.#name#), CONTROL_PAR_TEXT, text)
-		if (pers_status = PERSISTENT)
+		if pers_status = PERSISTENT
 			make_persistent(DEBUG.#name#)
 		end if		
 	END_USE_CODE
@@ -168,7 +166,7 @@ macro DEBUG.slider(#name#, fam, x, y, min, max, default, pers_status)
 		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_DEFAULT_VALUE, default)	
 		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_VALUE, default)	
 		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_MOUSE_BEHAVIOUR, 700)
-		if (pers_status = PERSISTENT)
+		if pers_status = PERSISTENT
 			make_persistent(DEBUG.#name#)
 		end if				
 	END_USE_CODE
@@ -183,7 +181,7 @@ macro DEBUG.menu(#name#, fam, x, y, default, pers_status)
 		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_WIDTH, DEBUG.col_width)
 		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_DEFAULT_VALUE, default)
 		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_VALUE, default)
-		if (pers_status = PERSISTENT)
+		if pers_status = PERSISTENT
 			make_persistent(DEBUG.#name#)
 		end if		
 	END_USE_CODE
@@ -192,7 +190,7 @@ end macro
 macro DEBUG.page_button(#name#)
 	USE_CODE_IF(ENABLE_DEBUG)	
 		on ui_control (DEBUG.#name#)
-			if (DEBUG.#name# = 1)
+			if DEBUG.#name# = 1
 				DEBUG.selected_page := DEBUG.#name#_id
 			else 
 				DEBUG.selected_page := DEBUG.page_none

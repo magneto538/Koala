@@ -1,5 +1,4 @@
 {
-
 ********* KOALA - AN ADVANCED SCRIPTING LIBRARY FOR KSP DEVELOPERS *********
 
 This file is part of Koala - An advanced scripting library for KSP developers.
@@ -39,80 +38,121 @@ Twitter: magneto538
 
 }   
 
-{UI Controls IDs}
-
-declare const SWITCHES := 1
-declare const BUTTONS := 2
-declare const KNOBS := 3
-declare const TEXT_LABELS := 4
-declare const PIC_LABELS := 5
-declare const MENUS := 6
+// UI Controls IDs
+declare const SWITCHES 		:= 1
+declare const BUTTONS 		:= 2
+declare const KNOBS 		:= 3
+declare const TEXT_LABELS 	:= 4
+declare const PIC_LABELS 	:= 5
+declare const MENUS 		:= 6
 declare const FILE_SELECTOR := 7
-declare const VALUE_EDITS := 8
-declare const SLIDERS := 9
-declare const TABLES := 10
-declare const LEVEL_METERS := 11
-declare const WAVEFORMS := 12
-declare const TEXT_EDITS := 13
+declare const VALUE_EDITS 	:= 8
+declare const SLIDERS 		:= 9
+declare const TABLES 		:= 10
+declare const LEVEL_METERS 	:= 11
+declare const WAVEFORMS 	:= 12
+declare const TEXT_EDITS 	:= 13
+declare const XY_PADS	 	:= 14
 
-{UI fonts}
-
+// UI fonts
 const CONSOLE
-	WHITE := 100
-	LIGHTGREY := 10
-	GREY1 := 3
-	GREY2 := 11
-	DARKGREY1 := 8
-	DARKGREY2 := 2
-	BLACK := 9
-	YELLOW := 4
-	RED := 6
+	WHITE 		:= 100
+	LIGHTGREY 	:= 10
+	GREY1 		:= 3
+	GREY2 		:= 11
+	DARKGREY1 	:= 8
+	DARKGREY2 	:= 2
+	BLACK 		:= 9
+	YELLOW 		:= 4
+	RED 		:= 6
 end const
 
 const REGULAR
-	WHITE := 18
-	LIGHTGREY := 13
-	GREY1 := 14
-	GREY2 := 23
-	DARKGREY1 := 15
-	DARKGREY2 := 12
-	BLACK := 22
+	WHITE 		:= 18
+	LIGHTGREY 	:= 13
+	GREY1 		:= 14
+	GREY2 		:= 23
+	DARKGREY1 	:= 15
+	DARKGREY2 	:= 12
+	BLACK 		:= 22
 end const 
 
 const BOLD
-	WHITE := 17
-	LIGHTGREY := 1
-	GREY1 := 20
-	GREY2 := 21
-	DARKGREY1 := 16
-	BLACK := 19
-	YELLOW := 5
-	RED := 7
+	WHITE 		:= 17
+	LIGHTGREY 	:= 1
+	GREY1 		:= 20
+	GREY2 		:= 21
+	DARKGREY1 	:= 16
+	BLACK 		:= 19
+	YELLOW 		:= 5
+	RED 		:= 7
 end const 
 
-declare const LEFT := 0
-declare const CENTER := 1
-declare const RIGHT := 2
+// UI colours
+const COLOR
+	BLACK 		:= 9000000h
+	WHITE 		:= 9ffffffh
+	LED_R 		:= 9ff0000h
+	LED_G 		:= 900ff00h
+	LED_B 		:= 9ff00ffh
+	RED 		:= 9ee204dh
+	SCARLET 	:= 9fc2847h
+	BRICK_RED	:= 9cb4154h
+	BLUE 		:= 91f75feh
+	GREEN 		:= 91cac78h
+	HOT_MAGENTA	:= 9ff1dceh
+	MAGENTA 	:= 9f664afh
+	YELLOW 		:= 9fce883h
+	CANARY		:= 9ffff99h
+	CERULEAN	:= 91dacd6h
+	SILVER		:= 9cdc5c2h
+	GREY		:= 995918ch
+	LIME 		:= 91df914h
+	PINE_GREEN	:= 9158078h
+	TURQUOISE 	:= 977dde7h
+	FUCHSIA 	:= 9c364c5h
+	SKY_BLUE 	:= 980daebh
+	PURPLE 		:= 97442c8h
+	ORANGE 		:= 9ff7538h
+	BROWN 		:= 9b4674dh
+	SEPIA 		:= 9a5694fh
+	COPPER 		:= 9dd9475h
+	SAND 		:= 9efcdb8h
+	SUNGLOW		:= 9ffcf48h
+end const
 
-{Visibility constants}
-declare const VISIBLE := 0 {HIDE_PART_NOTHING value}
-declare const INVISIBLE := 16 {HIDE_WHOLE_CONTROL value}
+declare const LEFT 		:= 0
+declare const CENTER 	:= 1
+declare const RIGHT 	:= 2
 
-{UI Level Meter constants}
-declare const LEFT_CH := 0
-declare const RIGHT_CH := 1
-declare const VERTICAL := 1
-declare const HORIZONTAL := 0
+// Visibility constants
+declare const VISIBLE 	:= 0 // HIDE_PART_NOTHING value
+declare const INVISIBLE := 16 // HIDE_WHOLE_CONTROL value
 
-{Persistence constants}
-declare const PERSISTENT := 1
-declare const NOT_PERSISTENT := 0
+// UI Level Meter constants
+declare const LEFT_CH 		:= 0
+declare const RIGHT_CH 		:= 1
+declare const VERTICAL 		:= 1
+declare const HORIZONTAL 	:= 0
+
+// Persistence constants
+declare const PERSISTENT 		:= 1
+declare const NOT_PERSISTENT 	:= 0
+
+// XY constants
+
+const XY 
+	AXIS_X 			:= 0
+	AXIS_Y 			:= 1
+	MOUSE_STD 		:= 0
+	MOUSE_FOLLOW 	:= 1
+	MOUSE_FORCE 	:= 2
+end const
+
+// ---------------------- PRIVATE ----------------------
 
 
-{---------------------- PRIVATE ----------------------}
-
-
-{UI arrays}
+// UI arrays
 declare const _EOA := -1
 declare _UI_COUNT := 0
 

@@ -38,8 +38,7 @@ Skype: magneto538
 Twitter: magneto538
 
 }  
- 
-	declare GRP.folders[MAX_GROUPS] := (_EOA)
-	declare GRP.selected_folder[MAX_GROUPS] := (_EOA)
 
-	declare GRP.folder_ids := 0
+declare GRP.folders[MAX_GROUPS] := (_EOA)
+declare GRP.selected_folder[MAX_GROUPS] := (_EOA)
+declare GRP.folder_ids := 0

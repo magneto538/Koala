@@ -1,5 +1,4 @@
 {
-
 ********* KOALA - AN ADVANCED SCRIPTING LIBRARY FOR KSP DEVELOPERS *********
 
 This file is part of Koala - An advanced scripting library for KSP developers.
@@ -39,7 +38,7 @@ Twitter: magneto538
 
 }  
 
-{GUI creation}
+// GUI creation
 	function DEBUG.add_ctrl(name, fam_id)
 		USE_CODE_IF(ENABLE_DEBUG)
 			inc(DEBUG.UI_COUNT)
@@ -56,7 +55,7 @@ Twitter: magneto538
 
 	function DEBUG.pos_x(col) -> return
 		USE_CODE_IF(ENABLE_DEBUG)
-			return := (DEBUG.col_width+5)*col
+			return := (DEBUG.col_width+5)*col + DEBUG.col_width - 15
 		END_USE_CODE
 	end function
 
@@ -114,10 +113,9 @@ Twitter: magneto538
 	end function 
 
 
-{GUI visibility}
+// GUI visibility
 	function DEBUG.view
 		USE_CODE_IF(ENABLE_DEBUG)
-
 			DEBUG.page_log := 0	
 			DEBUG.page_ui := 0	
 			DEBUG.page_event := 0	
@@ -133,9 +131,8 @@ Twitter: magneto538
 			DEBUG.set_family_visibility(DEBUG.CUSTOM_FAMILY, INVISIBLE)
 
 			restore_visibility_settings(ALL_FAMILIES)	
-
+			
 			select DEBUG.selected_page
-
 				case DEBUG.page_log_id
 					DEBUG.page_log := 1
 					DEBUG.set_visibility(get_ui_id(DEBUG.bg_label), VISIBLE)
@@ -162,9 +159,7 @@ Twitter: magneto538
 					DEBUG.page_custom := 1
 					DEBUG.set_visibility(get_ui_id(DEBUG.bg_label), VISIBLE)
 					DEBUG.set_family_visibility(DEBUG.CUSTOM_FAMILY, VISIBLE)
-
 			end select
-
 		END_USE_CODE
 	end function
 
@@ -175,8 +170,8 @@ Twitter: magneto538
 	function DEBUG.set_family_visibility(fam, value)
 		USE_CODE_IF(ENABLE_DEBUG)
 			_j := 1
-			while (DEBUG.UI_IDS[_j] # _EOA)
-				if (DEBUG.UI_FAMILIES[_j] = fam)			
+			while DEBUG.UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
+				if DEBUG.UI_FAMILIES[_j] = fam			
 					set_control_par(DEBUG.UI_IDS[_j], CONTROL_PAR_HIDE, value)
 				end if
 				inc(_j)
@@ -185,45 +180,44 @@ Twitter: magneto538
 	end function
 
 	function DEBUG.temp_set_fam_visibility(fam, value)
-		if (fam = ALL_FAMILIES)
-			_j := 1
-			while (_UI_IDS[_j] # _EOA)	
-				set_control_par(_UI_IDS[_j], CONTROL_PAR_HIDE, value)
-				inc(_j)
-			end while
-		else
+		USE_CODE_IF(ENABLE_DEBUG)
 			_j := 1		
-			while (_UI_IDS[_j] # _EOA)
-				if (_UI_FAMILIES[_j] = fam)		
+			while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
+				if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam		
 					set_control_par(_UI_IDS[_j], CONTROL_PAR_HIDE, value)
 				end if
 				inc(_j)
 			end while
-		end if
+		END_USE_CODE
+	end function
+
+	function DEBUG.shift_family(fam, offset_x, offset_y)
+		USE_CODE_IF(ENABLE_DEBUG)
+			_j := 1
+			while DEBUG.UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
+				if DEBUG.UI_FAMILIES[_j] = fam			
+					shift_ctrl(DEBUG.UI_IDS[_j], offset_x, offset_y)
+				end if
+				inc(_j)
+			end while
+		END_USE_CODE
 	end function
 
 	function DEBUG.logger_page_visibility
 		USE_CODE_IF(ENABLE_DEBUG)
-
 			DEBUG.set_family_visibility(DEBUG.LOG_FAMILY, VISIBLE)
-
-			if ( logger_switch_status = 0 )
+			if  logger_switch_status = 0 				
 				DEBUG.set_ctrl_text( get_ui_id(DEBUG.logger_switch), "_")
-
 				DEBUG.resize_ctrl(get_ui_id(DEBUG.logger_window), (DEBUG.col_width * 8), 400)
-				DEBUG.set_pos(get_ui_id(DEBUG.logger_window), DEBUG.pos_x(0), 20)
-
+				DEBUG.set_pos(get_ui_id(DEBUG.logger_window), 1, 20)
 				DEBUG.temp_set_fam_visibility(ALL_FAMILIES, INVISIBLE)
 			else 
 				DEBUG.set_ctrl_text( get_ui_id(DEBUG.logger_switch), "^")
-
-				DEBUG.resize_ctrl(get_ui_id(DEBUG.logger_window), (DEBUG.col_width * 4), 90)
-				DEBUG.set_pos(get_ui_id(DEBUG.logger_window), DEBUG.pos_x(3), DEBUG.pos_y(1))
-
+				DEBUG.resize_ctrl(get_ui_id(DEBUG.logger_window), (DEBUG.col_width * 4)-12, 110)
+				DEBUG.set_pos(get_ui_id(DEBUG.logger_window), DEBUG.pos_x(3), DEBUG.pos_y(0))
 				DEBUG.set_visibility(DEBUG.logger_lbl, INVISIBLE)
 				DEBUG.set_visibility(DEBUG.bg_label_logger, INVISIBLE)			
 			end if
-			
 		END_USE_CODE
 	end function
 
@@ -240,28 +234,28 @@ Twitter: magneto538
 	end function
 
 
-{GUI update}
+// GUI update
 	function DEBUG.fam_menu_filter
 		USE_CODE_IF(ENABLE_DEBUG)
 			declare DEBUG.menu_visibility
 
 			_j := 1
-			while (_UI_IDS[_j] # _EOA)
+			while _UI_IDS[_j] # _EOA
 				DEBUG.menu_visibility := 1
 
-				if (_UI_FAMILIES[_j] # DEBUG.ui_family_name or _UI_TYPE[_j] # DEBUG.ui_type)
+				if _UI_FAMILIES[_j] # DEBUG.ui_family_name or _UI_TYPE[_j] # DEBUG.ui_type
 					DEBUG.menu_visibility := 0
 				end if
 
-				if (DEBUG.ui_family_name = ALL_FAMILIES and _UI_TYPE[_j] = DEBUG.ui_type)
+				if DEBUG.ui_family_name = ALL_FAMILIES and _UI_TYPE[_j] = DEBUG.ui_type
 					DEBUG.menu_visibility := 1
 				end if
 
-				if (DEBUG.ui_type = ALL_TYPES and _UI_FAMILIES[_j] = DEBUG.ui_family_name)
+				if DEBUG.ui_type = ALL_TYPES and _UI_FAMILIES[_j] = DEBUG.ui_family_name
 					DEBUG.menu_visibility := 1
 				end if
 
-				if (DEBUG.ui_type = ALL_TYPES and DEBUG.ui_family_name = ALL_FAMILIES)
+				if DEBUG.ui_type = ALL_TYPES and DEBUG.ui_family_name = ALL_FAMILIES
 					DEBUG.menu_visibility := 1
 				end if
 
@@ -279,10 +273,14 @@ Twitter: magneto538
 
 	function DEBUG.var_menu_text_update
 		USE_CODE_IF(ENABLE_DEBUG)
-			if (DEBUG.var_name # 0)
-
+			if DEBUG.var_name # 0
 				DEBUG.set_ctrl_text(get_ui_id(DEBUG.ui_id), "UI ID: " & _UI_IDS[DEBUG.var_name])
-				DEBUG.set_ctrl_text(get_ui_id(DEBUG.value), "Value: " & get_value(_UI_IDS[DEBUG.var_name]))
+
+				if _UI_TYPE[DEBUG.var_name] # XY_PADS
+					DEBUG.set_ctrl_text(get_ui_id(DEBUG.value), "Value: " & get_value(_UI_IDS[DEBUG.var_name]))
+				else 
+					DEBUG.set_ctrl_text(get_ui_id(DEBUG.value), "Sel. cursor: " & active_cursor(_UI_IDS[DEBUG.var_name]))
+				end if
 
 				DEBUG.set_ctrl_text(get_ui_id(DEBUG.ui_pos_x), "Pos. X: " & get_pos_x(_UI_IDS[DEBUG.var_name]))
 				DEBUG.set_ctrl_text(get_ui_id(DEBUG.ui_pos_y), "Pos. Y: " & get_pos_y(_UI_IDS[DEBUG.var_name]))
@@ -312,9 +310,7 @@ Twitter: magneto538
 
 				DEBUG.set_ctrl_text(get_ui_id(DEBUG.ui_persistence_status), "Persistent: -")
 				DEBUG.set_ctrl_text(get_ui_id(DEBUG.number), "Ctrl No.: -")		
-
 			end if
-
 		END_USE_CODE	
 	end function
 
@@ -323,24 +319,19 @@ Twitter: magneto538
 			declare DEBUG.menu_visibility
 
 			_j := 0
-			while (_j < NUM_GROUPS)
-
+			while _j < NUM_GROUPS
 				DEBUG.menu_visibility := 0
-
-				if (GRP.folders[_j] = DEBUG.groups_folder or DEBUG.groups_folder = 0)
+				if GRP.folders[_j] = DEBUG.groups_folder or DEBUG.groups_folder = 0
 					DEBUG.menu_visibility := 1
 				end if
-
 				set_menu_item_visibility(get_ui_id(DEBUG.groups_name), _j, DEBUG.menu_visibility)
-
 				inc(_j)
 			end while
 
-			if ( DEBUG.groups_folder # 0 )
+			if  DEBUG.groups_folder # 0			
 				DEBUG.groups_name := search(GRP.folders, DEBUG.groups_folder)
 			else 
 				DEBUG.groups_name := 0
 			end if
-
 		END_USE_CODE
 	end function

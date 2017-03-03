@@ -1,9 +1,10 @@
 # What is Koala?
 Koala is an advanced scripting library for Kontakt KSP developers.
-The latest version is v2.0.0.
+The latest version is v2.1.0.
 The Koala project is open source and covered by MIT licensing system.
 
-The official web page of the Koala project is available [here](http://davidemagni.com/?page_id=709).
+**As of Koala v2.1.0, the library is compatible and fully supports Kontakt 5.6.5. Backwards compatibility is granted until Kontakt 5.5.2. There is no current documentation for Kontakt versions prior to 5.5.2.**
+
 
 # Install and use Koala
 Every info about Koala, including guides, tips and tricks, can be found on [the official Wiki page of Koala](https://github.com/magneto538/Koala/wiki). 
@@ -12,7 +13,8 @@ Starting from v2.0.0, the PDF manual has been deprecated.
 
 # Contacts
 - [Contact Koala Support](mailto:koala@davidemagni.com)
-- [Koala's web page](http://davidemagni.com/?page_id=709) on [davidemagni.com](http://davidemagni.com)
+- Koala's developer at [davidemagni.com](http://davidemagni.com)
+
 
 # MIT License
 

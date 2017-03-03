@@ -39,18 +39,17 @@ Twitter: magneto538
 
 }   
 
-{Generic Family - Show/Hide debugging options}
-
+// Generic Family - Show/Hide debugging options
 DEBUG.page_button(page_log)
 DEBUG.page_button(page_ui)
 DEBUG.page_button(page_event)
 DEBUG.page_button(page_groups)
 DEBUG.page_button(page_custom)
 
-{UI Family - Adjust position}
 
+// UI Family - Adjust position
 on ui_control (DEBUG.adjust_pos_x)
-	if (DEBUG.SELECTED_UI_ID # 0)
+	if DEBUG.SELECTED_UI_ID # 0
 		set_control_par(DEBUG.SELECTED_UI_ID, CONTROL_PAR_POS_X, DEBUG.adjust_pos_x)
 	else 
 		message("### DEBUGGER: Click on a UI Control to display/set its data.")
@@ -59,7 +58,7 @@ on ui_control (DEBUG.adjust_pos_x)
 end on
 
 on ui_control (DEBUG.adjust_pos_y)
-	if (DEBUG.SELECTED_UI_ID # 0)
+	if DEBUG.SELECTED_UI_ID # 0
 		set_control_par(DEBUG.SELECTED_UI_ID, CONTROL_PAR_POS_Y, DEBUG.adjust_pos_y)	
 	else 
 		message("### DEBUGGER: Click on a UI Control to display/set its data.")
@@ -68,7 +67,7 @@ on ui_control (DEBUG.adjust_pos_y)
 end on
 
 on ui_control (DEBUG.adjust_width)
-	if (DEBUG.SELECTED_UI_ID # 0)
+	if DEBUG.SELECTED_UI_ID # 0
 		set_control_par(DEBUG.SELECTED_UI_ID, CONTROL_PAR_WIDTH, DEBUG.adjust_width)	
 	else 
 		message("### DEBUGGER: Click on a UI Control to display/set its data.")
@@ -77,15 +76,13 @@ on ui_control (DEBUG.adjust_width)
 end on
 
 on ui_control (DEBUG.adjust_height)
-	if (DEBUG.SELECTED_UI_ID # 0)
+	if DEBUG.SELECTED_UI_ID # 0
 		set_control_par(DEBUG.SELECTED_UI_ID, CONTROL_PAR_HEIGHT, DEBUG.adjust_height)	
 	else 
 		message("### DEBUGGER: Click on a UI Control to display/set its data.")
 		DEBUG.adjust_height := 0
 	end if
 end on
-
-
 
 on ui_control (DEBUG.midi_mon_clear)
 	call DEBUG.midi_monitor_reset_view
@@ -114,9 +111,9 @@ end on
 
 on ui_control (DEBUG.midi_mon_play)
 	call DEBUG.panic
-	if (DEBUG.midi_mon_play = ON)
+	if DEBUG.midi_mon_play = ON
 		DEBUG.play_count := DEBUG.midi_mon_play_start
-		while (DEBUG.play_count <= DEBUG.midi_mon_play_end and DEBUG.midi_mon_play = ON)
+		while DEBUG.play_count <= DEBUG.midi_mon_play_end and DEBUG.midi_mon_play = ON
 			play_note(DEBUG.play_count, DEBUG.midi_mon_play_vel, 0, DURATION_QUARTER)
 			set_ctrl_text(get_ui_id(DEBUG.midi_mon_play), "Note " & DEBUG.play_count & ", Vel. " & DEBUG.midi_mon_play_vel)
 			wait(DURATION_QUARTER)
@@ -130,13 +127,13 @@ on ui_control (DEBUG.midi_mon_play)
 end on
 
 on ui_control (DEBUG.midi_mon_play_start)
-	if (DEBUG.midi_mon_play_end < DEBUG.midi_mon_play_start)
+	if DEBUG.midi_mon_play_end < DEBUG.midi_mon_play_start
 		DEBUG.midi_mon_play_end := DEBUG.midi_mon_play_start
 	end if
 end on
 
 on ui_control (DEBUG.midi_mon_play_end)
-	if (DEBUG.midi_mon_play_start > DEBUG.midi_mon_play_end)
+	if DEBUG.midi_mon_play_start > DEBUG.midi_mon_play_end
 		DEBUG.midi_mon_play_start := DEBUG.midi_mon_play_end
 	end if
 end on
@@ -156,10 +153,9 @@ on ui_control (DEBUG.midi_cc_test)
 end on
 
 on ui_control (DEBUG.midi_mon_freeze_engine)
-	if (DEBUG.midi_mon_freeze_engine = ON)
+	if DEBUG.midi_mon_freeze_engine = ON
 		call DEBUG.panic	
 	end if
-	{Conditional button. When on, ALL EVENTS WILL BE IGNORED!}	
 end on
 
 on ui_control (DEBUG.ui_family_name)
@@ -171,59 +167,40 @@ on ui_control (DEBUG.ui_type)
 end on
 
 on ui_control (DEBUG.var_name)
-
-	if (DEBUG.var_name # 0)
-
+	if DEBUG.var_name # 0
 		set_menu_item_visibility(get_ui_id(DEBUG.var_name), 0, 0)
 		DEBUG.SELECTED_UI_ID := _UI_IDS[DEBUG.var_name]
 		call DEBUG.var_menu_text_update
-
 	end if
-
 end on
 
 
-{Groups page}
-
+// Groups page
 on ui_control (DEBUG.groups_folder)
 	call DEBUG.groups_folder_filter
 end on
 
-on ui_control (DEBUG.groups_name)
 
-end on
-
-
-{Logger page}
-
+// Logger page
 on ui_control (DEBUG.logger_switch)
-
 	DEBUG.logger_switch := 0
-
-	if ( logger_switch_status = 0 )
+	if  logger_switch_status = 0 
 		logger_switch_status := 1
 	else 
 		logger_switch_status := 0
 	end if
-
 	call DEBUG.view
-
 end on
 
 on ui_control (DEBUG.logger_clear)
-
 	DEBUG.logger_clear := 0
-
 	DEBUG.set_ctrl_text(get_ui_id(DEBUG.logger_window), "")	
-
 end on
 
 on ui_control (DEBUG.logger_start)
-
-	if ( DEBUG.logger_start = 1 )
+	if  DEBUG.logger_start = 1 
 		DEBUG.add_log_simple("### _________ KOALA LOGGER STARTED _________ ###")
 	else
 		DEBUG.add_log_simple("### _________ KOALA LOGGER ENDED _________ ###")	
 	end if
-
 end on
