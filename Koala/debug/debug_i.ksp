@@ -78,6 +78,9 @@ family DEBUG
 	// User-defined declarations
 	declare var_name_ids[10]
 	declare var_value_ids[10]
+
+	declare logger_x_off
+	declare logger_y_off
 end family
 
 !DEBUG.UI_PERSISTENCE[0] := "N/A"

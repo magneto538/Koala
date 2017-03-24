@@ -107,6 +107,13 @@ function min(a, b) -> return
 	return := a*(1 + sh_right(b - a, 31)) - b*sh_right(b - a, 31)
 end function
 
+function bit_rnd(unsigned) -> return 
+	return := 0
+	for i := 0 to 31 - unsigned
+		return := return .or. sh_left(random(0,1), i)
+	end for
+end function
+
 // returns a bit sequence from an integer. The output is a text string.
 function int_to_bin(int, bit_nr) -> return
 	if bit_nr <= 0x20

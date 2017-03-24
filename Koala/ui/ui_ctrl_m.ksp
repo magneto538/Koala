@@ -212,6 +212,7 @@ macro create_menu(#name#, #fam#, x, y, w, h, default, entries, font, alignment, 
 	_store_ctrl_font_alignment(alignment)	
 	_store_ctrl_pic(pic)
 	_store_visibility(get_ui_id(#name#), VISIBLE)	
+	_store_ctrl_bounds(0, entries-1)	
 	_ctrl_type(MENUS)
 	
 	#name# -> pos_x := x
@@ -263,7 +264,7 @@ macro create_value_edit(#name#, #fam#, x, y, w, min, max, default, disp_ratio, p
 	END_USE_CODE
 end macro
 
-macro create_file_selector(#name#, #fam#, x, y, w, h, col_width, file_type, root_folder, font)
+macro create_file_selector(#name#, #fam#, x, y, w, h, col_width, f_type, root_folder, font)
 	declare ui_file_selector #name#
 	_add_ctrl(#name#, #fam#)		
 	_store_pos_data(x, y)
@@ -276,7 +277,7 @@ macro create_file_selector(#name#, #fam#, x, y, w, h, col_width, file_type, root
 	#name# -> width := w
 	#name# -> height := h
 	#name# -> column_width := col_width
-	#name# -> file_type := file_type
+	#name# -> file_type := f_type
 	#name# -> font_type := font
 	#name# -> basepath := root_folder
 
@@ -364,7 +365,7 @@ macro create_text_edit(#name#, #fam#, x, y, w, h, txt, font, alignment, backgrou
 	#name# -> text := txt
 	#name# -> font_type := font
 	#name# -> text_alignment := alignment
-	{#name# -> picture := background}
+	#name# -> picture := background
 
 	USE_CODE_IF(ENABLE_DEBUG)
 		add_menu_item(DEBUG.var_name, !_UI_CTRL_NAMES[_UI_COUNT], _UI_COUNT)
@@ -401,4 +402,3 @@ macro create_xy(#name#, #fam#, x, y, w, h, default, cursors, cursors_pic, pers_s
 		DEBUG.set_persistence(pers_status)
 	END_USE_CODE
 end macro
-

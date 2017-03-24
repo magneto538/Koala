@@ -37,51 +37,7 @@ www.davidemagni.com
 Skype: magneto538
 Twitter: magneto538
 
-}   
+}  
 
-{1 - on init}
-macro Koala.init
-	import "Koala/global/global_i.ksp"
-	import "Koala/ui/graphics_i.ksp"
-	import "Koala/ui/ctrl_default_i.ksp"
-	import "Koala/families/families_i.ksp"
-	import "Koala/tools/tools_i.ksp"
-	import "Koala/event/event_i.ksp"	
-	import "Koala/groups/groups_i.ksp"	
-	import "Koala/math/math_i.ksp" as math
-	import "Koala/bool/bool_i.ksp" as bool
-
-	USE_CODE_IF(ENABLE_DEBUG)
-		declare @KOALA_VERSION := "2.1.0"
-		import "Koala/debug/debug_i.ksp"
-		DEBUG.on_init
-	END_USE_CODE
-end macro
-
-{2 - macros}
-import "Koala/ui/ui_ctrl_m.ksp"
-
-{3 - functions}
-import "Koala/ui/graphics_p.ksp"
-import "Koala/tools/tools_p.ksp"
-import "Koala/families/families_p.ksp"
-import "Koala/groups/groups_p.ksp"	
-
-import "Koala/ui/graphics_f.ksp"
-import "Koala/families/families_f.ksp"
-import "Koala/io/io_f.ksp"
-import "Koala/tools/tools_f.ksp"
-import "Koala/engine/engine_f.ksp"
-import "Koala/groups/groups_f.ksp"	
-import "Koala/math/math_f.ksp" as math
-import "Koala/bool/bool_f.ksp" as bool
-
-{5 - debug}
-import "Koala/debug/debug_ui_f.ksp"
-import "Koala/debug/debug_operations_f.ksp"
-import "Koala/debug/debug_user_f.ksp"
-import "Koala/debug/debug_m.ksp"
-
-USE_CODE_IF(ENABLE_DEBUG)
-	import "Koala/debug/debug_c.ksp"
-END_USE_CODE
+// Declarations specific of bool. All these declarations will be imported as bool.<name>, as this file is imported as 'bool'.
+declare i

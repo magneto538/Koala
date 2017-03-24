@@ -221,7 +221,7 @@ end function
 
 function DEBUG.on_pgs_changed
 	USE_CODE_IF(ENABLE_DEBUG)
-		if DEBUG.logger_start = 1 and DEBUG.logger_show_pgcb = 1 and DEBUG.logger_show_lcb = 1
+		if DEBUG.logger_start = 1 and DEBUG.logger_show_pgcb = 1
 			DEBUG.add_log_p( "Callback executed" )
 		end if
 	END_USE_CODE
@@ -229,7 +229,7 @@ end function
 
 function DEBUG.on_poly_at
 	USE_CODE_IF(ENABLE_DEBUG)
-		if DEBUG.logger_start = 1 and DEBUG.logger_show_pacb = 1 and DEBUG.logger_show_lcb = 1
+		if DEBUG.logger_start = 1 and DEBUG.logger_show_pacb = 1
 			DEBUG.add_log_p( "Callback triggered by Key " & POLY_AT_NUM & " (" & !NOTE_NAME[POLY_AT_NUM] & "). Value: " & POLY_AT[POLY_AT_NUM] & ". MIDI Channel: " & MIDI_CHANNEL)
 		end if
 	END_USE_CODE
@@ -237,7 +237,7 @@ end function
 
 function DEBUG.on_rpn_nrpn
 	USE_CODE_IF(ENABLE_DEBUG)
-		if DEBUG.logger_start = 1 and DEBUG.logger_show_rncb = 1 and DEBUG.logger_show_lcb = 1
+		if DEBUG.logger_start = 1 and DEBUG.logger_show_rncb = 1
 			DEBUG.add_log_p( "Parameter number: " & RPN_ADDRESS & " . Parameter value: " & RPN_VALUE & ". MIDI Channel: " & MIDI_CHANNEL)
 		end if
 	END_USE_CODE
@@ -251,7 +251,7 @@ end function
 
 function DEBUG.on_async_complete
 	USE_CODE_IF(ENABLE_DEBUG)
-		if DEBUG.logger_start = 1 and DEBUG.logger_show_acb = 1 and DEBUG.logger_show_lcb = 1 and NI_ASYNC_ID # LOGGER_ASYNC_ID
+		if DEBUG.logger_start = 1 and DEBUG.logger_show_acb = 1 and NI_ASYNC_ID # LOGGER_ASYNC_ID
 			DEBUG.add_log_p( "Callback triggered by ID " & NI_ASYNC_ID & ". Exit status: " & NI_ASYNC_EXIT_STATUS )
 		end if		
 	END_USE_CODE
@@ -278,3 +278,16 @@ macro DEBUG.show_value(lbl_idx, #var#)
 		set_control_par_str(DEBUG.var_value_ids[lbl_idx - 1], CONTROL_PAR_TEXT, #var#)
 	END_USE_CODE
 end macro
+
+function DEBUG.shift_debugger(x, y)
+	USE_CODE_IF(ENABLE_DEBUG)
+		DEBUG.logger_x_off := x
+		DEBUG.logger_y_off := y
+		DEBUG.shift_family(DEBUG.GENERIC_FAMILY, DEBUG.logger_x_off, DEBUG.logger_y_off)
+		DEBUG.shift_family(DEBUG.LOG_FAMILY, DEBUG.logger_x_off, DEBUG.logger_y_off)
+		DEBUG.shift_family(DEBUG.UI_FAMILY, DEBUG.logger_x_off, DEBUG.logger_y_off)
+		DEBUG.shift_family(DEBUG.EVENT_FAMILY, DEBUG.logger_x_off, DEBUG.logger_y_off)
+		DEBUG.shift_family(DEBUG.GROUPS_FAMILY, DEBUG.logger_x_off, DEBUG.logger_y_off)
+		DEBUG.shift_family(DEBUG.CUSTOM_FAMILY, DEBUG.logger_x_off, DEBUG.logger_y_off)
+	END_USE_CODE
+end function

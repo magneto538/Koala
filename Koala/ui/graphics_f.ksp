@@ -180,6 +180,13 @@ function value_to_dec(ui_id) -> return
 	return := int_to_real(get_value(ui_id) - get_ctrl_min(ui_id)) / int_to_real(get_ctrl_max(ui_id) - get_ctrl_min(ui_id))
 end function
 
+function perc_to_value(ui_id, perc) -> return
+	return := ((((get_ctrl_max(ui_id) - get_ctrl_min(ui_id)) * perc) / 100) + get_ctrl_min(ui_id))
+end function
+
+function dec_to_value(ui_id, decim) -> return 
+	return := real_to_int(decim * int_to_real(get_ctrl_max(ui_id) - get_ctrl_min(ui_id))) + int_to_real(get_ctrl_min(ui_id)) 
+end function
 
 // Reset UI Controls functions
 function reset_pos(ui_id)

@@ -196,7 +196,8 @@ Twitter: magneto538
 			_j := 1
 			while DEBUG.UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
 				if DEBUG.UI_FAMILIES[_j] = fam			
-					shift_ctrl(DEBUG.UI_IDS[_j], offset_x, offset_y)
+					DEBUG.UI_IDS[_j] -> pos_x := DEBUG.UI_IDS[_j] -> pos_x + offset_x
+					DEBUG.UI_IDS[_j] -> pos_y := DEBUG.UI_IDS[_j] -> pos_y + offset_y
 				end if
 				inc(_j)
 			end while
@@ -218,6 +219,7 @@ Twitter: magneto538
 				DEBUG.set_visibility(DEBUG.logger_lbl, INVISIBLE)
 				DEBUG.set_visibility(DEBUG.bg_label_logger, INVISIBLE)			
 			end if
+			DEBUG.shift_ctrl(get_ui_id(DEBUG.logger_window), DEBUG.logger_x_off, DEBUG.logger_y_off)
 		END_USE_CODE
 	end function
 

@@ -117,7 +117,7 @@ end function
 function set_family_text(fam, array)
 	_j := 1
 	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
-		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
+		if (fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam) and (_UI_TYPE[_j] = TEXT_EDITS or _UI_TYPE[_j] = TEXT_LABELS or _UI_TYPE[_j] = PIC_LABELS or _UI_TYPE[_j] = BUTTONS or _UI_TYPE[_j] = SWITCHES)
 			set_ctrl_text(_UI_IDS[_j], array[_j])
 		end if 
 		inc(_j)
