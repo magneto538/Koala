@@ -40,10 +40,11 @@ Twitter: magneto538
 }  
 
 // Curve
-// curve_value shall be a value from 0 to 100. 50 is linear.
+// curve_value shall be a value from -50 to 50. 0 is linear.
 define CURVE_AMOUNT(curve_value) := ( int_to_real((1000 + curve_value) * 10) / 10000.0 )
 
 function curve(curve_value, lin_value, curve_steps, min, max) -> return
+	declare temp 
 	if CURVE_AMOUNT(curve_value) # 1.0
 		return := min + real_to_int( int_to_real(max-min) * (( pow(CURVE_AMOUNT(curve_value), int_to_real(lin_value)) - 1.0 ) / ( pow(CURVE_AMOUNT(curve_value), int_to_real(curve_steps)) - 1.0 ) ) )
 	else 
@@ -56,6 +57,11 @@ end function
 // if return_mode is 1: negative value -1, positive value 1
 function sign(value, return_mode) -> return
 	return := ((sh_right(value, 31) .or. 1) + (1-return_mode)) / (2-return_mode)
+end function
+
+// Turn 0 into 1 and vice-versa. Applies XOR operator to input value.
+function flip(value, bit_pos) -> return
+	return := ( (value .and. .not. sh_left(1, bit_pos)) .or. (.not. value .and. sh_left(1, bit_pos)) )
 end function
 
 // Advanced logarythm function. The user may now set a custom integer base and a real/int value to be processed.
@@ -112,6 +118,12 @@ function bit_rnd(unsigned) -> return
 	for i := 0 to 31 - unsigned
 		return := return .or. sh_left(random(0,1), i)
 	end for
+end function
+
+// fmod function is basically a workaround to use mod operator on real numbers. mod is not defined outside the
+// integers.
+function fmod(a, b) -> return
+	return := ((a) - floor((a) / (b)) * (b))
 end function
 
 // returns a bit sequence from an integer. The output is a text string.

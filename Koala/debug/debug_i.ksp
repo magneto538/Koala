@@ -60,12 +60,12 @@ family DEBUG
 	declare const page_groups_id 	:= 3
 	declare const page_custom_id 	:= 4
 
-	declare const GENERIC_FAMILY	:= -9999
-	declare const LOG_FAMILY		:= -9998
-	declare const UI_FAMILY 		:= -9997
-	declare const EVENT_FAMILY 		:= -9996
-	declare const GROUPS_FAMILY 	:= -9995
-	declare const CUSTOM_FAMILY 	:= -9994
+	declare const GENERIC_FAMILY	:= 0x1
+	declare const LOG_FAMILY		:= 0x2
+	declare const UI_FAMILY 		:= 0x4
+	declare const EVENT_FAMILY 		:= 0x8
+	declare const GROUPS_FAMILY 	:= 0x10
+	declare const CUSTOM_FAMILY 	:= 0x20
 
 	// Event data - declarations
 	declare !source_txt[6]
@@ -99,15 +99,15 @@ make_persistent(DEBUG.selected_page)
 
 if 1=1
 
-DEBUG.bg_label(bg_label, DEBUG.GENERIC_FAMILY, 0, DEBUG.row1, 633, 110, "### Koala - DEBUG CONSOLE ###")
+DEBUG.bg_label(bg_label, DEBUG.GENERIC_FAMILY, DEBUG.pos_x(0), DEBUG.row1, 595 - DEBUG.pos_x(0), 110, "### Koala - DEBUG CONSOLE ###")
 DEBUG.bg_label(bg_label_monitor, DEBUG.EVENT_FAMILY, 0, 0, 633, DEBUG.row1 - 2, "")
 DEBUG.bg_label(bg_label_logger, DEBUG.LOG_FAMILY, 0, 0, 633, DEBUG.row1 - 2, "")
 
-DEBUG.button(page_log, DEBUG.GENERIC_FAMILY, 0, DEBUG.pos_y(1), 0, "Log", PERSISTENT)
-DEBUG.button(page_ui, DEBUG.GENERIC_FAMILY, 0, DEBUG.pos_y(2), 1, "UI", PERSISTENT)
-DEBUG.button(page_event, DEBUG.GENERIC_FAMILY, 0, DEBUG.pos_y(3), 0, "Mon", PERSISTENT)
-DEBUG.button(page_groups, DEBUG.GENERIC_FAMILY, 0, DEBUG.pos_y(4), 0, "Grp", PERSISTENT)
-DEBUG.button(page_custom, DEBUG.GENERIC_FAMILY, 0, DEBUG.pos_y(5), 0, "Ex", PERSISTENT)
+DEBUG.button(page_log, DEBUG.GENERIC_FAMILY, 0, DEBUG.pos_y(0), 0, "Log", PERSISTENT)
+DEBUG.button(page_ui, DEBUG.GENERIC_FAMILY, 0, DEBUG.pos_y(1), 1, "UI", PERSISTENT)
+DEBUG.button(page_event, DEBUG.GENERIC_FAMILY, 0, DEBUG.pos_y(2), 0, "Mon", PERSISTENT)
+DEBUG.button(page_groups, DEBUG.GENERIC_FAMILY, 0, DEBUG.pos_y(3), 0, "Grp", PERSISTENT)
+DEBUG.button(page_custom, DEBUG.GENERIC_FAMILY, 0, DEBUG.pos_y(4), 0, "Ex", PERSISTENT)
 
 DEBUG.resize_ctrl(get_ui_id(DEBUG.page_log), 35, 18)
 DEBUG.resize_ctrl(get_ui_id(DEBUG.page_ui), 35, 18)
@@ -287,7 +287,6 @@ DEBUG.label(groups_purged_lbl, DEBUG.GROUPS_FAMILY, DEBUG.pos_x(0), DEBUG.pos_y(
 
 DEBUG.label(groups_allowed, DEBUG.GROUPS_FAMILY, DEBUG.pos_x(1), DEBUG.pos_y(4), "-", CONSOLE.WHITE, LEFT)		
 DEBUG.label(groups_purged, DEBUG.GROUPS_FAMILY, DEBUG.pos_x(1), DEBUG.pos_y(5), "-", CONSOLE.WHITE, LEFT)		
-
 
 // User-defined data
 DEBUG.label(var_1_name, DEBUG.CUSTOM_FAMILY, DEBUG.pos_x(0), DEBUG.pos_y(1), "<1>", CONSOLE.GREY2, RIGHT)

@@ -43,3 +43,13 @@ Twitter: magneto538
 function is_greater(a, b) -> return 
 	return := (((sh_right(a-b, 31) .or. 1) + 1)/2)
 end function
+
+// Returns 0 if a # b and 1 if a = b.
+function is_equal(a, b) -> return 
+	return := ( -sh_right(abs(a - b) - 1, 31) )
+end function
+
+function is_not_equal(a, b) -> return 
+	return := ( 1 + sh_right(abs(a - b) - 1, 31) )
+end function
+

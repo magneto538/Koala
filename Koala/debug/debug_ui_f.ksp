@@ -55,7 +55,7 @@ Twitter: magneto538
 
 	function DEBUG.pos_x(col) -> return
 		USE_CODE_IF(ENABLE_DEBUG)
-			return := (DEBUG.col_width+5)*col + DEBUG.col_width - 15
+			return := (DEBUG.col_width+5)*col + DEBUG.col_width - 40
 		END_USE_CODE
 	end function
 
