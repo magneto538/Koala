@@ -46,8 +46,6 @@ on init
 	activate_logger( get_folder(GET_FOLDER_PATCH_DIR) & "/log.nka")
 	Koala.init
 	create_instrument(540, "", "", "Koala v2.1 - TEMPLATE SCRIPT")
-	set_ui_data(1000, COLOR.BLUE)
-
 end on 
 
 on persistence_changed 

@@ -131,6 +131,7 @@ function set_xy_automation_data(ui_id, auto_id, auto_name)
 end function
 
 function set_automation_data(ui_id, auto_id, auto_name)
+	set_control_par(ui_id, CONTROL_PAR_ALLOW_AUTOMATION, YES)
 	set_control_par(ui_id, CONTROL_PAR_AUTOMATION_ID, auto_id)
 	set_control_par_str(ui_id, CONTROL_PAR_AUTOMATION_NAME, auto_name)
 end function
@@ -186,6 +187,11 @@ end function
 
 function dec_to_value(ui_id, decim) -> return 
 	return := real_to_int(decim * int_to_real(get_ctrl_max(ui_id) - get_ctrl_min(ui_id))) + int_to_real(get_ctrl_min(ui_id)) 
+end function
+
+// Useful to reduce the range of a slider within two edge values.
+function scale_slider_out(ui_id, min, max) -> return
+	return := real_to_int(int_to_real(min) + value_to_dec(ui_id) * int_to_real(max-min))
 end function
 
 // Reset UI Controls functions

@@ -120,6 +120,23 @@ function bit_rnd(unsigned) -> return
 	end for
 end function
 
+// Reduce the number of shown decimals. Both the input and the output are real values.
+function trim(in, decim) -> return
+	return := round(in * pow(10.0, int_to_real(decim))) / pow(10.0, int_to_real(decim))
+end function
+
+// Convert a note nr into a frequency.
+// The base formula is (2^(1/12))^(note-49) * ref. 82 is the note nr for A4 (reference). ref is the reference pitch (440 Hz)
+function note_to_freq(note, ref) -> return
+	return := pow(pow(2.0, 1.0/12.0), int_to_real(note) - 82.0) * ref
+end function
+
+// Convert a frequency into a note nr.
+// The base formula is 12*log2(freq/ref) + 49.
+function freq_to_note(freq, ref) -> return
+	return := real_to_int(12.0 * (log(freq/ref)/log(2.0)) + 82.0)
+end function
+
 // fmod function is basically a workaround to use mod operator on real numbers. mod is not defined outside the
 // integers.
 function fmod(a, b) -> return

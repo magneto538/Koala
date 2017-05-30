@@ -1,0 +1,287 @@
+{
+
+********* KOALA - AN ADVANCED SCRIPTING LIBRARY FOR KSP DEVELOPERS *********
+
+This file is part of Koala - An advanced scripting library for KSP developers.
+
+Copyright (c) 2016 Davide Magni
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer 
+in the documentation and/or other materials provided with the distribution.
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+CONTACTS
+
+koala@davidemagni.com
+www.davidemagni.com
+Skype: magneto538
+Twitter: magneto538
+
+}   
+
+//----------------- FILTERS --------------
+	// Fundamental equation: ep = 10^6/log2(Fmax/Fmin)*log2(F/Fmin)
+	// E2V output and V2E input: f_min to f_max Hz
+	define E2V.FILT_FREQ_BASE(in, f_min, f_max) := ((pow(2.0, int_to_real(in) * (math.log2(f_max/f_min)/pow(10.0, 6.0)))) * f_min)
+	define V2E.FILT_FREQ_BASE(in, f_min, f_max) := real_to_int(((pow(10.0, 6.0) / math.log2(f_max/f_min)) * math.log2(in / f_min)))
+	
+	// SV and Ladder filter frequency
+	function E2V.SVFreq(in) -> return
+		return := E2V.FILT_FREQ_BASE(in, 26.0, 19900.0)
+	end function
+	function V2E.SVFreq(in) -> return
+		return := V2E.FILT_FREQ_BASE(in, 26.0, 19900.0)	
+	end function
+
+	// SV multi filter frequency (for SV Par LP/HP, SV Par BP/BP, and SV Ser LP/HP)
+	function E2V.SVMFreq(in) -> return
+		return := E2V.FILT_FREQ_BASE(in, 2.6, 84400.0)
+	end function
+	function V2E.SVMFreq(in) -> return
+		return := V2E.FILT_FREQ_BASE(in, 2.6, 84400.0)	
+	end function
+
+	// Multi Versatile 3x2 filter frequency
+	function E2V.V3x2Freq(in) -> return
+		return := E2V.FILT_FREQ_BASE(in, 26.0, 15800.0)
+	end function
+	function V2E.V3x2Freq(in) -> return
+		return := V2E.FILT_FREQ_BASE(in, 26.0, 15800.0)	
+	end function
+
+	// AR filter frequency
+	function E2V.ARFreq(in) -> return
+		return := E2V.FILT_FREQ_BASE(in, 8.2, 35500.0)
+	end function
+	function V2E.ARFreq(in) -> return
+		return := V2E.FILT_FREQ_BASE(in, 8.2, 35500.0)
+	end function
+
+	// 1,2,3 bands EQ frequency
+	function E2V.EqFreq(in) -> return
+		return := E2V.FILT_FREQ_BASE(in, 20.0, 20000.0)
+	end function
+	function V2E.EqFreq(in) -> return
+		return := V2E.FILT_FREQ_BASE(in, 20.0, 20000.0)
+	end function
+
+	// LP Legacy frequency
+	function E2V.LPFreq(in) -> return
+		return := E2V.FILT_FREQ_BASE(in, 43.6, 21800.0)
+	end function
+	function V2E.LPFreq(in) -> return
+		return := V2E.FILT_FREQ_BASE(in, 43.6, 21800.0)
+	end function
+
+	// Legacy HP/BP frequency including HP1, HP4, BP2, BP4, and BR4
+	function E2V.HBFreq(in) -> return
+		return := E2V.FILT_FREQ_BASE(in, 36.1, 18100.0)
+	end function
+	function V2E.HBFreq(in) -> return
+		return := V2E.FILT_FREQ_BASE(in, 36.1, 18100.0)
+	end function
+
+	// Legacy HP2 frequency 
+	function E2V.HP2Freq(in) -> return
+		return := E2V.FILT_FREQ_BASE(in, 37.3, 18700.0)
+	end function
+	function V2E.HP2Freq(in) -> return
+		return := V2E.FILT_FREQ_BASE(in, 37.3, 18700.0)
+	end function
+
+	// DAFT filter frequency
+	function E2V.DAFTFreq(in) -> return
+		return := E2V.FILT_FREQ_BASE(in, 26.0, 35500.0)
+	end function
+	function V2E.HPLFreq(in) -> return
+		return := V2E.FILT_FREQ_BASE(in, 26.0, 35500.0)
+	end function
+
+	// LP Pro53 and Legacy Ladder
+	function E2V.ProFreq(in) -> return
+		return := E2V.FILT_FREQ_BASE(in, 26.0, 8400.0)
+	end function
+	function V2E.ProFreq(in) -> return
+		return := V2E.FILT_FREQ_BASE(in, 26.0, 8400.0)
+	end function
+
+	// Solid GEQ frequencies
+	function E2V.SGEqFreq_LF(in) -> return
+		return := E2V.FILT_FREQ_BASE(in, 40.0, 600.0)
+	end function
+	function V2E.SGEqFreq_LF(in) -> return
+		return := V2E.FILT_FREQ_BASE(in, 40.0, 600.0)
+	end function
+
+	function E2V.SGEqFreq_LMF(in) -> return
+		return := E2V.FILT_FREQ_BASE(in, 200.0, 2500.0)
+	end function
+	function V2E.SGEqFreq_LMF(in) -> return
+		return := V2E.FILT_FREQ_BASE(in, 200.0, 2500.0)
+	end function
+
+	function E2V.SGEqFreq_HMF(in) -> return
+		return := E2V.FILT_FREQ_BASE(in, 600.0, 7000.0)
+	end function
+	function V2E.SGEqFreq_HMF(in) -> return
+		return := V2E.FILT_FREQ_BASE(in, 600.0, 7000.0)
+	end function
+
+	function E2V.SGEqFreq_HF(in) -> return
+		return := E2V.FILT_FREQ_BASE(in, 1500.0, 22000.0)
+	end function
+	function V2E.SGEqFreq_HF(in) -> return
+		return := V2E.FILT_FREQ_BASE(in, 1500.0, 22000.0)
+	end function
+
+	// LFO frequency
+	function E2V.LFOFreq(in) -> return
+		return := E2V.FILT_FREQ_BASE(in, 0.01, 213.1)
+	end function
+	function V2E.LFOFreq(in) -> return
+		return := V2E.FILT_FREQ_BASE(in, 0.01, 213.1)
+	end function
+
+
+//----------------- SOURCE MODULE -------------- 
+	// Tune. Fundamental equation: ep = 1250*T/9 + 500000 
+	// E2V output and V2E input: -3600 to 3600 millicents
+	define E2V.TUNE_BASE(tune) := (((int_to_real(tune) - 500000.0) * 9.0) / 1250.0)
+	define V2E.TUNE_BASE(tune) := real_to_int(((1250.0 * tune) / 9.0 + 500000.0))
+
+	function E2V.tune(in) -> return
+		return := E2V.TUNE_BASE(in)
+	end function
+	function V2E.tune(in) -> return
+		return := V2E.TUNE_BASE(in)
+	end function
+
+	// Volume 
+	// Fundamental equation: vol = 18000*Lg(ep) - 346768
+	// E2V output and V2E input: -inf to 12000 millidB
+	define E2V.VOL_BASE(ep) := (18000.0 * math.log2(int_to_real(ep)) - 346768.2342478351)
+	define V2E.VOL_BASE(ep) := real_to_int(pow(2.0, (ep + 346768.2342478351) / 18000.0))
+
+	function E2V.volume(in) -> return
+		return := E2V.VOL_BASE(in)
+	end function
+	function V2E.volume(in) -> return
+		return := V2E.VOL_BASE(in)
+	end function
+
+
+//----------------- ENVELOPE --------------
+	// Fundamental equation: 	ep = K*[log2(T/100 + 2) - 1]
+    //    						where K = 1000000/[(log2(Tmax/100 + 2) - 1]
+    define _ENV_BASE_K := (1000000.0/(math.log2((t_max)/100.0 + 2.0) - 1.0))
+    define E2V.ENV_BASE(in, t_max) := ((pow(2.0, int_to_real(in) / _ENV_BASE_K + 1.0) - 2.0) * 100.0)
+    define V2E.ENV_BASE(in, t_max) := real_to_int((_ENV_BASE_K * (math.log2(in / 100.0 + 2.0) - 1.0)))
+
+	// Attack time
+	// E2V output and V2E input: 0 to 1500000 usec
+	function E2V.AtkTime(in) -> return
+		return := E2V.ENV_BASE(in, 1500000.0)
+	end function
+	function V2E.AtkTime(in) -> return
+		return := V2E.ENV_BASE(in, 1500000.0)
+	end function
+
+	// Decay and Release time 
+	// E2V output and V2E input: 0 to 2500000 usec
+	function E2V.DRTime(in) -> return
+		return := E2V.ENV_BASE(in, 2500000.0)
+	end function
+	function V2E.DRTime(in) -> return
+		return := V2E.ENV_BASE(in, 2500000.0)
+	end function
+
+//----------------- FX --------------
+	// Send FX Delay Time
+	// Fundamental equation: 	T = 702*2^[X*log2(413.6] - 200
+	// 							ep = 10^6/log2(413,6)*log2[(T+200)/702]
+	//							where X = ep/10^6
+	// E2V output and V2E input: 502 to 290147.2 usec
+	define E2V.DLY_TIME_BASE(in) := (702.0 * pow(2.0, (int_to_real(in) / pow(10.0, 6.0)) * math.log2(413.6)) - 200.0)
+	define V2E.DLY_TIME_BASE(in) := real_to_int((pow(10.0, 6.0) / math.log2(413.6) * math.log2((in + 200.0) / 702.0)))
+
+	function E2V.DlyTime(in) -> return
+		return := E2V.DLY_TIME_BASE(in)
+	end function
+	function V2E.DlyTime(in) -> return
+		return := V2E.DLY_TIME_BASE(in)
+	end function
+
+	// 1, 2, 3 Band EQ Bandwidth
+	// Fundamental equation: ep = 10^6*(bw - 33)/267
+	// E2V output and V2E input: 33 to 300 (octaves scaled by 100)
+	define E2V.EQBW_BASE(in) := (int_to_real(in) / pow(10.0, 6.0) * 267.0 + 33.0)
+	define V2E.EQBW_BASE(in) := real_to_int((pow(10.0, 6.0) * (in - 33.0) / 267.0))
+
+	function E2V.EqBW(in) -> return
+		return := E2V.EQBW_BASE(in)
+	end function
+	function V2E.EqBW(in) -> return
+		return := V2E.EQBW_BASE(in)
+	end function
+
+	// Solid G-EQ Bandwidth
+	// Fundamental equation: ep = (50000*Q - 3500000)/9
+	// E2V output and V2E input: 70 to 250 (octaves scaled by 100)
+	define E2V.SGEQBW_BASE(in) := (((int_to_real(in) * 9.0)  + 3500000.0) / 50000.0)
+	define V2E.SGEQBW_BASE(in) := real_to_int((50000.0 * in - 3500000.0) / 9.0)
+
+	function E2V.SGEqBW(in) -> return
+		return := E2V.SGEQBW_BASE(in)
+	end function
+	function V2E.SGEqBW(in) -> return
+		return := V2E.SGEQBW_BASE(in)
+	end function
+
+	// 1-2-3 Band EQ Gain
+	// Fundamental equation: ep = 500000*G/180 + 500000
+	// E2V output and V2E input: -180 to +180 (dB scaled by 10)
+	define E2V.EQGAIN_BASE(in) := (int_to_real(in) - 500000.0) / 500000.0 * 180.0
+	define V2E.EQGAIN_BASE(in) := real_to_int(500000.0 * in / 180.0 + 500000.0)
+
+	function E2V.EqGain(in) -> return
+		return := E2V.EQGAIN_BASE(in)
+	end function
+	function V2E.EqGain(in) -> return
+		return := V2E.EQGAIN_BASE(in)
+	end function
+
+	// Solid G-EQ Gain
+	// Fundamental equation: ep = 500000*G/200 + 500000
+	// E2V output and V2E input: -200 to +200 (dB scaled by 10)
+	define E2V.SGEQGAIN_BASE(in) := (int_to_real(in) - 500000.0) / 500000.0 * 200.0
+	define V2E.SGEQGAIN_BASE(in) := real_to_int(500000.0 * in / 200.0 + 500000.0)
+
+	function E2V.SGEqGain(in) -> return
+		return := E2V.SGEQGAIN_BASE(in)
+	end function
+	function V2E.SGEqGain(in) -> return
+		return := V2E.SGEQGAIN_BASE(in)
+	end function
+
+
+
