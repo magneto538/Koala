@@ -183,7 +183,7 @@ Twitter: magneto538
 		USE_CODE_IF(ENABLE_DEBUG)
 			_j := 1		
 			while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
-				if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam		
+				if fam = ALL_FAMILIES or _UI_FAMILIES[_j] .and. fam # 0		
 					set_control_par(_UI_IDS[_j], CONTROL_PAR_HIDE, value)
 				end if
 				inc(_j)
@@ -253,7 +253,7 @@ Twitter: magneto538
 					DEBUG.menu_visibility := 1
 				end if
 
-				if DEBUG.ui_type = ALL_TYPES and _UI_FAMILIES[_j] = DEBUG.ui_family_name
+				if DEBUG.ui_type = ALL_TYPES and _UI_FAMILIES[_j] .and. DEBUG.ui_family_name # 0
 					DEBUG.menu_visibility := 1
 				end if
 

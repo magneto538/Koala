@@ -53,7 +53,7 @@ end function
 function shift_family(fam, offset_x, offset_y)
 	_j := 1
 	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
-		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] .and. fam # 0
 			shift_ctrl(_UI_IDS[_j], offset_x, offset_y)
 		end if 
 		inc(_j)
@@ -63,7 +63,7 @@ end function
 function set_family_visibility(fam, value)
 	_j := 1
 	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
-		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] .and. fam # 0
 			set_visibility(_UI_IDS[_j], value)
 		end if 
 		inc(_j)
@@ -74,7 +74,7 @@ end function
 function get_family_values(fam, array)
 	_j := 1
 	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
-		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] .and. fam # 0
 			array[_j] := get_control_par(_UI_IDS[_j], CONTROL_PAR_VALUE)
 		end if 
 		inc(_j)
@@ -84,7 +84,7 @@ end function
 function set_family_values(fam, array)
 	_j := 1
 	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
-		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] .and. fam # 0
 			set_value(_UI_IDS[_j], array[_j])
 		end if 
 		inc(_j)
@@ -96,7 +96,7 @@ function get_family_ctrl_amount(fam) -> return
 	_j := 1
 	_k := 0
 	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
-		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] .and. fam # 0
 			inc(_k)
 		end if
 		inc(_j)
@@ -107,7 +107,7 @@ end function
 function get_family_ui_ids(fam, array)
 	_j := 1
 	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
-		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] .and. fam # 0
 			array[_j] := _UI_IDS[_j]
 		end if 
 		inc(_j)
@@ -117,7 +117,7 @@ end function
 function set_family_text(fam, array)
 	_j := 1
 	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
-		if (fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam) and (_UI_TYPE[_j] = TEXT_EDITS or _UI_TYPE[_j] = TEXT_LABELS or _UI_TYPE[_j] = PIC_LABELS or _UI_TYPE[_j] = BUTTONS or _UI_TYPE[_j] = SWITCHES)
+		if (fam = ALL_FAMILIES or _UI_FAMILIES[_j] .and. fam # 0) and (_UI_TYPE[_j] = TEXT_EDITS or _UI_TYPE[_j] = TEXT_LABELS or _UI_TYPE[_j] = PIC_LABELS or _UI_TYPE[_j] = BUTTONS or _UI_TYPE[_j] = SWITCHES)
 			set_ctrl_text(_UI_IDS[_j], array[_j])
 		end if 
 		inc(_j)
@@ -129,7 +129,7 @@ end function
 function reset_family_visibility(fam)
 	_j := 1
 	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
-		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] .and. fam # 0
 			reset_visibility(_UI_IDS[_j])
 		end if 
 		inc(_j)
@@ -139,7 +139,7 @@ end function
 function reset_family_text(fam)
 	_j := 1
 	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
-		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] .and. fam # 0
 			reset_ctrl_text(_UI_IDS[_j])
 		end if 
 		inc(_j)
@@ -150,7 +150,7 @@ end function
 function reset_family_pics(fam)
 	_j := 1
 	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
-		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] .and. fam # 0
 			reset_ctrl_pic(_UI_IDS[_j])
 		end if 
 		inc(_j)
@@ -161,7 +161,7 @@ end function
 function reset_family_values(fam)
 	_j := 1
 	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
-		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] .and. fam # 0
 			reset_value(_UI_IDS[_j])
 		end if 
 		inc(_j)
@@ -172,7 +172,7 @@ end function
 function reset_family_pos(fam)
 	_j := 1
 	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
-		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] .and. fam # 0
 			reset_pos(_UI_IDS[_j])
 		end if 
 		inc(_j)
@@ -183,7 +183,7 @@ end function
 function reset_family_font(fam)
 	_j := 1
 	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
-		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] .and. fam # 0
 			reset_font(_UI_IDS[_j])
 		end if 
 		inc(_j)
@@ -205,7 +205,7 @@ function place_on_grid(fam, type, start_x, start_y, col_w, row_h, ctrl_per_row)
 	if fam # ALL_FAMILIES and type = ALL_TYPES
 		_j := 1
 		while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
-			if _UI_FAMILIES[_j] = fam
+			if _UI_FAMILIES[_j] .and. fam # 0
 				_family_on_grid_math(fam, type, start_x, start_y, col_w, row_h, ctrl_per_row)
 			end if
 			inc(_j)
@@ -214,7 +214,7 @@ function place_on_grid(fam, type, start_x, start_y, col_w, row_h, ctrl_per_row)
 	if fam # ALL_FAMILIES and type # ALL_TYPES
 		_j := 1
 		while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
-			if _UI_FAMILIES[_j] = fam and _UI_TYPE[_j] = type		
+			if _UI_FAMILIES[_j] .and. fam # 0 and _UI_TYPE[_j] = type		
 				_family_on_grid_math(fam, type, start_x, start_y, col_w, row_h, ctrl_per_row)
 			end if
 			inc(_j)
@@ -225,7 +225,7 @@ end function
 function restore_visibility_settings(fam)
 	_j := 1
 	while _UI_IDS[_j] # _EOA and _j < MAX_ARRAY_SIZE
-		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] = fam
+		if fam = ALL_FAMILIES or _UI_FAMILIES[_j] .and. fam # 0
 			set_control_par(_UI_IDS[_j], CONTROL_PAR_HIDE, _UI_CURR_VISIBILITY[_j])
 		end if 
 		inc(_j)

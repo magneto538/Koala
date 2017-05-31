@@ -1,11 +1,76 @@
 {
 
-************* KSP EXTENDED COMMANDS LIBRARY *************
+********* KOALA - AN ADVANCED SCRIPTING LIBRARY FOR KSP DEVELOPERS *********
 
-Advanced families commands
-v0.1 - Last update 2016-01-09
+This file is part of Koala - An advanced scripting library for KSP developers.
 
-}		
+Copyright (c) 2016 Davide Magni
 
-declare const ALL_FAMILIES 	:= _MAX_KSP_VALUE
-declare const ALL_TYPES 	:= _MAX_KSP_VALUE
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+- Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+- Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer 
+in the documentation and/or other materials provided with the distribution.
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+CONTACTS
+
+koala@davidemagni.com
+www.davidemagni.com
+Skype: magneto538
+Twitter: magneto538
+
+}   	
+
+declare const ALL_FAMILIES 	:= _MIN_KSP_VALUE
+declare const ALL_TYPES 	:= _MIN_KSP_VALUE
+
+declare const MASK.1	:= 0x1
+declare const MASK.2	:= 0x2
+declare const MASK.3	:= 0x4
+declare const MASK.4	:= 0x8
+declare const MASK.5	:= 0x10
+declare const MASK.6	:= 0x20
+declare const MASK.7	:= 0x40
+declare const MASK.8	:= 0x80
+declare const MASK.9	:= 0x100
+declare const MASK.10	:= 0x200
+declare const MASK.11	:= 0x400
+declare const MASK.12	:= 0x800
+declare const MASK.13	:= 0x1000
+declare const MASK.14	:= 0x2000
+declare const MASK.15	:= 0x4000
+declare const MASK.16	:= 0x8000
+declare const MASK.17	:= 0x10000
+declare const MASK.18	:= 0x20000
+declare const MASK.19	:= 0x40000
+declare const MASK.20	:= 0x80000
+declare const MASK.21	:= 0x100000
+declare const MASK.22	:= 0x200000
+declare const MASK.23	:= 0x400000
+declare const MASK.24	:= 0x800000
+declare const MASK.25	:= 0x1000000
+declare const MASK.26	:= 0x2000000
+declare const MASK.27	:= 0x4000000
+declare const MASK.28	:= 0x8000000
+declare const MASK.29	:= 0x10000000
+declare const MASK.30	:= 0x20000000
+declare const MASK.31	:= 0x40000000
+declare const MASK.32	:= 0x80000000

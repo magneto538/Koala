@@ -194,6 +194,9 @@ add_menu_item(DEBUG.ui_type, "XY Pads", 14)
 
 DEBUG.label(var_name_lbl, DEBUG.UI_FAMILY, DEBUG.pos_x(0), DEBUG.pos_y(3), "UI Control: ", CONSOLE.WHITE, LEFT)
 DEBUG.menu(var_name, DEBUG.UI_FAMILY, DEBUG.pos_x(1), DEBUG.pos_y(3), 0, NOT_PERSISTENT)
+DEBUG.button(var_hide, DEBUG.UI_FAMILY, DEBUG.pos_x(2), DEBUG.pos_y(3), 0, "H", NOT_PERSISTENT)
+DEBUG.var_hide -> width 	:= 18
+DEBUG.var_hide -> height 	:= 18
 
 add_menu_item(DEBUG.var_name, "Choose ctrl...", 0)
 
