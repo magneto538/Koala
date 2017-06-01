@@ -41,3 +41,6 @@ Twitter: magneto538
 
 // Declarations specific of math. All these declarations will be imported as math.<name>, as this file is imported as 'math'.
 declare i
+
+
+

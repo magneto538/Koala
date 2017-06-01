@@ -97,7 +97,7 @@ end function
 
 // Compute hypotenuse given two cathetuses
 function hypot(cath_1, cath_2) -> return
-	return := sqrt( pow2(cath_1)+pow2(cath_2) )
+	return := sqrt(pow2(cath_1)+pow2(cath_2))
 end function
 
 // Range, minimum and maximum value. Thanks to BigBob's Math library.
@@ -128,7 +128,7 @@ end function
 // Convert a note nr into a frequency.
 // The base formula is (2^(1/12))^(note-49) * ref. 82 is the note nr for A4 (reference). ref is the reference pitch (440 Hz)
 function note_to_freq(note, ref) -> return
-	return := pow(pow(2.0, 1.0/12.0), int_to_real(note) - 82.0) * ref
+	return := pow(1.0594630943593, int_to_real(note) - 82.0) * ref
 end function
 
 // Convert a frequency into a note nr.
@@ -184,3 +184,172 @@ function int_to_hex(int) -> return
 	end for
 	return := '9' & return & 'h'
 end function
+
+
+// ----------------------- EASING FUNCTIONS -----------
+
+	// t: current time in milliseconds. This is a real value, so the resolution can be much higher than milliseconds. We want to keep the scale in milliseconds
+	//		because it appears to fit most of the common uses without breaking the maximum Kontakt value during calculations.
+	// b: value where the animation begins
+	// c: value where the animation ends
+	// d: d of the animation in milliseconds. This is a real value.
+	// Thanks to Paolo Ingraito for making this happen!
+	// References:	http://gizma.com/easing/
+
+	// Macro definitions
+	define DELTA 			:= (int_to_real(c) - int_to_real(b))
+	define RES_1 			:= (t / d)
+	define RES_2 			:= (t / (d / 2.0))
+
+	// These operations are locals for bool.is_greater and bool.is_not_greater. This is needed because 
+	// this KSP file is imported as 'math'.
+	define IS_T_NOT_GREATER := (1 + sh_right(real_to_int(d / 2.0) - real_to_int(t), 31))
+	define IS_T_GREATER		:= (-sh_right(real_to_int(d / 2.0) - real_to_int(t), 31))
+
+
+	// Linear tween - no easing, no acceleration.
+	// Fundamental equation: (c - b)*t/d + b
+	function linear_tween(t, b, c, d) -> return
+		return := 	real_to_int(round((DELTA / d) * t)) + b
+	end function
+
+	// Quadratic easing in - accelerating from zero velocity
+	// Fundamental equation: (c - b)*(t/d)*(t/d) + b
+	function easeIn_quad(t, b, c, d) -> return
+		return := 	real_to_int(round(DELTA * RES_1 * RES_1)) + b
+	end function
+
+	// Quadratic easing out - decelerating to zero velocity
+	// Fundamental equation: -(c - b)*(t/d)*((t/d)-2) + b
+	function easeOut_quad(t, b, c, d) -> return
+		return := 	real_to_int(round(-DELTA * RES_1 * (RES_1 - 2.0))) + b
+	end function
+
+	// Quadratic easing in/out - acceleration until halfway, then deceleration
+	// Fundamental equations: ((c-b)/2.0*(t / (d/2.0))*(t / (d/2.0)))+b for t < (d/2.0)
+	// 						 (-(c-b)/2.0 * (((t / (d/2.0))-1.0)*(((t / (d/2.0))-1.0)-2.0) -1.0) for t > (d/2.0)
+	function easeInOut_quad(t, b, c, d) -> return
+		return :=  	IS_T_NOT_GREATER * ...
+				   	real_to_int(round(DELTA / 2.0 * RES_2 * RES_2)) + ...
+				   	IS_T_GREATER * ...
+				   	real_to_int(round(-DELTA / 2.0 * ((RES_2 - 1.0) * ((RES_2 - 1.0) - 2.0) - 1.0)))...
+				   	+ b	
+	end function
+
+	// Cubic easing in - accelerating from zero velocity
+	// Fundamental equation: (c - b)*(t/d)*(t/d)*(t/d) + b
+	function easeIn_cubic(t, b, c, d) -> return
+		return := 	real_to_int(round(DELTA * RES_1 * RES_1 * RES_1)) + b
+	end function
+
+	// Cubic easing out - decelerating to zero velocity
+	// Fundamental equation: ((c - b) * ((t / d -1.0) * (t / d -1.0)*(t / d -1.0)+1.0)) + b
+	function easeOut_cubic(t, b, c, d) -> return
+		return := 	real_to_int(round(DELTA * ((RES_1 - 1.0) * (RES_1 - 1.0) * (RES_1 - 1.0) + 1.0))) + b
+	end function
+
+	// Cubic easing in/out - acceleration until halfway, then deceleration
+	// Fundamental equations: ((c-b)/2.0 * (t / (d/2.0))*(t / (d/2.0))*(t / (d/2.0)))+b for t < (d/2.0)
+	// 						 ((c-b)/2.0 * ((t / (d/2.0) -2.0) * (t / (d/2.0) -2.0)*(t / (d/2.0) -2.0)+2.0)) + b for t > (d/2.0)
+	function easeInOut_cubic(t, b, c, d) -> return
+		return :=  	IS_T_NOT_GREATER * ...
+				   	real_to_int(round((DELTA / 2.0) * RES_2 * RES_2 * RES_2)) + ...
+				   	IS_T_GREATER * ...
+				   	real_to_int(round((DELTA / 2.0) * ((RES_2 - 2.0) * (RES_2 - 2.0) * (RES_2 - 2.0) + 2.0)))...
+				    + b				    
+	end function
+
+	// Quartic easing in - accelerating from zero velocity
+	// Fundamental equation: (c - b)*(t/d)*(t/d)*(t/d)*(t/d) + b
+	function easeIn_quartic(t, b, c, d) -> return
+		return := 	real_to_int(round(DELTA * RES_1 * RES_1 * RES_1 * RES_1)) + b
+	end function		
+
+	// Quartic easing out - decelerating to zero velocity
+	// Fundamental equation: (-(c - b) * ((t / d -1.0) *(t / d -1.0) * (t / d -1.0)*(t / d -1.0)-1.0)) + b
+	function easeOut_quartic(t, b, c, d) -> return
+		return := 	real_to_int(round(-DELTA * ((RES_1 - 1.0) * (RES_1 - 1.0) * (RES_1 - 1.0) * (RES_1 -1.0) - 1.0))) + b
+	end function
+
+	// Quartic easing in/out - acceleration until halfway, then deceleration
+	// Fundamental equations: ((c-b)/2.0 * (t / (d/2.0))*(t / (d/2.0))*(t / (d/2.0))*(t / (d/2.0)))+b for t < (d/2.0)
+	// 						 (-(c-b)/2.0 * ((t / (d/2.0) -2.0) * (t / (d/2.0) -2.0) * (t / (d/2.0) -2.0)*(t / (d/2.0) -2.0)-2.0)) + b for t > (d/2.0)
+	function easeInOut_quartic(t, b, c, d) -> return
+		return :=   IS_T_NOT_GREATER * ...
+				   	real_to_int(round(DELTA / 2.0 * (RES_2 * RES_2 * RES_2 * RES_2))) + ...
+				   	IS_T_GREATER * ...
+				   	real_to_int(round(-DELTA / 2.0 * ((RES_2 - 2.0) * (RES_2 - 2.0) * (RES_2 - 2.0) * (RES_2 - 2.0) - 2.0)))...
+				    + b	
+	end function
+
+	// Sinusoidal easing in - accelerating from zero velocity
+	// Fundamental equation: (-(c - b) * cos(t / d * (~NI_MATH_PI / 2.0))) + (c - b)+ b
+	function easeIn_sine(t, b, c, d) -> return
+		return := real_to_int(round(-DELTA * cos(RES_1 * 1.5707963267949))) + (c - b) + b
+	end function
+
+	// Sinusoidal easing out - decelerating to zero velocity
+	// Fundamental equation: ((c - b) * sin(t / d * (~NI_MATH_PI / 2.0))) + b
+	function easeOut_sine(t, b, c, d) -> return
+		return := 	real_to_int(round(DELTA * sin(t / d * 1.5707963267949))) + b
+	end function
+
+	// Sinusoidal easing in/out - acceleration until halfway, then deceleration
+	// Fundamental equation: (-(c - b)/2.0 * (cos((t / d) * ~NI_MATH_PI) -1.0)) + b
+	function easeInOut_sine(t, b, c, d) -> return
+		return := 	real_to_int(round(-DELTA / 2.0 * (cos((t / d) * ~NI_MATH_PI) -1.0))) + b
+	end function
+
+	// Exponential easing in - accelerating from zero velocity
+	// Fundamental equation: ((c - b) * (pow(2.0 , 10.0*((t / d)-1.0)))) +  b
+	function easeIn_expo(t, b, c, d) -> return
+		return := 	real_to_int(round(DELTA * (pow(2.0, 10.0 * (RES_1 - 1.0))))) +  b
+	end function
+
+	// Exponential easing out - decelerating to zero velocity
+	// Fundamental equation: ((c - b) * (-pow(2.0 , -10.0*(t / d))+1.0)) +  b
+	function easeOut_expo(t, b, c, d) -> return
+		return := 	real_to_int(round(DELTA * (-pow(2.0, -10.0 * RES_1) + 1.0))) +  b
+	end function
+
+	// Exponential easing in/out - acceleration until halfway, then deceleration
+	// Fundamental equations: ((c-b)/2.0 *(pow(2.0 , 10.0*(t / (d/2.0)-1.0))))+b for t < (d/2.0)
+	// 						 ((c-b)/2.0  * (-pow(2.0 , -10.0*((t / (d/2.0))-1.0))+2.0))+b for t > (d/2.0)
+	function easeInOut_expo(t, b, c, d) -> return
+	    return :=  	IS_T_NOT_GREATER * ...
+				   	real_to_int(round(DELTA / 2.0 * (pow(2.0, 10.0 * (RES_2 - 1.0))))) + ...
+				   	IS_T_GREATER * ...
+				   	real_to_int(round(DELTA / 2.0  * (-pow(2.0, -10.0 * (RES_2 - 1.0)) + 2.0)))...
+				    + b	
+	end function
+
+	// Circular easing in - accelerating from zero velocity
+	// Fundamental equation: (-(c - b) * (sqrt(1.0-(t / d)*(t / d))-1.0)) +  b
+	function easeIn_circ(t, b, c, d) -> return
+		return := 	real_to_int(round(-DELTA * (sqrt(1.0 - RES_1 * RES_1) - 1.0))) +  b
+	end function
+
+	// Circular easing out - decelerating to zero velocity
+	// Fundamental equation: ((c - b) * (sqrt(1.0-((t / d)-1.0)*((t / d)-1.0)))) +  b
+	function easeOut_circ(t, b, c, d) -> return
+		return := 	real_to_int(round(DELTA * (sqrt(1.0 - (RES_1 - 1.0) * (RES_1 - 1.0))))) +  b
+	end function
+
+	// Circular easing in/out - acceleration until halfway, then deceleration
+	// Fundamental equations: (-(c-b)/2.0 * (sqrt(1.0-(t / (d/2.0))*(t / (d/2.0)))-1.0) )+b for t < (d/2.0)
+	// 						 ((c-b)/2.0 * (sqrt(1.0-(t / (d/2.0) -2.0)*(t / (d/2.0) -2.0))+1.0)  ) + b for t > (d/2.0)
+	function easeInOut_circ(t, b, c, d) -> return
+	    return :=  	IS_T_NOT_GREATER * ...
+				   	real_to_int(round(-DELTA / 2.0 * (sqrt(1.0 - RES_2 * RES_2) - 1.0))) + ...
+				   	IS_T_GREATER * ...
+				   	real_to_int(round(DELTA/2.0 * (sqrt(1.0 - (RES_2 - 2.0) * (RES_2 - 2.0)) + 1.0)))...
+				    + b	
+	end function
+
+	// Elastic easing out - decelerating to zero velocity with bouncing effect
+	// The elasticy factor is the period of the bouncing. The smaller it is, the most elastic is the easing.
+	// Fundamental equation: ((c-b) * (pow(2.0,-10.0*(t/d)) * sin( ((t/d) - elasticity/4.0) * (2.0*~NI_MATH_PI)/elasticity)+1.0)) +b 
+	function easeOut_elastic(t, b, c, d, e) -> return
+		return := 	real_to_int(round(DELTA * (pow(2.0, -10.0 * RES_1) * sin((RES_1 - e / 4.0) * 6.28318530717959 / e) + 1.0))) + b 
+	end function
+

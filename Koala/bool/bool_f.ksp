@@ -39,9 +39,14 @@ Twitter: magneto538
 
 }  
 
-// Returns 0 if a<b and 1 if a>=b.
+// Returns 0 if a<=b and 1 if a>b.
 function is_greater(a, b) -> return 
-	return := (((sh_right(a-b, 31) .or. 1) + 1)/2)
+	return := (-sh_right(b - a, 31))
+end function
+
+// Returns 1 if a<=b and 0 if a>b.
+function is_not_greater(a, b) -> return 
+	return := (1 + sh_right(b - a, 31))
 end function
 
 // Returns 0 if a # b and 1 if a = b.
