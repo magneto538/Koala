@@ -278,11 +278,7 @@ Twitter: magneto538
 			if DEBUG.var_name # 0
 				DEBUG.set_ctrl_text(get_ui_id(DEBUG.ui_id), "UI ID: " & _UI_IDS[DEBUG.var_name])
 
-				if _UI_TYPE[DEBUG.var_name] # XY_PADS
-					DEBUG.set_ctrl_text(get_ui_id(DEBUG.value), "Value: " & get_value(_UI_IDS[DEBUG.var_name]))
-				else 
-					DEBUG.set_ctrl_text(get_ui_id(DEBUG.value), "Sel. cursor: " & active_cursor(_UI_IDS[DEBUG.var_name]))
-				end if
+				DEBUG.set_ctrl_text(get_ui_id(DEBUG.value), "Value: " & get_value(_UI_IDS[DEBUG.var_name]))
 
 				DEBUG.set_ctrl_text(get_ui_id(DEBUG.ui_pos_x), "Pos. X: " & get_pos_x(_UI_IDS[DEBUG.var_name]))
 				DEBUG.set_ctrl_text(get_ui_id(DEBUG.ui_pos_y), "Pos. Y: " & get_pos_y(_UI_IDS[DEBUG.var_name]))
