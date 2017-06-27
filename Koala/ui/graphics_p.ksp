@@ -43,7 +43,9 @@ macro _add_ctrl(#name#, fam)
 	inc(_UI_COUNT)
 	_UI_IDS[_UI_COUNT] := get_ui_id(#name#)
 	_UI_FAMILIES[_UI_COUNT] := fam
+	USE_CODE_IF(ENABLE_DEBUG)
 	!_UI_CTRL_NAMES[_UI_COUNT] := "#name#"
+	END_USE_CODE
 end macro
 
 function _store_pos_data(x, y)
@@ -86,9 +88,11 @@ function _ctrl_type(type)
 end function
 
 function _update_init_value(ui_id, array, new_value)
+	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)
 	if (NI_CALLBACK_TYPE = NI_CB_TYPE_INIT)
 		array[search_ctrl_number(ui_id)] := new_value
 	end if
+	END_USE_CODE
 end function
 
 function _store_ctrl_bounds(min, max)

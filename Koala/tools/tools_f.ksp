@@ -237,9 +237,9 @@ end function
 
 // Used to softly terminate any loop without using exit
 function break(counter)
-	counter := _MAX_KSP_VALUE-1
+	counter := _MAX_KSP_VALUE-2
 end function
 
 function break_downto(counter)
-	counter := _MIN_KSP_VALUE-1
+	counter := _MIN_KSP_VALUE-2
 end function
