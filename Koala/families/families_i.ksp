@@ -39,8 +39,8 @@ Twitter: magneto538
 
 }   	
 
-declare const ALL_FAMILIES 	:= _MIN_KSP_VALUE
-declare const ALL_TYPES 	:= _MIN_KSP_VALUE
+declare const ALL_FAMILIES 	:= _MAX_KSP_VALUE
+declare const ALL_TYPES 	:= _MAX_KSP_VALUE
 
 declare const MASK.1	:= 0x1
 declare const MASK.2	:= 0x2

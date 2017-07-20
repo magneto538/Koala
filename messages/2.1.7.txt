@@ -1,0 +1,105 @@
+KOALA v2.1.7 - CHANGELOG
+* Added math.set_bit
+* Fixed bug in break_downto()	
+
+KOALA v2.1.6 - CHANGELOG
+* Fixed bug in Debugger which caused an error when applying the script in Kontakt 5.5.2
+
+NOTE: Check out the changelogs for v2.1.5 and 2.1.4, there's much more stuff! 
+
+KOALA v2.1.5 - CHANGELOG
+* ADDED EASING FUNCTIONS! With Kontakt 5.6's new real Math operations, it's now possible to use easing functions to enhance your UI animations and handle complex curves for any kind of application, be it UI or Engine-based. Take a look here http://easings.net/ for more info!
+* Added new real Math constants (~MATH_2PI, ~MATH_LN2 and more)
+* Fixed bool.is_greater (which used to include the '=' case too) and added bool.is_not_greater. Thanks to BigBob as always.
+
+NOTE: I will add the missing snippets soon, I promise!
+
+KOALA v2.1.4 - CHANGELOG
+* Added Tags for Families: now each UI control can be assigned to multiple Families! This allows you to create Subfamilies as well. Read the Wiki in order to get you up and running!
+* Added a Show/Hide button next to the UI control's name on UI view. This button allows you to temporary show/hide the currently selected UI Control.
+
+
+KOALA v2.1.3 - CHANGELOG
+* Added new E2V and V2E INLINE functions from BigBob's Math Library! 
+* Added new Math functions: math.fmod, math.note_to_freq, math.freq_to_note, math.trim
+* Fixed 0_dB_12 value
+* Added scale_slider_out function. Useful to reduce the range of a slider within two edge values.
+
+
+KOALA v2.1.2 - CHANGELOG
+* Many new bool functions
+
+
+KOALA v2.1.1 - CHANGELOG
+* Added new bool functions and some math functions
+* Fixed bug in Logger which prevented some informations to be displayed
+
+
+KOALA v2.1.0 - CHANGELOG
+
+### Koala is now COMPATIBLE WITH KONTAKT 5.6. Please read this Changelog carefully! ###
+
+* Kontakt 5.6.5 support: XY Pad and new Math runtime
+* New UI functions and color/status constants
+* New function to load all the UI Ids of a Family inside an array
+* New set of math functions with a killer curve function
+* New integer conversion functions (inspired by the majestic work of BigBob † and his Math library)
+* XY Pad is now fully supported by Koala and the Debugger: advanced functions to link cursors to UI controls or Engine Pars
+* new automation functions
+* new functions to convert the value of a UI control into a percentage value (0 to 100) or a decimal value (0 to 1, real number)
+* Changed responsivity of the Debugger according to the UI size
+* Koala is backward compatible with Kontakt 5.5.2, but the functions that use real numbers will return an error when applying the script to Kontakt 5.5.2. The same goes for XY pad, which has been introduced with Kontakt 5.6.5, thus it is not available in prior versions.
+
+* Fixed create_text_edit macro
+* Fixed a bug in the Logger which prevented the Persistence callback to be logged properly. The Logger cannot be used in the on init callback
+* Improved 'timer' function. Now the data from 'timer' are loaded into a text variable in order to save a lot of scripting lines. New usage: 
+	call timer
+	message(@timer)
+
+
+---
+
+KOALA v2.0.10 - CHANGELOG
+* Added Monokai Material color scheme for SublimeText 3. This theme can be used with Material Theme (available on PackageControl)
+
+KOALA v2.0.9 - CHANGELOG
+* Added function assign_family
+
+KOALA v2.0.8 - CHANGELOG
+* Fixed a bug on CONSOLE.WHITE font which was displayed as black on text edits
+
+KOALA v2.0.7 - CHANGELOG
+* Added get_send_fx_par, get_bus_fx_par, get_insert_fx_par, get_group_fx_par
+
+KOALA v2.0.6 - CHANGELOG
+* Added functions to allow/disallow groups using EVENT_PAR_ALLOW_GROUP instead of allow_group and disallow_group functions. These functions can be used inside function calls and, generally speaking, in any callback and function, while allow_group and disallow_group only work in 'on note' and 'on release' callbacks.
+
+KOALA v2.0.5 - CHANGELOG
+* Added get_ctrl_family, which allows to retrieve the UI Ctrl Family
+
+KOALA v2.0.4 - CHANGELOG
+* Added get_ctrl_min and get_ctrl_max, which return the minimum and maximum value of a specific UI control
+
+KOALA v2.0.3 - CHANGELOG
+* Updated change log messages. No other modifications were made. 
+
+KOALA v2.0.2 - CHANGELOG
+* The Logger now distinguishes between system and user logs. Logs added using DEBUG.add_log are now displayed with the label ‘USER’.
+* User logs can now be shown/hidden just like the others.
+* Added Persistency to all Logger categories.
+
+KOALA v2.0.1 - CHANGELOG
+* Fixed a bug in set_array, which caused an Out Of Bounds script warning
+* Added group_allow_state, which returns the current allow state of a Group
+
+KOALA v2.0.0 - CHANGELOG
+
+* Added the Logger page to the Debugger
+* Added the Groups page to the Debugger
+* Added DEBUG. functions for all the callbacks
+* Added new groups functions
+* Added new UI controls functions
+* Added integration with SublimeKSP by Sam Windell
+* Fixed a couple constants with wrong values
+* Fixed NOTE_NAMES[] loading
+* Minor bugfixes
