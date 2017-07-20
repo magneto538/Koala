@@ -1,3 +1,33 @@
+KOALA v2.1.8 - CHANGELOG
+* Added Light Mode! Reduce the amount of compiled script lines (at a cost, but it's not so big)
+
+KOALA v2.1.7 - CHANGELOG
+* fixed ALL_FAMILIES and ALL_TYPES (they are _MAX_KSP_VALUE now)
+
+KOALA v2.1.6 - CHANGELOG
+* Fixed bug in Debugger which caused an error when applying the script in Kontakt 5.5.2
+
+NOTE: Check out the changelogs for v2.1.5 and 2.1.4, there's much more stuff! 
+
+KOALA v2.1.5 - CHANGELOG
+* ADDED EASING FUNCTIONS! With Kontakt 5.6's new real Math operations, it's now possible to use easing functions to enhance your UI animations and handle complex curves for any kind of application, be it UI or Engine-based. Take a look here http://easings.net/ for more info!
+* Added new real Math constants (~MATH_2PI, ~MATH_LN2 and more)
+* Fixed bool.is_greater (which used to include the '=' case too) and added bool.is_not_greater. Thanks to BigBob as always.
+
+NOTE: I will add the missing snippets soon, I promise!
+
+KOALA v2.1.4 - CHANGELOG
+* Added Tags for Families: now each UI control can be assigned to multiple Families! This allows you to create Subfamilies as well. Read the Wiki in order to get you up and running!
+* Added a Show/Hide button next to the UI control's name on UI view. This button allows you to temporary show/hide the currently selected UI Control.
+
+
+KOALA v2.1.3 - CHANGELOG
+* Added new E2V and V2E INLINE functions from BigBob's Math Library! 
+* Added new Math functions: math.fmod, math.note_to_freq, math.freq_to_note, math.trim
+* Fixed 0_dB_12 value
+* Added scale_slider_out function. Useful to reduce the range of a slider within two edge values.
+
+
 KOALA v2.1.2 - CHANGELOG
 * Many new bool functions
 

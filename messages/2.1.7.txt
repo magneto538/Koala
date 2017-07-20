@@ -1,6 +1,5 @@
 KOALA v2.1.7 - CHANGELOG
-* Added math.set_bit
-* Fixed bug in break_downto()	
+* fixed ALL_FAMILIES and ALL_TYPES (they are _MAX_KSP_VALUE now)
 
 KOALA v2.1.6 - CHANGELOG
 * Fixed bug in Debugger which caused an error when applying the script in Kontakt 5.5.2

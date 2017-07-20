@@ -61,12 +61,7 @@ end function
 
 // Turn 0 into 1 and vice-versa. Applies XOR operator to input value.
 function flip(value, bit_pos) -> return
-	return := ((value .and. .not. sh_left(1, bit_pos)) .or. (.not. value .and. sh_left(1, bit_pos)))
-end function
-
-// Identical to above, but here you can decide to set the bit on/off manually.
-function set_bit(value, bit_value, bit_pos) -> return
-	return := ((value .and. .not. sh_left(1, bit_pos)) .or. sh_left(bit_value, bit_pos))
+	return := ( (value .and. .not. sh_left(1, bit_pos)) .or. (.not. value .and. sh_left(1, bit_pos)) )
 end function
 
 // Advanced logarythm function. The user may now set a custom integer base and a real/int value to be processed.
