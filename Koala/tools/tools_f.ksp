@@ -241,5 +241,5 @@ function break(counter)
 end function
 
 function break_downto(counter)
-	counter := _MIN_KSP_VALUE-2
+	counter := _MIN_KSP_VALUE+2
 end function
