@@ -42,9 +42,9 @@ Twitter: magneto538
 macro create_button(#name#, #fam#, x, y, w, h, default, pers_status, txt, pic)
 	declare ui_button #name#
 	_add_ctrl(#name#, #fam#)	
-	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)
 	_store_pos_data(x, y)
 	_store_size_data(w, h)
+	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)
 	_store_ctrl_text(txt)
 	_store_ctrl_pic(pic)
 	END_USE_CODE
@@ -73,9 +73,9 @@ end macro
 macro create_switch(#name#, #fam#, x, y, w, h, default, pers_status, txt, pic)
 	declare ui_switch #name#
 	_add_ctrl(#name#, #fam#)	
-	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)	
 	_store_pos_data(x, y)
 	_store_size_data(w, h)
+	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)	
 	_store_ctrl_text(txt)	
 	_store_ctrl_pic(pic)
 	END_USE_CODE
@@ -104,9 +104,9 @@ end macro
 macro create_text_label(#name#, #fam#, x, y, w, h, txt, font, alignment, background)
 	declare ui_label #name# (1, 1)
 	_add_ctrl(#name#, #fam#)		
-	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)	
 	_store_pos_data(x, y)
 	_store_size_data(w, h)
+	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)	
 	_store_ctrl_font_type(font)	
 	_store_ctrl_font_alignment(alignment)		
 	_store_ctrl_pic(background)
@@ -131,9 +131,9 @@ end macro
 macro create_multirow_text_label(#name#, #fam#, x, y, w, h, txt, font, alignment, background)
 	declare ui_label #name# (2, 2)
 	_add_ctrl(#name#, #fam#)		
-	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)	
 	_store_pos_data(x, y)
 	_store_size_data(w, h)
+	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)	
 	_store_ctrl_font_type(font)	
 	_store_ctrl_font_alignment(alignment)		
 	_store_ctrl_pic(background)
@@ -158,9 +158,9 @@ end macro
 macro create_pic_label(#name#, #fam#, x, y, w, h, pic)
 	declare ui_label #name# (1, 1)
 	_add_ctrl(#name#, #fam#)
-	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)	
 	_store_pos_data(x, y)
 	_store_size_data(w, h)
+	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)	
 	_store_ctrl_pic(pic)
 	END_USE_CODE
 	_store_visibility(get_ui_id(#name#), VISIBLE)	
@@ -180,12 +180,12 @@ end macro
 
 macro create_slider(#name#, #fam#, x, y, w, h, min, max, default, pers_status, mouse_b, pic)
 	declare ui_slider #name# (min, max)
-	_add_ctrl(#name#, #fam#)	
-	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)		
+	_add_ctrl(#name#, #fam#)		
 	_store_pos_data(x, y)
 	_store_size_data(w, h)
-	_store_ctrl_pic(pic)	
 	_store_ctrl_bounds(min, max)	
+	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)	
+	_store_ctrl_pic(pic)	
 	END_USE_CODE
 	_store_def_value(default)
 	_store_visibility(get_ui_id(#name#), VISIBLE)	
@@ -212,11 +212,11 @@ end macro
 macro create_knob(#name#, #fam#, x, y, min, max, default, disp_ratio, pers_status, disp_unit, txt)
 	declare ui_knob #name# (min, max, disp_ratio)
 	_add_ctrl(#name#, #fam#)	
-	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)		
 	_store_pos_data(x, y)
-	_store_size_data(0, 0)
-	_store_ctrl_text(txt)	
+	_store_size_data(0, 0)	
 	_store_ctrl_bounds(min, max)	
+	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)	
+	_store_ctrl_text(txt)	
 	END_USE_CODE
 	_store_def_value(default)
 	_store_visibility(get_ui_id(#name#), VISIBLE)		
@@ -243,14 +243,14 @@ macro create_menu(#name#, #fam#, x, y, w, h, default, entries, font, alignment, 
 	declare ui_menu #name#
 	declare !#name#_entries[entries]
 	declare _#name#_COUNT := 0	
-	_add_ctrl(#name#, #fam#)	
-	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)		
+	_add_ctrl(#name#, #fam#)		
 	_store_pos_data(x, y)
 	_store_size_data(w, h)
+	_store_ctrl_bounds(0, entries-1)	
+	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)	
 	_store_ctrl_font_type(font)	
 	_store_ctrl_font_alignment(alignment)	
 	_store_ctrl_pic(pic)
-	_store_ctrl_bounds(0, entries-1)	
 	END_USE_CODE
 	_store_def_value(default)
 	_store_visibility(get_ui_id(#name#), VISIBLE)	
@@ -278,12 +278,12 @@ end macro
 macro create_value_edit(#name#, #fam#, x, y, w, min, max, default, disp_ratio, pers_status, font, pic)
 	declare ui_value_edit #name# (min, max, disp_ratio)
 	_add_ctrl(#name#, #fam#)	
-	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)			
 	_store_pos_data(x, y)
 	_store_size_data(w, 0)
+	_store_ctrl_bounds(min, max)	
+	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)			
 	_store_ctrl_font_type(font)		
 	_store_ctrl_pic(pic)	
-	_store_ctrl_bounds(min, max)	
 	END_USE_CODE
 	_store_def_value(default)
 	_store_visibility(get_ui_id(#name#), VISIBLE)	
@@ -309,11 +309,9 @@ end macro
 
 macro create_file_selector(#name#, #fam#, x, y, w, h, col_width, f_type, root_folder, font)
 	declare ui_file_selector #name#
-	_add_ctrl(#name#, #fam#)	
-	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)			
+	_add_ctrl(#name#, #fam#)			
 	_store_pos_data(x, y)
 	_store_size_data(w, h)
-	END_USE_CODE
 	_store_visibility(get_ui_id(#name#), VISIBLE)	
 	_ctrl_type(FILE_SELECTOR)
 	
@@ -334,10 +332,8 @@ end macro
 macro create_table(#name#, #fam#, x, y, w, h, columns, range, pers_status)
 	declare ui_table #name#[columns](1, 1, range)
 	_add_ctrl(#name#, #fam#)		
-	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)	
 	_store_pos_data(x, y)
 	_store_size_data(w, h)
-	END_USE_CODE
 	_store_visibility(get_ui_id(#name#), VISIBLE)	
 	_ctrl_type(TABLES)	
 
@@ -357,11 +353,9 @@ end macro
 
 macro create_level_meter(#name#, #fam#, x, y, w, h, orientation, group, slot, channel, bus)
 	declare ui_level_meter #name#
-	_add_ctrl(#name#, #fam#)	
-	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)		
+	_add_ctrl(#name#, #fam#)		
 	_store_pos_data(x, y)
 	_store_size_data(w, h)
-	END_USE_CODE
 	_store_visibility(get_ui_id(#name#), VISIBLE)	
 	_ctrl_type(LEVEL_METERS)	
 
@@ -380,10 +374,8 @@ end macro
 macro create_waveform(#name#, #fam#, x, y, w, h, zone_name, zone_flags)
 	declare ui_waveform #name#(1,1)
 	_add_ctrl(#name#, #fam#)	
-	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)		
 	_store_pos_data(x, y)
 	_store_size_data(w, h)
-	END_USE_CODE
 	_store_visibility(get_ui_id(#name#), VISIBLE)	
 	_ctrl_type(WAVEFORMS)	
 
@@ -400,10 +392,10 @@ end macro
 
 macro create_text_edit(#name#, #fam#, x, y, w, h, txt, font, alignment, background)
 	declare ui_text_edit @#name#
-	_add_ctrl(#name#, #fam#)	
-	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)		
+	_add_ctrl(#name#, #fam#)		
 	_store_pos_data(x, y)
 	_store_size_data(w, h)
+	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)	
 	_store_ctrl_font_type(font)	
 	_store_ctrl_text(txt)
 	_store_ctrl_font_alignment(alignment)		
@@ -428,10 +420,8 @@ end macro
 macro create_xy(#name#, #fam#, x, y, w, h, default, cursors, cursors_pic, pers_status, m_behav_x, m_behav_y, m_mode, background)
 	declare ui_xy ?#name#[cursors*2]
 	_add_ctrl(#name#, #fam#)		
-	USE_CODE_IF_NOT(KOALA_LIGHT_MODE)	
 	_store_pos_data(x, y)
 	_store_size_data(w, h)		
-	END_USE_CODE
 	_store_visibility(get_ui_id(#name#), VISIBLE)	
 	_ctrl_type(XY_PADS)	
 	

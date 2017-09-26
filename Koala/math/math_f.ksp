@@ -52,6 +52,10 @@ function curve(curve_value, lin_value, curve_steps, min, max) -> return
 	end if 
 end function
 
+function curve_alt(ex, x, min, max) -> return
+    return := real_to_int(pow(int_to_real(x) / 1000.0, pow(10.0, int_to_real(ex)/100.0)) * int_to_real(max - min) + int_to_real(min))
+end function
+
 // Credits to BigBob's Sign() function. return_mode chooses the format of the return:
 // if return_mode is 0: negative value 0, positive value 1
 // if return_mode is 1: negative value -1, positive value 1
