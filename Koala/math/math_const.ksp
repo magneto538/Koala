@@ -39,15 +39,15 @@ Twitter: magneto538
 
 }  
 
-declare const ~MATH_SQRT2 	:=  1.4142135623731
-declare const ~MATH_LOG2E 	:=  1.44269504088896
-declare const ~MATH_LOG10E 	:=  0.434294481903252
-declare const ~MATH_LN2 	:=  0.693147180559945
-declare const ~MATH_LN10 	:=  2.30258509299405
-declare const ~MATH_2PI 	:=  6.28318530717959
-declare const ~MATH_4PI 	:=  12.5663706143592
-declare const ~MATH_PI_2 	:=  1.5707963267949
-declare const ~MATH_PI_4 	:=  0.785398163397448
-declare const ~MATH_TWRT2 	:=  1.0594630943593	
+declare const ~MATH_SQRT2 :=  1.4142135623731
+declare const ~MATH_LOG2E :=  1.44269504088896
+declare const ~MATH_LOG10E :=  0.434294481903252
+declare const ~MATH_LN2 :=  0.693147180559945
+declare const ~MATH_LN10 :=  2.30258509299405
+declare const ~MATH_2PI :=  6.28318530717959
+declare const ~MATH_4PI :=  12.5663706143592
+declare const ~MATH_PI_2 :=  1.5707963267949
+declare const ~MATH_PI_4 :=  0.785398163397448
+declare const ~MATH_TWRT2 :=  1.0594630943593	
 
 
