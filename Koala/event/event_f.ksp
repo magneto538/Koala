@@ -39,10 +39,5 @@ Twitter: magneto538
 
 } 
 
-function HOST_BPM() -> return
-	return := (ms_to_ticks(60000000) / 960)
-end function
-
-function HOST_BPM_FLOAT() -> return 
-	return := (int_to_real(ms_to_ticks(60000000)) / 960.0)
-end function
+define HOST_BPM := (ms_to_ticks(60000000) / 960)
+define HOST_BPM_FLOAT := (int_to_real(ms_to_ticks(60000000)) / 960.0)
