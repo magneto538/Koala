@@ -43,7 +43,7 @@ SET_CONDITION(ENABLE_DEBUG)
 import "Koala/Koala.ksp"
 
 on init
-	activate_logger( get_folder(GET_FOLDER_PATCH_DIR) & "/log.nka")
+	activate_logger(get_folder(GET_FOLDER_PATCH_DIR) & "/log.nka")
 	Koala.init
 	create_instrument(540, "", "", "Koala v2.1 - TEMPLATE SCRIPT")
 end on 

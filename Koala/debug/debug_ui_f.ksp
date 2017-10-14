@@ -116,49 +116,64 @@ Twitter: magneto538
 // GUI visibility
 	function DEBUG.view
 		USE_CODE_IF(ENABLE_DEBUG)
-			DEBUG.page_log := 0	
-			DEBUG.page_ui := 0	
-			DEBUG.page_event := 0	
-			DEBUG.page_groups := 0	
-			DEBUG.page_custom := 0		
+			declare f_mask
+			declare f_mask_pre
+			declare i
 
-			set_control_par(get_ui_id(DEBUG.bg_label), CONTROL_PAR_HIDE, HIDE_WHOLE_CONTROL)
+			restore_visibility_settings(ALL_FAMILIES)
 
-			DEBUG.set_family_visibility(DEBUG.LOG_FAMILY, INVISIBLE)
-			DEBUG.set_family_visibility(DEBUG.UI_FAMILY, INVISIBLE)
-			DEBUG.set_family_visibility(DEBUG.EVENT_FAMILY, INVISIBLE)
-			DEBUG.set_family_visibility(DEBUG.GROUPS_FAMILY, INVISIBLE)
-			DEBUG.set_family_visibility(DEBUG.CUSTOM_FAMILY, INVISIBLE)
+			f_mask := ...
+						DEBUG.PAGE_BTN_FAMILY .or. ...
+						bool.is_not_equal(DEBUG.selected_page, DEBUG.page_none) * ...
+							(DEBUG.GENERIC_FAMILY .or. ...
+							DEBUG.page_log -> value * DEBUG.LOG_FAMILY .or. ...
+							DEBUG.page_ui -> value * DEBUG.UI_FAMILY .or. ...
+							DEBUG.page_event -> value * DEBUG.EVENT_FAMILY .or. ...
+							DEBUG.page_groups -> value * DEBUG.GROUPS_FAMILY .or. ...
+							DEBUG.page_custom -> value * DEBUG.CUSTOM_FAMILY .or. ...
+							DEBUG.page_osc -> value * DEBUG.OSC_FAMILY)
 
-			restore_visibility_settings(ALL_FAMILIES)	
-			
+			// Load the exact inverted mask if the instrument is loading. By doing this, I am forcing  
+			// the if statement below to be always triggered at startup
+			if NI_CALLBACK_TYPE = NI_CB_TYPE_PERSISTENCE_CHANGED
+				f_mask_pre := .not. f_mask
+			end if
+
+			// Execute
+			// (sh_right(f_mask, i) .and. 1) returns 1 if the selected bit is 1 and 0 otherwise. 
+			// Because I need to reverse this value, I am applying the XOR operator using math.flip. 
+			// This value is then multiplied by INVISIBLE (whose value is 16)
+			for i := 0 to 31
+				if sh_right(f_mask, i) # sh_right(f_mask_pre, i)
+					DEBUG.set_family_visibility(sh_left(1, i), INVISIBLE * math.flip(sh_right(f_mask, i) .and. 1, 0))
+				end if
+			end for
+
+			f_mask_pre := f_mask
+
 			select DEBUG.selected_page
 				case DEBUG.page_log_id
-					DEBUG.page_log := 1
-					DEBUG.set_visibility(get_ui_id(DEBUG.bg_label), VISIBLE)
 					DEBUG.logger_page_visibility
 
 				case DEBUG.page_ui_id
-					DEBUG.page_ui := 1
-					DEBUG.set_visibility(get_ui_id(DEBUG.bg_label), VISIBLE)
-					DEBUG.set_family_visibility(DEBUG.UI_FAMILY, VISIBLE)
 					DEBUG.var_menu_text_update
 
 				case DEBUG.page_event_id
-					DEBUG.page_event := 1
-					DEBUG.set_visibility(get_ui_id(DEBUG.bg_label), VISIBLE)
-					DEBUG.set_family_visibility(DEBUG.EVENT_FAMILY, VISIBLE)
 					DEBUG.temp_set_fam_visibility(ALL_FAMILIES, INVISIBLE)
 
 				case DEBUG.page_groups_id
-					DEBUG.page_groups := 1
-					DEBUG.set_visibility(get_ui_id(DEBUG.bg_label), VISIBLE)
-					DEBUG.set_family_visibility(DEBUG.GROUPS_FAMILY, VISIBLE)
-
 				case DEBUG.page_custom_id
-					DEBUG.page_custom := 1
-					DEBUG.set_visibility(get_ui_id(DEBUG.bg_label), VISIBLE)
-					DEBUG.set_family_visibility(DEBUG.CUSTOM_FAMILY, VISIBLE)
+				case DEBUG.page_osc_id
+					DEBUG.temp_set_fam_visibility(ALL_FAMILIES, INVISIBLE)
+					if DEBUG.osc_table_or_disp = 0 
+						DEBUG.osc_table_or_disp -> text := 'Oscilloscope'
+						DEBUG.osc_table -> hide 		:= VISIBLE 
+						DEBUG.osc_disp_value -> hide 	:= INVISIBLE
+					else 
+						DEBUG.osc_table_or_disp -> text := 'Array'
+						DEBUG.osc_table -> hide := INVISIBLE 
+						DEBUG.osc_disp_value -> hide := VISIBLE
+					end if
 			end select
 		END_USE_CODE
 	end function
@@ -213,11 +228,11 @@ Twitter: magneto538
 				DEBUG.set_pos(get_ui_id(DEBUG.logger_window), 1, 20)
 				DEBUG.temp_set_fam_visibility(ALL_FAMILIES, INVISIBLE)
 			else 
-				DEBUG.set_ctrl_text( get_ui_id(DEBUG.logger_switch), "^")
+				DEBUG.set_ctrl_text(get_ui_id(DEBUG.logger_switch), "^")
 				DEBUG.resize_ctrl(get_ui_id(DEBUG.logger_window), (DEBUG.col_width * 4)-12, 110)
 				DEBUG.set_pos(get_ui_id(DEBUG.logger_window), DEBUG.pos_x(3), DEBUG.pos_y(0))
 				DEBUG.set_visibility(DEBUG.logger_lbl, INVISIBLE)
-				DEBUG.set_visibility(DEBUG.bg_label_logger, INVISIBLE)			
+				DEBUG.set_visibility(DEBUG.bg_label_logger, INVISIBLE)
 			end if
 			DEBUG.shift_ctrl(get_ui_id(DEBUG.logger_window), DEBUG.logger_x_off, DEBUG.logger_y_off)
 		END_USE_CODE

@@ -52,13 +52,14 @@ family DEBUG
 	declare UI_COUNT := 0
 	declare SELECTED_UI_ID
 
-	declare selected_page
 	declare const page_none 		:= -1
 	declare const page_log_id 		:= 0
 	declare const page_ui_id 		:= 1
 	declare const page_event_id 	:= 2
 	declare const page_groups_id 	:= 3
 	declare const page_custom_id 	:= 4
+	declare const page_osc_id 		:= 5
+	declare selected_page 			:= DEBUG.page_ui_id
 
 	declare const GENERIC_FAMILY	:= 0x1
 	declare const LOG_FAMILY		:= 0x2
@@ -66,6 +67,8 @@ family DEBUG
 	declare const EVENT_FAMILY 		:= 0x8
 	declare const GROUPS_FAMILY 	:= 0x10
 	declare const CUSTOM_FAMILY 	:= 0x20
+	declare const OSC_FAMILY 		:= 0x40
+	declare const PAGE_BTN_FAMILY 	:= 0x80
 
 	// Event data - declarations
 	declare !source_txt[6]
@@ -81,6 +84,10 @@ family DEBUG
 
 	declare logger_x_off
 	declare logger_y_off
+
+	// Osc	
+	declare osc_table_src[128]
+	declare osc_value_found := NO
 end family
 
 !DEBUG.UI_PERSISTENCE[0] := "N/A"
@@ -103,23 +110,34 @@ DEBUG.bg_label(bg_label, DEBUG.GENERIC_FAMILY, DEBUG.pos_x(0), DEBUG.row1, 595 -
 DEBUG.bg_label(bg_label_monitor, DEBUG.EVENT_FAMILY, 0, 0, 633, DEBUG.row1 - 2, "")
 DEBUG.bg_label(bg_label_logger, DEBUG.LOG_FAMILY, 0, 0, 633, DEBUG.row1 - 2, "")
 
-DEBUG.button(page_log, DEBUG.GENERIC_FAMILY, 0, DEBUG.pos_y(0), 0, "Log", PERSISTENT)
-DEBUG.button(page_ui, DEBUG.GENERIC_FAMILY, 0, DEBUG.pos_y(1), 1, "UI", PERSISTENT)
-DEBUG.button(page_event, DEBUG.GENERIC_FAMILY, 0, DEBUG.pos_y(2), 0, "Mon", PERSISTENT)
-DEBUG.button(page_groups, DEBUG.GENERIC_FAMILY, 0, DEBUG.pos_y(3), 0, "Grp", PERSISTENT)
-DEBUG.button(page_custom, DEBUG.GENERIC_FAMILY, 0, DEBUG.pos_y(4), 0, "Ex", PERSISTENT)
+DEBUG.button(page_log, DEBUG.PAGE_BTN_FAMILY, 0, DEBUG.pos_y(0), 0, "Log", PERSISTENT)
+DEBUG.button(page_ui, DEBUG.PAGE_BTN_FAMILY, 0, DEBUG.pos_y(1), 1, "UI", PERSISTENT)
+DEBUG.button(page_event, DEBUG.PAGE_BTN_FAMILY, 0, DEBUG.pos_y(2), 0, "Mon", PERSISTENT)
+DEBUG.button(page_groups, DEBUG.PAGE_BTN_FAMILY, 0, DEBUG.pos_y(3), 0, "Grp", PERSISTENT)
+DEBUG.button(page_custom, DEBUG.PAGE_BTN_FAMILY, 0, DEBUG.pos_y(4), 0, "Cstm", PERSISTENT)
+DEBUG.button(page_osc, DEBUG.PAGE_BTN_FAMILY, 0, DEBUG.pos_y(5), 0, "Mon", PERSISTENT)
+
+list page_ids
+	get_ui_id(DEBUG.page_log)
+	get_ui_id(DEBUG.page_ui)
+	get_ui_id(DEBUG.page_event)
+	get_ui_id(DEBUG.page_groups)
+	get_ui_id(DEBUG.page_custom)
+	get_ui_id(DEBUG.page_osc)
+end list
 
 DEBUG.resize_ctrl(get_ui_id(DEBUG.page_log), 35, 18)
 DEBUG.resize_ctrl(get_ui_id(DEBUG.page_ui), 35, 18)
 DEBUG.resize_ctrl(get_ui_id(DEBUG.page_event), 35, 18)
 DEBUG.resize_ctrl(get_ui_id(DEBUG.page_groups), 35, 18)
 DEBUG.resize_ctrl(get_ui_id(DEBUG.page_custom), 35, 18)
+DEBUG.resize_ctrl(get_ui_id(DEBUG.page_osc), 35, 18)
 
 // Log page
 DEBUG.label(logger_lbl, DEBUG.LOG_FAMILY, DEBUG.pos_x(0), 0, "Live Console Logger", CONSOLE.WHITE, LEFT)
 DEBUG.resize_ctrl(get_ui_id(DEBUG.logger_lbl), DEBUG.col_width * 7, 18)
 
-DEBUG.log_label(logger_window, DEBUG.LOG_FAMILY, DEBUG.pos_x(3), DEBUG.pos_y(1), (DEBUG.col_width * 4), 90, "", CONSOLE.YELLOW, LEFT)
+DEBUG.multirow_label(logger_window, DEBUG.LOG_FAMILY, DEBUG.pos_x(3), DEBUG.pos_y(1), (DEBUG.col_width * 4), 90, "", CONSOLE.YELLOW, LEFT)
 
 DEBUG.button(logger_switch, DEBUG.LOG_FAMILY, 252, DEBUG.pos_y(5), 0, "^", NOT_PERSISTENT)
 DEBUG.resize_ctrl(get_ui_id(DEBUG.logger_switch), 18, 18)
@@ -348,8 +366,43 @@ DEBUG.value_edit(custom_ve_3, DEBUG.CUSTOM_FAMILY, DEBUG.pos_x(5), DEBUG.pos_y(3
 DEBUG.value_edit(custom_ve_4, DEBUG.CUSTOM_FAMILY, DEBUG.pos_x(5), DEBUG.pos_y(4), -1000000, 1000000, 0, 1, CONSOLE.WHITE, "<4>", NOT_PERSISTENT)
 DEBUG.value_edit(custom_ve_5, DEBUG.CUSTOM_FAMILY, DEBUG.pos_x(5), DEBUG.pos_y(5), -1000000, 1000000, 0, 1, CONSOLE.WHITE, "<5>", NOT_PERSISTENT)
 
-DEBUG.view
+// Oscilloscope page
+declare const DEBUG.OSC_TABLE_RANGE := -1000000
+declare const DEBUG.OSC_ZOOM_V_MAX := 100000
+declare const DEBUG.OSC_TIME := 20000	// Microseconds
 
+DEBUG.table(osc_table, DEBUG.OSC_FAMILY, 0, 0, 633, 428, 128, DEBUG.OSC_TABLE_RANGE, NOT_PERSISTENT)
+DEBUG.knob(osc_zoom_fine, DEBUG.OSC_FAMILY, 41, 448, 1, 100, 100, 1, PERSISTENT, KNOB_UNIT_PERCENT, 'Zoom -')
+DEBUG.knob(osc_zoom_gross, DEBUG.OSC_FAMILY, 41, 493, 100, DEBUG.OSC_ZOOM_V_MAX, 100, 1, PERSISTENT, KNOB_UNIT_PERCENT, 'Zoom +')
+DEBUG.knob(osc_res, DEBUG.OSC_FAMILY, 141, 493, 0, 1000, 0, 1, PERSISTENT, KNOB_UNIT_NONE, 'Res')
+DEBUG.knob(osc_offset_v, DEBUG.OSC_FAMILY, 141, 448, DEBUG.OSC_TABLE_RANGE, -DEBUG.OSC_TABLE_RANGE, 0, 1, PERSISTENT, KNOB_UNIT_NONE, 'Offset V')
+
+DEBUG.button(osc_start_arr, DEBUG.OSC_FAMILY, 241, DEBUG.pos_y(1), 0, "Start Arr", PERSISTENT)
+DEBUG.button(osc_start_value, DEBUG.OSC_FAMILY, 241, DEBUG.pos_y(2), 0, "Start Value", PERSISTENT)
+	DEBUG.osc_start_arr -> font_type := CONSOLE.YELLOW
+	DEBUG.osc_start_value -> font_type := CONSOLE.YELLOW
+DEBUG.multirow_label(osc_whois, DEBUG.OSC_FAMILY, 241, DEBUG.pos_y(4), 212, 36, "", CONSOLE.YELLOW, LEFT)
+
+DEBUG.button(osc_generate, DEBUG.OSC_FAMILY, DEBUG.pos_x(4), DEBUG.pos_y(3), 0, "Export Table", NOT_PERSISTENT)
+DEBUG.value_edit(osc_generate_mult, DEBUG.OSC_FAMILY, DEBUG.pos_x(4), DEBUG.pos_y(1), -1000, 1000, 1, 1, CONSOLE.WHITE, "Mult", NOT_PERSISTENT)
+DEBUG.value_edit(osc_generate_div, DEBUG.OSC_FAMILY, DEBUG.pos_x(4), DEBUG.pos_y(2), -1000, 1000, 1, 1, CONSOLE.WHITE, "Div", NOT_PERSISTENT)
+
+DEBUG.button(osc_save_arr, DEBUG.OSC_FAMILY, DEBUG.pos_x(6) - 30, DEBUG.pos_y(1), 0, "Save Arr", NOT_PERSISTENT)
+DEBUG.button(osc_refresh, DEBUG.OSC_FAMILY, DEBUG.pos_x(6) - 30, DEBUG.pos_y(2), 0, "Refresh", NOT_PERSISTENT)
+DEBUG.button(osc_table_or_disp, DEBUG.OSC_FAMILY, DEBUG.pos_x(6) - 30, DEBUG.pos_y(5), 0, "", NOT_PERSISTENT)
+	DEBUG.osc_table_or_disp -> font_type := CONSOLE.YELLOW
+
+DEBUG.multirow_label(osc_disp_value, DEBUG.OSC_FAMILY, 20, 0, 613, 428, "", CONSOLE.YELLOW, LEFT)
+	DEBUG.osc_disp_value -> textline := "Click on 'Refresh Disp' to view the content of the array you are monitoring."
+
+read_persistent_var(DEBUG.page_log)
+read_persistent_var(DEBUG.page_ui)
+read_persistent_var(DEBUG.page_event)
+read_persistent_var(DEBUG.page_groups)
+read_persistent_var(DEBUG.page_custom)
+read_persistent_var(DEBUG.page_osc)
+
+DEBUG.view
 end if
 
 // CBs filtered by the 'User' ctrl. The only two callbacks that are missing are PCB and ICB, so that the user can use DEBUG.add_log inside those callbacks 

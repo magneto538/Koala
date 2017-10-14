@@ -39,10 +39,10 @@ Twitter: magneto538
 
 }   
 
-macro DEBUG.custom_button(#n#, text, #line_1#, #line_2#, #line_3#)
+macro DEBUG.custom_button(#n#, txt, #line_1#, #line_2#, #line_3#)
 	USE_CODE_IF(ENABLE_DEBUG)	
 		on ui_control (DEBUG.custom_button_#n#)
-			set_control_par_str(get_ui_id(DEBUG.custom_button_#n#), CONTROL_PAR_TEXT, text)
+			DEBUG.custom_button_#n# -> text := txt
 			#line_1#
 			#line_2#
 			#line_3#
@@ -68,89 +68,89 @@ macro DEBUG.custom_value_edit(#n#, #min#, #max#, #line_1#, #line_2#, #line_3#)
 end macro
 
 // PRIVATE
-macro DEBUG.label(#name#, fam, x, y, text, font, alignment)
+macro DEBUG.label(#name#, fam, x, y, txt, font, alignment)
 	USE_CODE_IF(ENABLE_DEBUG)	
 		declare ui_label DEBUG.#name#(1, 1)
 		DEBUG.add_ctrl(DEBUG.#name#, fam)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_X, x)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_Y, y)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_WIDTH, DEBUG.col_width)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_HEIGHT, 18)
-		set_control_par_str(get_ui_id(DEBUG.#name#), CONTROL_PAR_TEXT, text)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_FONT_TYPE, font)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_TEXT_ALIGNMENT, alignment)
+		DEBUG.#name# -> pos_x := x
+		DEBUG.#name# -> pos_y := y
+		DEBUG.#name# -> width := DEBUG.col_width
+		DEBUG.#name# -> height := 18
+		DEBUG.#name# -> text := txt
+		DEBUG.#name# -> font_type := font
+		DEBUG.#name# -> text_alignment := alignment
 	END_USE_CODE
 end macro
 
-macro DEBUG.log_label(#name#, fam, x, y, width, height, text, font, alignment)
+macro DEBUG.multirow_label(#name#, fam, x, y, w, h, txt, font, alignment)
 	USE_CODE_IF(ENABLE_DEBUG)	
 		declare ui_label DEBUG.#name#(3, 2)
 		DEBUG.add_ctrl(DEBUG.#name#, fam)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_X, x)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_Y, y)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_WIDTH, width)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_HEIGHT, height)
-		set_control_par_str(get_ui_id(DEBUG.#name#), CONTROL_PAR_TEXT, text)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_FONT_TYPE, font)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_TEXT_ALIGNMENT, alignment)
+		DEBUG.#name# -> pos_x := x
+		DEBUG.#name# -> pos_y := y
+		DEBUG.#name# -> width := w
+		DEBUG.#name# -> height := h
+		DEBUG.#name# -> text := txt
+		DEBUG.#name# -> font_type := font
+		DEBUG.#name# -> text_alignment := alignment
 	END_USE_CODE
 end macro
 
 
-macro DEBUG.midi_mon(#name#, fam, x, y, text, font, alignment)
+macro DEBUG.midi_mon(#name#, fam, x, y, txt, font, alignment)
 	USE_CODE_IF(ENABLE_DEBUG)	
 		declare ui_label DEBUG.#name#(3, 2)
 		DEBUG.add_ctrl(DEBUG.#name#, fam)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_X, x)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_Y, y)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_WIDTH, DEBUG.col_width)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_HEIGHT, 400)
-		set_control_par_str(get_ui_id(DEBUG.#name#), CONTROL_PAR_TEXT, text)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_FONT_TYPE, font)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_TEXT_ALIGNMENT, alignment)
+		DEBUG.#name# -> pos_x := x
+		DEBUG.#name# -> pos_y := y
+		DEBUG.#name# -> width := DEBUG.col_width
+		DEBUG.#name# -> height := 400
+		DEBUG.#name# -> text := txt
+		DEBUG.#name# -> font_type := font
+		DEBUG.#name# -> text_alignment := alignment
 	END_USE_CODE
 end macro
 
-macro DEBUG.bg_label(#name#, fam, x, y, w, h, text)
+macro DEBUG.bg_label(#name#, fam, x, y, w, h, txt)
 	USE_CODE_IF(ENABLE_DEBUG)	
 		declare ui_label DEBUG.#name#(1, 1)
 		DEBUG.add_ctrl(DEBUG.#name#, fam)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_X, x)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_Y, y)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_WIDTH, w)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_HEIGHT, h)
-		set_control_par_str(get_ui_id(DEBUG.#name#), CONTROL_PAR_TEXT, text)
+		DEBUG.#name# -> pos_x := x
+		DEBUG.#name# -> pos_y := y
+		DEBUG.#name# -> width := w
+		DEBUG.#name# -> height := h
+		DEBUG.#name# -> text := txt
 	END_USE_CODE
 end macro
 
-macro DEBUG.button(#name#, fam, x, y, default, text, pers_status)
+macro DEBUG.button(#name#, fam, x, y, default, txt, pers_status)
 	USE_CODE_IF(ENABLE_DEBUG)	
 		declare ui_button DEBUG.#name#
 		DEBUG.add_ctrl(DEBUG.#name#, fam)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_X, x)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_Y, y)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_WIDTH, DEBUG.col_width)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_HEIGHT, 18)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_DEFAULT_VALUE, default)	
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_VALUE, default)	
-		set_control_par_str(get_ui_id(DEBUG.#name#), CONTROL_PAR_TEXT, text)
+		DEBUG.#name# -> pos_x := x
+		DEBUG.#name# -> pos_y := y
+		DEBUG.#name# -> width := DEBUG.col_width
+		DEBUG.#name# -> height := 18
+		DEBUG.#name# -> default_value := default	
+		DEBUG.#name# -> value := default	
+		DEBUG.#name# -> text := txt
 		if pers_status = PERSISTENT
 			make_persistent(DEBUG.#name#)
 		end if		
 	END_USE_CODE
 end macro
 
-macro DEBUG.value_edit(#name#, fam, x, y, min, max, default, disp_ratio, font, text, pers_status)
+macro DEBUG.value_edit(#name#, fam, x, y, min, max, default, disp_ratio, font, txt, pers_status)
 	USE_CODE_IF(ENABLE_DEBUG)	
 		declare ui_value_edit DEBUG.#name# (min, max, disp_ratio)
 		DEBUG.add_ctrl(DEBUG.#name#, fam)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_X, x)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_Y, y)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_WIDTH, DEBUG.col_width)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_DEFAULT_VALUE, default)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_VALUE, default)	
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_FONT_TYPE, font)	
-		set_control_par_str(get_ui_id(DEBUG.#name#), CONTROL_PAR_TEXT, text)
+		DEBUG.#name# -> pos_x := x
+		DEBUG.#name# -> pos_y := y
+		DEBUG.#name# -> width := DEBUG.col_width
+		DEBUG.#name# -> default_value := default
+		DEBUG.#name# -> value := default	
+		DEBUG.#name# -> font_type := font	
+		DEBUG.#name# -> text := txt
 		if pers_status = PERSISTENT
 			make_persistent(DEBUG.#name#)
 		end if		
@@ -161,11 +161,11 @@ macro DEBUG.slider(#name#, fam, x, y, min, max, default, pers_status)
 	USE_CODE_IF(ENABLE_DEBUG)	
 		declare ui_slider DEBUG.#name# (min, max)
 		DEBUG.add_ctrl(DEBUG.#name#, fam)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_X, x)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_Y, y)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_DEFAULT_VALUE, default)	
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_VALUE, default)	
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_MOUSE_BEHAVIOUR, 700)
+		DEBUG.#name# -> pos_x := x
+		DEBUG.#name# -> pos_y := y
+		DEBUG.#name# -> default_value := default	
+		DEBUG.#name# -> value := default	
+		DEBUG.#name# -> mouse_behaviour := 700
 		if pers_status = PERSISTENT
 			make_persistent(DEBUG.#name#)
 		end if				
@@ -176,20 +176,59 @@ macro DEBUG.menu(#name#, fam, x, y, default, pers_status)
 	USE_CODE_IF(ENABLE_DEBUG)
 		declare ui_menu DEBUG.#name#
 		DEBUG.add_ctrl(DEBUG.#name#, fam)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_X, x)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_POS_Y, y)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_WIDTH, DEBUG.col_width)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_DEFAULT_VALUE, default)
-		set_control_par(get_ui_id(DEBUG.#name#), CONTROL_PAR_VALUE, default)
+		DEBUG.#name# -> pos_x := x
+		DEBUG.#name# -> pos_y := y
+		DEBUG.#name# -> width := DEBUG.col_width
+		DEBUG.#name# -> default_value := default
+		DEBUG.#name# -> value := default
 		if pers_status = PERSISTENT
 			make_persistent(DEBUG.#name#)
 		end if		
 	END_USE_CODE
 end macro
 
+macro DEBUG.table(#name#, fam, x, y, w, h, columns, range, pers_status)
+	USE_CODE_IF(ENABLE_DEBUG)
+		declare ui_table DEBUG.#name#[columns] (1, 1, range)
+		DEBUG.add_ctrl(DEBUG.#name#, fam)
+
+		DEBUG.#name# -> pos_x := x
+		DEBUG.#name# -> pos_y := y
+		DEBUG.#name# -> width := w
+		DEBUG.#name# -> height := h
+
+		if (pers_status = PERSISTENT)
+			make_persistent(DEBUG.#name#)
+		end if	
+	END_USE_CODE
+end macro
+
+macro DEBUG.knob(#name#, fam, x, y, min, max, default, disp_ratio, pers_status, disp_unit, txt)
+	declare ui_knob DEBUG.#name# (min, max, disp_ratio)
+	DEBUG.add_ctrl(DEBUG.#name#, fam)
+
+	DEBUG.#name# -> pos_x := x
+	DEBUG.#name# -> pos_y := y
+	DEBUG.#name# -> default_value := default
+	DEBUG.#name# -> value := default
+	DEBUG.#name# -> unit := disp_unit
+	DEBUG.#name# -> text := txt
+
+	set_control_par_str(get_ui_id(DEBUG.#name#), CONTROL_PAR_TEXT, txt)	
+	if (pers_status = PERSISTENT)
+		make_persistent(DEBUG.#name#)
+	end if	
+end macro
+
 macro DEBUG.page_button(#name#)
 	USE_CODE_IF(ENABLE_DEBUG)	
 		on ui_control (DEBUG.#name#)
+			for _j := 0 to num_elements(page_ids)-1
+				if page_ids[_j] # get_ui_id(DEBUG.#name#)
+					page_ids[_j] -> value := 0
+				end if 
+			end for
+
 			if DEBUG.#name# = 1
 				DEBUG.selected_page := DEBUG.#name#_id
 			else 

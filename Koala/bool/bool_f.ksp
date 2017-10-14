@@ -58,3 +58,6 @@ function is_not_equal(a, b) -> return
 	return := ( 1 + sh_right(abs(a - b) - 1, 31) )
 end function
 
+function is_in_range(value, a, b) -> return 
+	return := (1 + (sh_right(b-value,31) .or. sh_right(value-a,31)))
+end function

@@ -45,6 +45,7 @@ DEBUG.page_button(page_ui)
 DEBUG.page_button(page_event)
 DEBUG.page_button(page_groups)
 DEBUG.page_button(page_custom)
+DEBUG.page_button(page_osc)
 
 
 // UI Family - Adjust position
@@ -209,4 +210,47 @@ on ui_control (DEBUG.logger_start)
 	else
 		DEBUG.add_log_simple("### _________ KOALA LOGGER ENDED _________ ###")	
 	end if
+end on
+
+
+// Osc page 
+on ui_control (DEBUG.osc_start_value)
+	DEBUG.osc_start_arr := OFF 
+	if DEBUG.osc_value_found = NO
+		DEBUG.osc_whois -> text 	:= "Waiting for DEBUG.osc_value() to be executed..."
+		DEBUG.osc_whois -> textline := "Have you added this function to the script?"
+	end if
+end on
+on ui_control (DEBUG.osc_start_arr)	// This UCB will be ignored automatically when DEBUG.osc_array is found.
+	DEBUG.osc_start_value := OFF
+	DEBUG.osc_whois -> text 	:= "DEBUG.osc_array() not found!"
+	DEBUG.osc_whois -> textline := "Add it in order to use the Monitor."
+end on 
+on ui_control (DEBUG.osc_table_or_disp)
+	call DEBUG.view
+end on
+on ui_control (DEBUG.osc_generate)
+	DEBUG.osc_generate := OFF
+	DEBUG.osc_generate_table()
+end on
+on ui_control (DEBUG.osc_refresh)
+	DEBUG.osc_refresh := OFF
+	for _j := 0 to 127 	
+		DEBUG.osc_table[_j] := 0
+	end for
+end on
+on ui_control (DEBUG.osc_zoom_fine)
+	for _j := 0 to 127 
+		DEBUG.osc_table[_j] := DEBUG.OSC_VALUE(DEBUG.osc_table_src[_j])
+	end for
+end on
+on ui_control (DEBUG.osc_zoom_gross)
+	for _j := 0 to 127 
+		DEBUG.osc_table[_j] := DEBUG.OSC_VALUE(DEBUG.osc_table_src[_j])
+	end for
+end on
+on ui_control (DEBUG.osc_offset_v)
+	for _j := 0 to 127 
+		DEBUG.osc_table[_j] := DEBUG.OSC_VALUE(DEBUG.osc_table_src[_j])
+	end for
 end on

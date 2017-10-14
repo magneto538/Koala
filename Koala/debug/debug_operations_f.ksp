@@ -124,3 +124,42 @@ function DEBUG.add_log_p(text)
 		print(@timer & " --- [" & !DEBUG.logger_cb_types[NI_CALLBACK_TYPE] & "] " & text)
 	END_USE_CODE
 end function
+
+define DEBUG.OSC_VALUE(value) 	:= math.clamp(((value * DEBUG.OSC_ZOOM / 100) + DEBUG.osc_offset_v), DEBUG.OSC_TABLE_RANGE, -DEBUG.OSC_TABLE_RANGE)
+define DEBUG.OSC_ZOOM 			:= (DEBUG.osc_zoom_fine + (DEBUG.osc_zoom_gross - 100))
+
+function DEBUG.push_to_osc(arr)
+	USE_CODE_IF(ENABLE_DEBUG)
+		declare j
+		declare start_time := ENGINE_UPTIME
+		declare global @DEBUG.osc_arr_name
+
+		while DEBUG.osc_start_arr = ON
+			DEBUG.osc_whois -> text 	:= "Array Monitor - " & @DEBUG.osc_arr_name
+			DEBUG.osc_whois -> textline := "Monitor uptime (ms): " & ENGINE_UPTIME-start_time
+			declare r := r mod DEBUG.osc_res			
+			if r = 0
+				for j := 0 to 127
+					// According to the info retrieved above, push the correct data to the table
+					DEBUG.osc_table_src[j]	:= arr[(j*(num_elements(arr)-1))/127]
+					DEBUG.osc_table[j] 		:= DEBUG.OSC_VALUE(DEBUG.osc_table_src[j])
+				end for
+			end if 
+			inc(r)
+			wait(DEBUG.OSC_TIME)
+		end while
+	END_USE_CODE
+end function
+
+function DEBUG.osc_generate_table
+	USE_CODE_IF(ENABLE_DEBUG)
+		declare global DEBUG.osc_generate_output[128]
+		DEBUG.osc_start_arr := OFF 
+
+		for _j := 0 to 127
+			DEBUG.osc_generate_output[_j] := (DEBUG.osc_table[_j] / DEBUG.osc_generate_div) * DEBUG.osc_generate_mult
+		end for
+		DEBUG.osc_whois -> text := "Table generated and saved to disk."
+		save_array(DEBUG.osc_generate_output, 1)
+	END_USE_CODE
+end function

@@ -279,6 +279,63 @@ macro DEBUG.show_value(lbl_idx, #var#)
 	END_USE_CODE
 end macro
 
+macro DEBUG.osc_array(#arr#)
+	USE_CODE_IF(ENABLE_DEBUG)
+		SET_CONDITION(DEBUG.OSC_ARRAY_ENABLED)
+		on ui_control (DEBUG.osc_start_arr)
+			DEBUG.osc_start_value := OFF
+			@DEBUG.osc_arr_name := '#arr#' & "[" & num_elements(#arr#) & "]"
+			DEBUG.push_to_osc(#arr#)
+		end on 
+		on ui_control (DEBUG.osc_refresh)
+			DEBUG.osc_refresh := OFF
+
+			// Refresh disp
+			@DEBUG.osc_arr_name := '#arr#' & "[" & num_elements(#arr#) & "]"
+			DEBUG.osc_disp_value -> text := ''
+			DEBUG.osc_disp_value -> textline := "Content of the array " & @DEBUG.osc_arr_name & ". Click on 'Refresh Disp.' to refresh this view with new data. Click on 'Save Arr' to save the array to disk."
+			DEBUG.osc_disp_value -> textline := ""
+			DEBUG.osc_disp_value -> textline := "--- BEGINNING OF ARRAY ---"			
+			for _j := 0 to num_elements(#arr#)-1
+				DEBUG.osc_disp_value -> textline := _j & ' - ' & #arr#[_j]
+			end for
+			DEBUG.osc_disp_value -> textline := "--- END OF ARRAY ---"
+
+			// Refresh Osc
+			for _j := 0 to 127 	
+				DEBUG.osc_table[_j] := 0
+			end for
+		end on
+		on ui_control (DEBUG.osc_save_arr)
+			DEBUG.osc_save_arr := OFF
+			save_array(#arr#, 1)
+		end on
+	END_USE_CODE
+end macro
+
+function DEBUG.osc_value(vv)
+	USE_CODE_IF(ENABLE_DEBUG)
+		SET_CONDITION(DEBUG.OSC_VALUE_ENABLED)
+		declare j
+		declare start_time
+		DEBUG.osc_value_found := YES
+		if DEBUG.osc_start_value = OFF 
+			start_time := ENGINE_UPTIME
+		else 
+			declare r := r mod DEBUG.osc_res
+			DEBUG.osc_whois -> text := "Value Monitor - Callback: " & !DEBUG.logger_cb_types[NI_CALLBACK_TYPE]
+			DEBUG.osc_whois -> textline := "Monitor uptime (ms): " & ENGINE_UPTIME-start_time			
+			if r = 0
+				j := j mod num_elements(DEBUG.osc_table)
+				DEBUG.osc_table_src[j]	:= vv
+				DEBUG.osc_table[j] 		:= DEBUG.OSC_VALUE(vv)
+				inc(j)
+			end if
+			inc(r)
+		end if
+	END_USE_CODE
+end function
+
 function DEBUG.shift_debugger(x, y)
 	USE_CODE_IF(ENABLE_DEBUG)
 		DEBUG.logger_x_off := x

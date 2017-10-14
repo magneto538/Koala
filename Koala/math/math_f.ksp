@@ -130,6 +130,11 @@ function gate(value, btm) -> return
 	return := (value + (-sh_right(value - btm, 31)) * (btm - value))
 end function
 
+function clamp(value, btm, top) -> return
+	return := (value*(1 + (sh_right(top-value,31) .or. sh_right(value-btm,31))) - btm*sh_right(value-btm,31) - top*sh_right(top-value,31))
+end function
+
+
 // Returns 1 if Even, 0 if Odd
 function parity(a) -> return
 	return := abs((a mod 2) - 1)

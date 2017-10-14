@@ -42,11 +42,11 @@ Twitter: magneto538
 function create_instrument(height, wallpaper, icon, title)
 	make_perfview	
 
+	message("")
 	INST_WALLPAPER_ID -> picture := wallpaper 
 	INST_ICON_ID -> picture := icon 
 
 	INST_HEIGHT := height
-	message("")
 
 	USE_CODE_IF_NOT(ENABLE_DEBUG)
 	    set_script_title(title)
