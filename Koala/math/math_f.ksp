@@ -212,6 +212,13 @@ function int_to_hex(int) -> return
 	return := '9' & return & 'h'
 end function
 
+// Similar to Max MSP's scale object.
+// v: value to be scaled 
+// a/b: input min/max 
+// c/d: output min/max
+function scale(v, a, b, c, d) -> return
+	return := (((((v)-(a)) * ((d)-(c)))/((b)-(a))) + (c))
+end function
 
 // ----------------------- EASING FUNCTIONS -----------
 

@@ -223,9 +223,9 @@ end macro
 macro DEBUG.page_button(#name#)
 	USE_CODE_IF(ENABLE_DEBUG)	
 		on ui_control (DEBUG.#name#)
-			for _j := 0 to num_elements(page_ids)-1
-				if page_ids[_j] # get_ui_id(DEBUG.#name#)
-					page_ids[_j] -> value := 0
+			for _j := 0 to num_elements(DEBUG.page_ids)-1
+				if DEBUG.page_ids[_j] # get_ui_id(DEBUG.#name#)
+					DEBUG.page_ids[_j] -> value := 0
 				end if 
 			end for
 

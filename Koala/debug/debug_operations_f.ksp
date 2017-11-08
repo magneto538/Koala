@@ -90,24 +90,24 @@ function DEBUG.ucb_log_line
 	USE_CODE_IF(ENABLE_DEBUG)
 		if DEBUG.logger_start = 1 and DEBUG.logger_show_ucb = 1 
 
-			select _UI_TYPE[search(_UI_IDS, DEBUG.SELECTED_UI_ID)]
+			select _UI_TYPE[search(_UI_IDS, CTRL_TOUCHED)]
 
 				case SWITCHES
-					@_txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' pressed. Value: " & get_value(DEBUG.SELECTED_UI_ID)
+					@_txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, CTRL_TOUCHED)] & "' pressed. Value: " & get_value(CTRL_TOUCHED)
 				case BUTTONS
-					@_txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' pressed. Value: " & get_value(DEBUG.SELECTED_UI_ID)
+					@_txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, CTRL_TOUCHED)] & "' pressed. Value: " & get_value(CTRL_TOUCHED)
 				case KNOBS
-					@_txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' moved. Value: " & get_value(DEBUG.SELECTED_UI_ID)			
+					@_txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, CTRL_TOUCHED)] & "' moved. Value: " & get_value(CTRL_TOUCHED)			
 				case MENUS
-					@_txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' changed. Selected entry: " & get_value(DEBUG.SELECTED_UI_ID)	
+					@_txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, CTRL_TOUCHED)] & "' changed. Selected entry: " & get_value(CTRL_TOUCHED)	
 				case FILE_SELECTOR
-					@_txt := "New file selected on '" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & ". Selected entry: " & get_value(DEBUG.SELECTED_UI_ID)
+					@_txt := "New file selected on '" & _UI_CTRL_NAMES[search(_UI_IDS, CTRL_TOUCHED)] & ". Selected entry: " & get_value(CTRL_TOUCHED)
 				case VALUE_EDITS
-					@_txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' changed. Value: " & get_value(DEBUG.SELECTED_UI_ID)
+					@_txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, CTRL_TOUCHED)] & "' changed. Value: " & get_value(CTRL_TOUCHED)
 				case SLIDERS
-					@_txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' moved. Value: " & get_value(DEBUG.SELECTED_UI_ID)			
+					@_txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, CTRL_TOUCHED)] & "' moved. Value: " & get_value(CTRL_TOUCHED)			
 				case TABLES
-					@_txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)] & "' changed. Value: " & get_value(DEBUG.SELECTED_UI_ID)						
+					@_txt := "'" & _UI_CTRL_NAMES[search(_UI_IDS, CTRL_TOUCHED)] & "' changed. Value: " & get_value(CTRL_TOUCHED)						
 				case TEXT_EDITS
 		
 			end select

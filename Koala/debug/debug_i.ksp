@@ -117,7 +117,7 @@ DEBUG.button(page_groups, DEBUG.PAGE_BTN_FAMILY, 0, DEBUG.pos_y(3), 0, "Grp", PE
 DEBUG.button(page_custom, DEBUG.PAGE_BTN_FAMILY, 0, DEBUG.pos_y(4), 0, "Cstm", PERSISTENT)
 DEBUG.button(page_osc, DEBUG.PAGE_BTN_FAMILY, 0, DEBUG.pos_y(5), 0, "Mon", PERSISTENT)
 
-list page_ids
+list DEBUG.page_ids
 	get_ui_id(DEBUG.page_log)
 	get_ui_id(DEBUG.page_ui)
 	get_ui_id(DEBUG.page_event)

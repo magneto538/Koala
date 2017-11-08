@@ -40,12 +40,14 @@ Twitter: magneto538
 }   
 
 function DEBUG.on_ui_control(name)
+	declare global CTRL_TOUCHED := -1
+	CTRL_TOUCHED := get_ui_id(name)
+	set_ctrl_cb_id(CTRL_TOUCHED) 
+	
 	USE_CODE_IF(ENABLE_DEBUG)
-		DEBUG.SELECTED_UI_ID := get_ui_id(name)
-
-		DEBUG.var_name := search(_UI_IDS, DEBUG.SELECTED_UI_ID)
-		DEBUG.ui_type := _UI_TYPE[search(_UI_IDS, DEBUG.SELECTED_UI_ID)]
-		DEBUG.ui_family_name := _UI_FAMILIES[search(_UI_IDS, DEBUG.SELECTED_UI_ID)]
+		DEBUG.var_name := search(_UI_IDS, CTRL_TOUCHED)
+		DEBUG.ui_type := _UI_TYPE[search(_UI_IDS, CTRL_TOUCHED)]
+		DEBUG.ui_family_name := _UI_FAMILIES[search(_UI_IDS, CTRL_TOUCHED)]
 
 		call DEBUG.ucb_log_line
 		call DEBUG.var_menu_text_update	
@@ -347,4 +349,12 @@ function DEBUG.shift_debugger(x, y)
 		DEBUG.shift_family(DEBUG.GROUPS_FAMILY, DEBUG.logger_x_off, DEBUG.logger_y_off)
 		DEBUG.shift_family(DEBUG.CUSTOM_FAMILY, DEBUG.logger_x_off, DEBUG.logger_y_off)
 	END_USE_CODE
+end function
+
+function set_ctrl_cb_id(ui_id)
+	declare global _CTRL_CB_ID[32768] := (-1)
+	_CTRL_CB_ID[search_ctrl_number(ui_id)] := NI_CALLBACK_ID
+end function
+function get_ctrl_cb_id(ui_id) -> return
+	return := _CTRL_CB_ID[search_ctrl_number(ui_id)]
 end function

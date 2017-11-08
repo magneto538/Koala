@@ -50,8 +50,8 @@ DEBUG.page_button(page_osc)
 
 // UI Family - Adjust position
 on ui_control (DEBUG.adjust_pos_x)
-	if DEBUG.SELECTED_UI_ID # 0
-		set_control_par(DEBUG.SELECTED_UI_ID, CONTROL_PAR_POS_X, DEBUG.adjust_pos_x)
+	if CTRL_TOUCHED # 0
+		set_control_par(CTRL_TOUCHED, CONTROL_PAR_POS_X, DEBUG.adjust_pos_x)
 	else 
 		message("### DEBUGGER: Click on a UI Control to display/set its data.")
 		DEBUG.adjust_pos_x := 0
@@ -59,8 +59,8 @@ on ui_control (DEBUG.adjust_pos_x)
 end on
 
 on ui_control (DEBUG.adjust_pos_y)
-	if DEBUG.SELECTED_UI_ID # 0
-		set_control_par(DEBUG.SELECTED_UI_ID, CONTROL_PAR_POS_Y, DEBUG.adjust_pos_y)	
+	if CTRL_TOUCHED # 0
+		set_control_par(CTRL_TOUCHED, CONTROL_PAR_POS_Y, DEBUG.adjust_pos_y)	
 	else 
 		message("### DEBUGGER: Click on a UI Control to display/set its data.")
 		DEBUG.adjust_pos_y := 0
@@ -68,8 +68,8 @@ on ui_control (DEBUG.adjust_pos_y)
 end on
 
 on ui_control (DEBUG.adjust_width)
-	if DEBUG.SELECTED_UI_ID # 0
-		set_control_par(DEBUG.SELECTED_UI_ID, CONTROL_PAR_WIDTH, DEBUG.adjust_width)	
+	if CTRL_TOUCHED # 0
+		set_control_par(CTRL_TOUCHED, CONTROL_PAR_WIDTH, DEBUG.adjust_width)	
 	else 
 		message("### DEBUGGER: Click on a UI Control to display/set its data.")
 		DEBUG.adjust_width := 0
@@ -77,8 +77,8 @@ on ui_control (DEBUG.adjust_width)
 end on
 
 on ui_control (DEBUG.adjust_height)
-	if DEBUG.SELECTED_UI_ID # 0
-		set_control_par(DEBUG.SELECTED_UI_ID, CONTROL_PAR_HEIGHT, DEBUG.adjust_height)	
+	if CTRL_TOUCHED # 0
+		set_control_par(CTRL_TOUCHED, CONTROL_PAR_HEIGHT, DEBUG.adjust_height)	
 	else 
 		message("### DEBUGGER: Click on a UI Control to display/set its data.")
 		DEBUG.adjust_height := 0
@@ -170,14 +170,14 @@ end on
 on ui_control (DEBUG.var_name)
 	if DEBUG.var_name # 0
 		set_menu_item_visibility(get_ui_id(DEBUG.var_name), 0, 0)
-		DEBUG.SELECTED_UI_ID := _UI_IDS[DEBUG.var_name]
+		CTRL_TOUCHED := _UI_IDS[DEBUG.var_name]
 		call DEBUG.var_menu_text_update
 	end if
 end on
 
 on ui_control (DEBUG.var_hide)
 	if DEBUG.var_name # 0
-		DEBUG.SELECTED_UI_ID -> hide := INVISIBLE * DEBUG.var_hide
+		CTRL_TOUCHED -> hide := INVISIBLE * DEBUG.var_hide
 	end if
 end on
 

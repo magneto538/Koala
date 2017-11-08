@@ -282,7 +282,7 @@ Twitter: magneto538
 
 			DEBUG.var_name := 0
 			set_menu_item_visibility(get_ui_id(DEBUG.var_name), 0, 1)	
-			DEBUG.SELECTED_UI_ID := DEBUG.var_name
+			CTRL_TOUCHED := DEBUG.var_name
 
 			call DEBUG.var_menu_text_update
 		END_USE_CODE
