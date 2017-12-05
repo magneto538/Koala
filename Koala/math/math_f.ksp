@@ -220,6 +220,17 @@ function scale(v, a, b, c, d) -> return
 	return := (((((v)-(a)) * ((d)-(c)))/((b)-(a))) + (c))
 end function
 
+// Simple periodic functions
+function simple_tri(phase, period, v_offs) -> return 
+	return := (abs((((phase) + (period)) mod ((period)*2)) - (period)) + (v_offs))
+end function
+function simple_saw(mode, phase, period, v_offs) -> return 
+	return := (abs(((phase) mod (period)) - (mode)*((period)-1)) + (v_offs))
+end function
+function simple_sqr(phase, period, v_offs) -> return 
+	return := (abs((((phase) / (period)) mod 2) - 1) + (v_offs))
+end function
+
 // ----------------------- EASING FUNCTIONS -----------
 
 	// t: current time in milliseconds. This is a real value, so the resolution can be much higher than milliseconds. We want to keep the scale in milliseconds

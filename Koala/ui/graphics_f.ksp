@@ -279,6 +279,10 @@ function get_type(ui_id) -> return
 	return := _UI_TYPE[search_ctrl_number(ui_id)]
 end function
 
+function get_def_text(ui_id) -> return
+	return := !_UI_TEXT[search_ctrl_number(ui_id)]
+end function
+
 function get_pos_x(ui_id) -> return
 	return := get_control_par(ui_id, CONTROL_PAR_POS_X)
 end function
