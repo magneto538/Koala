@@ -144,8 +144,19 @@ function lcm(a,b) -> return
 end function
 
 // Least Common Multiple between a series of numbers. Needs to be fed with an array that contains the values to be processed.
-function lcmm(arr)
-	return := reduce(math.lcm, arr)
+// The function reduce() has been unrolled here in order to avoid issues with the 'math' prefix.
+function lcmm(arr) -> return
+	declare t := arr[0]
+	declare i
+	for i := 0 to num_elements(arr)-1
+		// This is math.lcm
+		declare x := t
+		while x mod arr[i] # 0
+			x := x + t
+		end while
+		t := x 
+		return := t
+	end for
 end function
 
 // Returns 1 if Even, 0 if Odd
