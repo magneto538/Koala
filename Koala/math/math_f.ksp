@@ -134,8 +134,24 @@ function clamp(value, btm, top) -> return
 	return := (value*(1 + (sh_right(top-value,31) .or. sh_right(value-btm,31))) - btm*sh_right(value-btm,31) - top*sh_right(top-value,31))
 end function
 
+// Great Common Divider. Based on the Euclidean algorithm
+function gcd(x, y) -> return
+	declare a
+	declare b
+	declare t
+
+	a := x 
+	b := y 
+    while b # 0
+       t := b 
+       b := a mod b 
+       a := t 
+    end while
+    return := a
+end function
+
 // Least Common Multiple between two values
-function lcm(a,b) -> return
+function lcm(a, b) -> return
 	declare t := a
 	while t mod b # 0
 		t := t + a
@@ -234,6 +250,13 @@ function int_to_hex(int) -> return
     	input := sh_right(input, 4) 
 	end for
 	return := '9' & return & 'h'
+end function
+
+// Outputs a text. Feed it with an int and reduce it to an int.dec text string.
+// Example: value = 12538, div = 1000, dec_div = 100
+// Output: 12.53
+function decimals(value, div, dec_div) -> return 
+	return := (value) / (div) & '.' & abs(((value) mod (div)) / dec_div) 
 end function
 
 // Similar to Max MSP's scale object.
