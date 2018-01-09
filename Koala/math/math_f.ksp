@@ -278,6 +278,17 @@ function simple_sqr(phase, period, v_offs) -> return
 	return := (abs((((phase) / (period)) mod 2) - 1) + (v_offs))
 end function
 
+// Iterate an operation through a list of values. Needs to be fed with a function that accepts 2 int variables and an array that contains the list of values.
+// Stolen by Python.
+function reduce(func, args) -> return
+	declare t := args[0]
+	declare i
+	for i := 0 to num_elements(args)-1
+		t := func(t, args[i])
+		return := t
+	end for
+end function
+
 // ----------------------- EASING FUNCTIONS -----------
 
 	// t: current time in milliseconds. This is a real value, so the resolution can be much higher than milliseconds. We want to keep the scale in milliseconds

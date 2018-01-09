@@ -111,17 +111,6 @@ function reverse(arr)
 	end for	
 end function
 
-// Iterate an operation through a list of values. Needs to be fed with a function that accepts 2 int variables and an array that contains the list of values.
-// Stolen by Python.
-function reduce(func, args) -> return
-	declare t := args[0]
-	declare i
-	for i := 0 to num_elements(args)-1
-		t := func(t, args[i])
-		return := t
-	end for
-end function
-
 // Concatenate two arrays inside a third array
 function concat(source_arr_1, source_arr_2, target_arr, mode)
 	select mode
