@@ -1,6 +1,6 @@
 KOALA v2.2.3 - CHANGELOG
 * Added reduce(): used to iterate a 2-parameters function over a set of values (just like in Python)
-+ Added math.gcd(), math.lcm(), math.lcmm() and math.decimals()
+* Added math.gcd(), math.lcm(), math.lcmm() and math.decimals()
 
 KOALA v2.2.2 - CHANGELOG
 * Added math.simple_saw, math.simple_tri and math.simple_sqr. Can be used to output a set of integers that vary according to the desired wave shape.
