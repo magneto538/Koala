@@ -259,6 +259,16 @@ function decimals(value, div, dec_div) -> return
 	return := (value) / (div) & '.' & abs(((value) mod (div)) / dec_div) 
 end function
 
+function decimals_hr(value, div, dec_div) -> return 
+	declare n 
+	n := abs(((value) mod (div)) / dec_div)
+	while n < (div/dec_div) / 10
+		n := n * 10
+	end while
+	return := (value) / (div) & '.' & n
+end function
+
+
 // Similar to Max MSP's scale object.
 // v: value to be scaled 
 // a/b: input min/max 

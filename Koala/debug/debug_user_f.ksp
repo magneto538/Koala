@@ -40,7 +40,6 @@ Twitter: magneto538
 }   
 
 function DEBUG.on_ui_control(name)
-	declare global CTRL_TOUCHED := -1
 	CTRL_TOUCHED := get_ui_id(name)
 	set_ctrl_cb_id(CTRL_TOUCHED) 
 	
