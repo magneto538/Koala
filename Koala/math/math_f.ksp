@@ -262,7 +262,7 @@ end function
 function decimals_hr(value, div, dec_div) -> return 
 	declare n 
 	n := abs(((value) mod (div)) / dec_div)
-	while n < (div/dec_div) / 10
+	while n+1 < (div/dec_div) / 10
 		n := n * 10
 	end while
 	return := (value) / (div) & '.' & n
