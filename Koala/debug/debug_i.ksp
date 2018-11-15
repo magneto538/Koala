@@ -37,7 +37,6 @@ Skype: magneto538
 Twitter: magneto538
 }   
 
-declare CTRL_TOUCHED := -1
 family DEBUG 
 	declare const row1 			:= 430
 

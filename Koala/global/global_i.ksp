@@ -63,3 +63,4 @@ declare _i
 
 declare @_txt
 
+declare CTRL_TOUCHED := -1
