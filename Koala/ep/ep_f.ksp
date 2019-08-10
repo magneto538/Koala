@@ -198,7 +198,7 @@ Twitter: magneto538
     define V2E.ENV_BASE(in, t_max) := real_to_int((_ENV_BASE_K * (math.log2(in / 100.0 + 2.0) - 1.0)))
 
 	// Attack time
-	// E2V output and V2E input: 0 to 1500000 usec
+	// E2V output and V2E input: 0 to 15000.00 milliseconds (scaled by 100)
 	function E2V.AtkTime(in) -> return
 		return := E2V.ENV_BASE(in, 1500000.0)
 	end function
@@ -207,7 +207,7 @@ Twitter: magneto538
 	end function
 
 	// Decay and Release time 
-	// E2V output and V2E input: 0 to 2500000 usec
+	// E2V output and V2E input: 0 to 25000.00 milliseconds (scaled by 100)
 	function E2V.DRTime(in) -> return
 		return := E2V.ENV_BASE(in, 2500000.0)
 	end function
