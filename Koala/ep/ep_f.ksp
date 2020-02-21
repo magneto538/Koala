@@ -42,8 +42,8 @@ Twitter: magneto538
 //----------------- FILTERS --------------
 	// Fundamental equation: ep = 10^6/log2(Fmax/Fmin)*log2(F/Fmin)
 	// E2V output and V2E input: f_min to f_max Hz
-	define E2V.FILT_FREQ_BASE(in, f_min, f_max) := ((pow(2.0, int_to_real(in) * (math.log2(f_max/f_min)/pow(10.0, 6.0)))) * f_min)
-	define V2E.FILT_FREQ_BASE(in, f_min, f_max) := real_to_int(((pow(10.0, 6.0) / math.log2(f_max/f_min)) * math.log2(in / f_min)))
+	define E2V.FILT_FREQ_BASE(in, f_min, f_max) := ((pow(2.0, int_to_real(in) * (math.log2(f_max/f_min) / 1000000.0))) * f_min)
+	define V2E.FILT_FREQ_BASE(in, f_min, f_max) := real_to_int(((1000000.0 / math.log2(f_max/f_min)) * math.log2(in / f_min)))
 	
 	// SV and Ladder filter frequency
 	function E2V.SVFreq(in) -> return
@@ -178,7 +178,7 @@ Twitter: magneto538
 
 	// Volume 
 	// Fundamental equation: vol = 18000*Lg(ep) - 346768
-	// E2V output and V2E input: -inf to 12000 millidB
+	// E2V output and V2E input: -inf to 12000 millidecibel
 	define E2V.VOL_BASE(ep) := (18000.0 * math.log2(int_to_real(ep)) - 346768.2342478351)
 	define V2E.VOL_BASE(ep) := real_to_int(pow(2.0, (ep + 346768.2342478351) / 18000.0))
 
@@ -221,8 +221,8 @@ Twitter: magneto538
 	// 							ep = 10^6/log2(413,6)*log2[(T+200)/702]
 	//							where X = ep/10^6
 	// E2V output and V2E input: 502 to 290147.2 usec
-	define E2V.DLY_TIME_BASE(in) := (702.0 * pow(2.0, (int_to_real(in) / pow(10.0, 6.0)) * math.log2(413.6)) - 200.0)
-	define V2E.DLY_TIME_BASE(in) := real_to_int((pow(10.0, 6.0) / math.log2(413.6) * math.log2((in + 200.0) / 702.0)))
+	define E2V.DLY_TIME_BASE(in) := (702.0 * pow(2.0, (int_to_real(in) / 1000000.0) * math.log2(413.6)) - 200.0)
+	define V2E.DLY_TIME_BASE(in) := real_to_int((1000000.0 / math.log2(413.6) * math.log2((in + 200.0) / 702.0)))
 
 	function E2V.DlyTime(in) -> return
 		return := E2V.DLY_TIME_BASE(in)
@@ -234,8 +234,8 @@ Twitter: magneto538
 	// 1, 2, 3 Band EQ Bandwidth
 	// Fundamental equation: ep = 10^6*(bw - 33)/267
 	// E2V output and V2E input: 33 to 300 (octaves scaled by 100)
-	define E2V.EQBW_BASE(in) := (int_to_real(in) / pow(10.0, 6.0) * 267.0 + 33.0)
-	define V2E.EQBW_BASE(in) := real_to_int((pow(10.0, 6.0) * (in - 33.0) / 267.0))
+	define E2V.EQBW_BASE(in) := (int_to_real(in) / 1000000.0 * 267.0 + 33.0)
+	define V2E.EQBW_BASE(in) := real_to_int((1000000.0 * (in - 33.0) / 267.0))
 
 	function E2V.EqBW(in) -> return
 		return := E2V.EQBW_BASE(in)
@@ -282,6 +282,3 @@ Twitter: magneto538
 	function V2E.SGEqGain(in) -> return
 		return := V2E.SGEQGAIN_BASE(in)
 	end function
-
-
-
