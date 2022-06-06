@@ -211,11 +211,11 @@ function fmod(a, b) -> return
 end function
 
 // returns a bit sequence from an integer. The output is a text string.
-function int_to_bin(int, bit_nr) -> return
+function int_to_bin(integer, bit_nr) -> return
 	if bit_nr <= 0x20
 		return := ''
 		for i := 0 to bit_nr-1 
-			return := (sh_right(int, i) .and. 1) & return
+			return := (sh_right(integer, i) .and. 1) & return
 		end for
 	else 
 		return := '### KOALA WARNING: int_to_bin has invalid bit_nr (must be <= 32)!'
@@ -226,9 +226,9 @@ end function
 // returns a hex sequence from an integer. 
 // The output is formatted in order to match Kontakt's requests ('9' before and 'h' after the string)
 // This function is a fork of Hex() in BigBob's Math library.
-function int_to_hex(int) -> return 
+function int_to_hex(integer) -> return 
 	declare input
-	input := int
+	input := integer
 	return := ''
 	for i := 0 to 7
 		select input .and. 0xF
@@ -252,7 +252,7 @@ function int_to_hex(int) -> return
 	return := '9' & return & 'h'
 end function
 
-// Outputs a text. Feed it with an int and reduce it to an int.dec text string.
+// Outputs a text. Feed it with an integer and reduce it to an integer.decimal text string.
 // Example: value = 12538, div = 1000, dec_div = 100
 // Output: 12.53
 function decimals(value, div, dec_div) -> return 
@@ -288,7 +288,7 @@ function simple_sqr(phase, period, v_offs) -> return
 	return := (abs((((phase) / (period)) mod 2) - 1) + (v_offs))
 end function
 
-// Iterate an operation through a list of values. Needs to be fed with a function that accepts 2 int variables and an array that contains the list of values.
+// Iterate an operation through a list of values. Needs to be fed with a function that accepts 2 integer variables and an array that contains the list of values.
 // Stolen by Python.
 function reduce(func, args) -> return
 	declare t := args[0]
